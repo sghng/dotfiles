@@ -16,7 +16,7 @@ format = """
                             []( bg:color_aqua   fg:color_yellow )\
 [( $git_branch( $git_status) )]( bg:color_aqua   fg:color_fg0    )\
                             []( bg:color_blue   fg:color_aqua   )\
-    [( $c$nodejs$java$python )]( bg:color_blue   fg:color_fg0    )\
+     [( $c$nodejs$java$python)]( bg:color_blue   fg:color_fg0    )\
                             []( bg:color_bg3    fg:color_blue   )\
                 [$conda$docker]( bg:color_bg3    fg:color_fg0    )\
                             []( bg:color_green  fg:color_bg3    )\
@@ -97,15 +97,15 @@ format = "($all_status$ahead_behind)"
 
 [nodejs]
 symbol = " "
-format = "$symbol($version)"
+format = "$symbol($version) "
 
 [c]
 symbol = " "
-format = "$symbol($version)"
+format = "$symbol($version) "
 
 [python]
 symbol = " "
-format = "$symbol($version)"
+format = "$symbol($version) "
 
 # ENVIRONMENTS
 
