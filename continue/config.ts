@@ -1,5 +1,3 @@
-/* Continue config */
-
 // cSpell:words siliconflow deepseek qwen rerank reranker baai bgem
 
 /* Fetch Secrets */
