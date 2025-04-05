@@ -3,7 +3,7 @@
 
 var REG_NONE = NewRegistrar("none");
 var DSP_CLOUDFLARE = NewDnsProvider("cloudflare", {
-  manage_single_redirects: true,
+  manage_redirects: true,
 });
 
 D(
@@ -23,16 +23,19 @@ D(
   // redirections
   A("in", "192.0.2.1", { cloudflare_proxy: "on" }),
   A("git", "192.0.2.1", { cloudflare_proxy: "on" }),
-  CF_SINGLE_REDIRECT(
-    "LinkedIn",
-    301,
-    'http.host eq "in.sghuang.com"',
-    'concat("https://linkedin.com/in/samuel-g-huang", "")',
-  ),
-  CF_SINGLE_REDIRECT(
-    "GitHub",
-    301,
-    'http.host eq "git.sghuang.com"',
-    'concat("https://github.com/sghng", "")',
-  ),
+  // ideally we should use single redirection, but DNSControl hasn't implmeneted
+  // regex replacement in conversion mode
+  CF_REDIRECT("in.sghuang.com", "https://linkedin.com/in/samuel-g-huang"),
+  CF_REDIRECT("git.sghuang.com", "https://github.com/sghng"),
+);
+
+D(
+  "sghua.ng",
+  REG_NONE,
+  DnsProvider(DSP_CLOUDFLARE),
+  // proxy all domains
+  A("@", "192.0.2.1", { cloudflare_proxy: "on" }),
+  A("*", "192.0.2.1", { cloudflare_proxy: "on" }),
+  // regex replacement is not supported in conversion mode yet
+  CF_REDIRECT("*sghua.ng/*", "https://$1sghuang.com/$2"),
 );
