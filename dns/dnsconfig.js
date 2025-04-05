@@ -6,6 +6,8 @@ var DSP_CLOUDFLARE = NewDnsProvider("cloudflare", {
   manage_redirects: true,
 });
 
+/* Primary domain */
+
 D(
   "sghuang.com",
   REG_NONE,
@@ -18,7 +20,8 @@ D(
 
   // subdomains
   CNAME("naive", "cname.vercel-dns.com."),
-  CNAME("notes", "publish-main.obsidian.md."),
+  // proxy needed for Obsidian
+  CNAME("notes", "publish-main.obsidian.md.", { cloudflare_proxy: "on" }),
 
   // redirections
   A("in", "192.0.2.1", { cloudflare_proxy: "on" }),
@@ -29,8 +32,34 @@ D(
   CF_REDIRECT("git.sghuang.com", "https://github.com/sghng"),
 );
 
+/* Primary shorthand */
+
+D(
+  "sgh.ng",
+  REG_NONE,
+  DnsProvider(DSP_CLOUDFLARE),
+  // proxy all domains
+  A("@", "192.0.2.1", { cloudflare_proxy: "on" }),
+  A("*", "192.0.2.1", { cloudflare_proxy: "on" }),
+  // regex replacement is not supported in conversion mode yet
+  CF_REDIRECT("*sghua.ng/*", "https://$1sghuang.com/$2"),
+);
+
+/* Other shorthands */
+
 D(
   "sghua.ng",
+  REG_NONE,
+  DnsProvider(DSP_CLOUDFLARE),
+  // proxy all domains
+  A("@", "192.0.2.1", { cloudflare_proxy: "on" }),
+  A("*", "192.0.2.1", { cloudflare_proxy: "on" }),
+  // regex replacement is not supported in conversion mode yet
+  CF_REDIRECT("*sghua.ng/*", "https://$1sghuang.com/$2"),
+);
+
+D(
+  "sghng.com",
   REG_NONE,
   DnsProvider(DSP_CLOUDFLARE),
   // proxy all domains
