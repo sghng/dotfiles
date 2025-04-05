@@ -1,0 +1,8 @@
+{
+  "cloudflare": {
+    "TYPE": "CLOUDFLAREAPI",
+    "accountid": "$CLOUDFLARE_ACCOUNT_ID",
+    "apitoken": "$CLOUDFLARE_API_TOKEN"
+  },
+  "none": { "TYPE": "NONE" }
+}
