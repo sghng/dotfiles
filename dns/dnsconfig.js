@@ -68,5 +68,5 @@ D(
   A("@", "192.0.2.1", { cloudflare_proxy: "on" }),
   A("*", "192.0.2.1", { cloudflare_proxy: "on" }),
   // regex replacement is not supported in conversion mode yet
-  CF_REDIRECT("*sghua.com/*", "https://$1sghuang.com/$2"),
+  CF_REDIRECT("*sghng.com/*", "https://$1sghuang.com/$2"),
 );
