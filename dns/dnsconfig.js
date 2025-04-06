@@ -41,6 +41,8 @@ D(
   // proxy all domains
   A("@", "192.0.2.1", { cloudflare_proxy: "on" }),
   A("*", "192.0.2.1", { cloudflare_proxy: "on" }),
+  MX("@", 10, "mx01.mail.icloud.com."),
+  MX("@", 10, "mx02.mail.icloud.com."),
   // regex replacement is not supported in conversion mode yet
   CF_REDIRECT("*sghua.ng/*", "https://$1sghuang.com/$2"),
 );
@@ -66,5 +68,5 @@ D(
   A("@", "192.0.2.1", { cloudflare_proxy: "on" }),
   A("*", "192.0.2.1", { cloudflare_proxy: "on" }),
   // regex replacement is not supported in conversion mode yet
-  CF_REDIRECT("*sghua.ng/*", "https://$1sghuang.com/$2"),
+  CF_REDIRECT("*sghua.com/*", "https://$1sghuang.com/$2"),
 );
