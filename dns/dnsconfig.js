@@ -44,7 +44,7 @@ D(
   MX("@", 10, "mx01.mail.icloud.com."),
   MX("@", 10, "mx02.mail.icloud.com."),
   // regex replacement is not supported in conversion mode yet
-  CF_REDIRECT("*sghua.ng/*", "https://$1sghuang.com/$2"),
+  CF_REDIRECT("*sgh.ng/*", "https://$1sghuang.com/$2"),
 );
 
 /* Other shorthands */
