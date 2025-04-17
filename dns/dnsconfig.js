@@ -41,8 +41,12 @@ D(
   // proxy all domains
   A("@", "192.0.2.1", { cloudflare_proxy: "on" }),
   A("*", "192.0.2.1", { cloudflare_proxy: "on" }),
+  // email
   MX("@", 10, "mx01.mail.icloud.com."),
   MX("@", 10, "mx02.mail.icloud.com."),
+  CNAME("sig1._domainkey", "sig1.dkim.sgh.ng.at.icloudmailadmin.com."),
+  TXT("@", "apple-domain=3ewMGQM5mVlNnFbt"),
+  TXT("@", "v=spf1 include:icloud.com ~all"),
   // regex replacement is not supported in conversion mode yet
   CF_REDIRECT("*sgh.ng/*", "https://$1sghuang.com/$2"),
 );
