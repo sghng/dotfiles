@@ -19,6 +19,7 @@ D(
   MX("@", 10, "mx02.mail.icloud.com."),
 
   // subdomains
+  IGNORE("srv", "A"), // real IP address of server managed in dashboard
   CNAME("naive", "cname.vercel-dns.com."),
   // proxy needed for Obsidian
   CNAME("notes", "publish-main.obsidian.md.", { cloudflare_proxy: "on" }),
