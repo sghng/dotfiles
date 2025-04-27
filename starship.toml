@@ -16,7 +16,7 @@ format = """
                             []( bg:color_aqua   fg:color_yellow )\
 [( $git_branch( $git_status) )]( bg:color_aqua   fg:color_fg0    )\
                             []( bg:color_blue   fg:color_aqua   )\
-     [( $c$nodejs$java$python)]( bg:color_blue   fg:color_fg0    )\
+ [( $bun$c$nodejs$java$python)]( bg:color_blue   fg:color_fg0    )\
                             []( bg:color_bg3    fg:color_blue   )\
                 [$conda$docker]( bg:color_bg3    fg:color_fg0    )\
                             []( bg:color_green  fg:color_bg3    )\
@@ -94,6 +94,10 @@ format = "$symbol$branch"
 format = "($all_status$ahead_behind)"
 
 # LANGUAGES
+
+[bun]
+symbol = " "
+format = "$symbol($version) "
 
 [nodejs]
 symbol = " "
