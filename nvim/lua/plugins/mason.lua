@@ -1,8 +1,8 @@
 ---@type LazySpec
 return {
-	{ "williamboman/mason.nvim", lazy = true, config = true },
+	{ "mason-org/mason.nvim", lazy = true, config = true },
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		dependencies = "neovim/nvim-lspconfig",
 		event = "VeryLazy",
 		config = function()
@@ -19,13 +19,8 @@ return {
 					"ts_ls",
 					"unocss",
 					"vimls",
-					"volar",
+					"vue_ls",
 				},
-			})
-			require("mason-lspconfig").setup_handlers({
-				function(server)
-					require("lspconfig")[server].setup({})
-				end,
 			})
 		end,
 	},
