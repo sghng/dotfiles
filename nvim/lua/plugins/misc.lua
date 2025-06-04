@@ -33,15 +33,6 @@ return {
 	-- Language support
 
 	{
-		"github/copilot.vim",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		-- TODO: is this really needed?
-		config = function()
-			vim.g.copilot_filetypes = { ["*"] = true }
-		end,
-	},
-	{
 		-- TODO: evaluate this plugin
 		"ludovicchabant/vim-gutentags",
 		event = { "BufRead", "BufNewFile" },
@@ -55,7 +46,6 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 		},
 		event = "LspAttach",
-		cond = false,
 		opts = { lightbulb = { enable = false } }, -- takes up to much space
 	},
 	{
@@ -168,12 +158,15 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		cmd = "ToggleTerm",
-		-- FIXME: first invocation of key map doesn't work sometimes
-		keys = "<C-\\>",
-		---@module "toggleterm"
-		---@type ToggleTermConfig
-		---@diagnostic disable-next-line: missing-fields
-		opts = { open_mapping = [[<C-\>]] },
+		keys = {
+			{
+				"<C-\\>",
+				"<Cmd>ToggleTerm<CR>",
+				mode = { "n", "i", "v", "t" },
+				desc = "Toggle terminal",
+			},
+		},
+		config = true,
 	},
 	{
 		"sitiom/nvim-numbertoggle",
