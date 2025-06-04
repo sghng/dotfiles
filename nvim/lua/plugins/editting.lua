@@ -3,7 +3,6 @@
 ---@type LazySpec
 return {
 	{ "tpope/vim-unimpaired", event = { "BufRead", "BufNewFile" } },
-	{ "tpope/vim-commentary", event = { "BufRead", "BufNewFile" } },
 	{
 		-- sets shiftwidth expandtab heuristically
 		"tpope/vim-sleuth",
@@ -30,21 +29,42 @@ return {
 			vim.g.undotree_WindowLayout = 2
 		end,
 	},
-	-- TODO: need to compare more align plugins
-	{ "echasnovski/mini.align", opts = {} },
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = { check_ts = true, fast_wrap = {} },
+	},
 	{
 		"windwp/nvim-ts-autotag",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		event = function()
 			local ft = { "astro", "html", "jsx", "md", "tsx", "vue", "xml" }
-			-- TODO: type annotation wants this to be an array, create issue
 			return { "InsertEnter *.{" .. table.concat(ft, ",") .. "}" }
 		end,
 		opts = {}, -- required
 	},
+	-- TODO: need to compare more align plugins
+	{ "echasnovski/mini.align", opts = {} },
+	{ "echasnovski/mini.cursorword", opts = {} },
 	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = { check_ts = true, fast_wrap = {} },
+		"numToStr/Comment.nvim",
+		dependencies = {
+			"JoosepAlviste/nvim-ts-context-commentstring",
+			---@type ts_context_commentstring.Config
+			-- auto cmd must be disabled for integration with comment plugins
+			opts = { enable_autocmd = false },
+		},
+		event = { "BufRead", "BufNewFile" },
+		config = function()
+			require("Comment").setup(
+				---@module "Comment"
+				---@type CommentConfig
+				---@diagnostic disable-next-line: missing-fields
+				{
+					-- Must be dynamically configured, hook required for JSX
+					pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+				}
+			)
+		end,
 	},
 }
