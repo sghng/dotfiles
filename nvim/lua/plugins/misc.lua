@@ -178,4 +178,13 @@ return {
 	},
 	{ "echasnovski/mini.animate", cond = not vim.g.neovide, opts = {} },
 	"Bekaboo/deadcolumn.nvim",
+	{
+		"ellisonleao/dotenv.nvim",
+		lazy = false,
+		cmd = { "Dotenv", "DotenvGet" },
+		config = function()
+			require("dotenv").setup()
+			vim.cmd("Dotenv ~/.env")
+		end,
+	},
 }
