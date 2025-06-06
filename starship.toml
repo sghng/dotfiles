@@ -36,7 +36,7 @@ $line_break $shell
 
 [os]
 disabled = false
-format   = "$symbol"
+format = "$symbol"
 
 [os.symbols]
 Macos = " "
@@ -51,40 +51,40 @@ format = "$indicator"
 format = "$user"
 
 [directory]
-format            = "$path"
+format = "$path"
 truncation_length = 5
 truncation_symbol = "…/"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
 "Downloads" = " "
-"Music"     = "󰝚 "
-"Pictures"  = " "
-"~/dev"     = "󰲋 "
+"Music" = "󰝚 "
+"Pictures" = " "
+"~/dev" = "󰲋 "
 
 [status]
-disabled   = false
+disabled = false
 pipestatus = true
-symbol     = "✘" # nf-fa-xmark
+symbol = "✘"                 # nf-fa-xmark
 not_executable_symbol = " "
 not_found_symbol = " "
 sigint_symbol = " "
 map_symbol = true
-format     = "$symbol$status"
+format = "$symbol$status"
 
 [jobs]
 symbol = " "
 format = "$symbol($number)"
 
 [time]
-disabled    = false
+disabled = false
 time_format = "%R"
-format      = " $time"
+format = " $time"
 
 [cmd_duration]
-min_time          = 1
+min_time = 1
 show_milliseconds = true
-format            = "$duration"
+format = "$duration"
 
 [git_branch]
 symbol = " "
@@ -109,7 +109,7 @@ format = "$symbol($version) "
 
 [python]
 symbol = " "
-format = "$symbol($version) "
+format = "${symbol}${pyenv_prefix}(${version} )(\\($virtualenv\\) )"
 
 # ENVIRONMENTS
 
