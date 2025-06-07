@@ -16,12 +16,6 @@ return {
 		},
 	},
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		opts = {}, -- required
-	},
-	{
 		"fang2hou/blink-copilot",
 		dependencies = {
 			"zbirenbaum/copilot.lua",

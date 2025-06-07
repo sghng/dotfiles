@@ -10,7 +10,7 @@ return {
 			"jbyuki/nabla.nvim",
 		},
 		cmd = "RenderMarkdown",
-		ft = { "markdown", "Avante", "AvanteInput" },
+		ft = { "markdown", "codecompanion"},
 		---@module "render-markdown"
 		---@type render.md.Config
 		---@diagnostic disable: missing-fields
@@ -94,6 +94,7 @@ return {
 		config = function()
 			require("diagram").setup({
 				integrations = { require("diagram.integrations.markdown") },
+				renderer_options = {},
 			})
 		end,
 	},
