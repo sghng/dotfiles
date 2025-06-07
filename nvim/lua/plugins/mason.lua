@@ -4,30 +4,32 @@ return {
 	{
 		"mason-org/mason-lspconfig.nvim",
 		dependencies = "neovim/nvim-lspconfig",
-		event = "VeryLazy",
-		config = function()
-			require("mason-lspconfig").setup(
-				---@type MasonLspconfigSettings
-				{
-					ensure_installed = {
-						"air", -- R LSP and Formatter
-						"cssls",
-						"html",
-						"jsonls",
-						"lemminx", -- xml
-						"lua_ls",
-						"marksman",
-						"ruff",
-						"tailwindcss",
-						"taplo", -- toml
-						"ts_ls",
-						"unocss",
-						"vimls",
-						"vue_ls",
-					},
-				}
-			)
-
+		event = { "BufRead", "BufNewFile" },
+		---@type MasonLspconfigSettings
+		opts = {
+			ensure_installed = {
+				"air", -- R
+				"cssls",
+				"html",
+				"jsonls",
+				"lemminx", -- XML
+				"lua_ls",
+				"marksman",
+				"pyrefly", -- Python, LSP
+				"ruff", -- Python, formatter/linter
+				"tailwindcss",
+				"taplo", -- TOML
+				"ts_ls",
+				"ty", -- Python, type checker
+				"unocss",
+				"vimls",
+				"vue_ls",
+			},
+			-- NOTE: `ty` is currently unstable
+			automatic_enable = { exclude = { "ty" } },
+		},
+		config = function(_, opts)
+			require("mason-lspconfig").setup(opts)
 			--- Additional configuration for Vue.js support
 			local vue_ls_path = vim.fn.expand("$MASON/packages/vue-language-server")
 			local vue_plugin_path = vue_ls_path .. "/node_modules/@vue/language-server"
