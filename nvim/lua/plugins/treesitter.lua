@@ -17,6 +17,7 @@ return {
 					node_decremental = "grm",
 				},
 			},
+			ensure_installed = { "regex" },
 		},
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)

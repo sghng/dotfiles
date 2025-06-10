@@ -52,7 +52,7 @@ return {
 		},
 	},
 	config = function()
-		for _, e in ipairs({ "fzf", "lazy_plugins" }) do
+		for _, e in ipairs({ "fzf", "lazy_plugins", "noice" }) do
 			require("telescope").load_extension(e)
 		end
 	end,

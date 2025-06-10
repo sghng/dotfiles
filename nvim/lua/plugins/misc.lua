@@ -33,11 +33,6 @@ return {
 	-- Language support
 
 	{
-		-- TODO: evaluate this plugin
-		"ludovicchabant/vim-gutentags",
-		event = { "BufRead", "BufNewFile" },
-	},
-	{
 		-- provides context breadcrumbs, symbols outline, etc
 		-- TODO: better key binding since this is helpful
 		"nvimdev/lspsaga.nvim",
@@ -73,6 +68,11 @@ return {
 		"folke/trouble.nvim",
 		cmd = "Trouble",
 		keys = {
+			{
+				"<Leader>xp",
+				vim.diagnostic.open_float,
+				desc = "Diagnostics [p]opup",
+			},
 			{
 				"<Leader>xx",
 				"<Cmd>Trouble diagnostics toggle<CR>",
@@ -111,9 +111,10 @@ return {
 
 	{ "tpope/vim-sensible", event = "VimEnter" },
 	{
-		-- TODO: figure this out
-		"easymotion/vim-easymotion",
-		keys = { "<Leader><Leader>" },
+		"ggandor/leap.nvim",
+		config = function()
+			require("leap").set_default_mappings()
+		end,
 	},
 	{
 		-- TODO: doesn't work in terminal window, create an issue
@@ -176,7 +177,12 @@ return {
 			vim.opt.relativenumber = true
 		end,
 	},
-	{ "echasnovski/mini.animate", cond = not vim.g.neovide, opts = {} },
+	{
+		"echasnovski/mini.animate",
+		cond = not vim.g.neovide,
+		-- TODO: window animations conflict with neo-tree, file issues
+		opts = { open = { enable = false }, close = { enable = false } },
+	},
 	"Bekaboo/deadcolumn.nvim",
 	{
 		"ellisonleao/dotenv.nvim",
@@ -186,5 +192,34 @@ return {
 			require("dotenv").setup()
 			vim.cmd("Dotenv ~/.env")
 		end,
+	},
+	{
+		"folke/noice.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
+		event = "VeryLazy",
+		---@module "noice"
+		---@type NoiceConfig
+		opts = {
+			views = {
+				cmdline_popup = { position = { row = -5 } },
+				mini = {
+					border = { style = "rounded" },
+					position = { row = -2 },
+				},
+			},
+			lsp = {
+				-- override markdown rendering to enable treesitter highlighting
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+				},
+				hover = { silent = true },
+			},
+			-- you can enable a preset for easier configuration
+			presets = {
+				long_message_to_split = true, -- long messages will be sent to a split
+				lsp_doc_border = true,
+			},
+		},
 	},
 }
