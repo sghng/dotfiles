@@ -14,18 +14,23 @@ set tabstop=4
 
 let g:python3_host_prog = "~/venvs/nvim/bin/python"
 
+" mappings
+
+nnoremap <Leader>bd :bdelete<CR>
+
 " Neovide configs
 
 if !exists("g:neovide")
 	finish
 endif
 
-set guifont=MonoLisaVariable\ Nerd\ Font:h18
+let g:neovide_opacity = 0.8
+let g:neovide_window_blurred = v:true
+
 " needs to be loaded after gruvbox-material theme
 hi Normal guibg=#252423 " adapted from gruvbox material bg0
+
 " paste from system clipboard, somehow not working in Neovide
 nnoremap <D-v>      "+p
 vnoremap <D-v>      "+p
 inoremap <D-v>  <C-r>+
-cnoremap <D-v>  <C-r>+
-tnoremap <D-v>  <C-r>+
