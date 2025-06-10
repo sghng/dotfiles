@@ -10,28 +10,31 @@ return {
 			-- "s1n7ax/nvim-window-picker", -- delay until needed
 		},
 		-- load eagerly if directory is opened
-		lazy = vim.fn.argc() == 0 or vim.fn.filereadable(vim.fn.argv(0)) == 1,
+		lazy = vim.fn.isdirectory(vim.fn.argv(0) --[[@as string]]) == 0,
+		priority = 1000,
 		-- we want :e to always work, which can't be specified with cmd
 		event = "VeryLazy",
+		-- we want :e to always work
 		keys = {
 			-- Neotree recommended key mappings
 			{
+				-- FIXME: backslash is also used as local leader
 				"\\", -- Neotree recommends / by default, which is used for searching
 				"<Cmd>Neotree toggle current reveal_force_cwd<CR>",
 				desc = "Toggle Neotree (current dir)",
 			},
 			{
 				"|",
-				"<Cmd>Neotree reveal left<CR>",
-				desc = "Reveal file in Neotree",
+				"<Cmd>Neotree toggle left<CR>",
+				desc = "Reveal file in Neotree sidebar",
 			},
 			{
-				"gd",
+				"<Leader>r", -- gd conflicts with go to definition
 				"<Cmd>Neotree float reveal reveal_force_cwd<CR>",
-				desc = "Show file in floating Neotree",
+				desc = "[r]eveal file in Neotree popup",
 			},
 			{
-				"<Leader>b",
+				"<Leader>bb",
 				"<Cmd>Neotree toggle show buffers right<CR>",
 				desc = "Toggle [b]uffer explorer",
 			},
