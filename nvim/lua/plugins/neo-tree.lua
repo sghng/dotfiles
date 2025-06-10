@@ -18,10 +18,9 @@ return {
 		keys = {
 			-- Neotree recommended key mappings
 			{
-				-- FIXME: backslash is also used as local leader
-				"\\", -- Neotree recommends / by default, which is used for searching
+				"<Leader>d", -- Neotree recommends / by default, which is used for searching
 				"<Cmd>Neotree toggle current reveal_force_cwd<CR>",
-				desc = "Toggle Neotree (current dir)",
+				desc = "Open current [d]irectory with Neotree",
 			},
 			{
 				"|",
