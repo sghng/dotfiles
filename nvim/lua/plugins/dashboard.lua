@@ -3,23 +3,29 @@ return {
 	"nvimdev/dashboard-nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	lazy = vim.fn.argc() ~= 0, -- load lazily if opening a dir entry
+	priority = 1000,
 	cmd = "Dashboard",
 	init = function()
-		-- TODO: somehow the default start screen is flashed
-		vim.opt.shortmess:append("I") -- disables the msg as a workaround
+		vim.opt.shortmess:append("I") -- disables msg to prevent flashing
 	end,
 	opts = {
 		hide = { statusline = true },
 		config = {
 			week_header = { enable = true },
-			footer = { "", " 尽心，知性，知天" },
+			footer = { "", " 尽心，知性，知天 " },
+			project = {
+				action = function(path)
+					vim.fn.chdir(path)
+					vim.cmd("Telescope find_files")
+				end,
+			},
 			shortcut = {
 				{
 					key = "g",
 					icon = " ",
 					desc = "GitHub",
 					group = "@property",
-					action = "!open https://github.com/sghuang19/",
+					action = "!open https://github.com/sghng/",
 				},
 				{
 					icon = " ",
@@ -32,7 +38,7 @@ return {
 					icon = " ",
 					desc = "Dots",
 					group = "@label",
-					action = "e ~/dev/dotfiles",
+					action = "cd ~/dev/dotfiles | e .",
 					key = "d",
 				},
 				{
@@ -46,7 +52,7 @@ return {
 					icon = " ",
 					desc = "Obsidian",
 					group = "@attribute",
-					action = "e ~/obsidian",
+					action = "cd ~/obsidian | e",
 					key = "o",
 				},
 			},
