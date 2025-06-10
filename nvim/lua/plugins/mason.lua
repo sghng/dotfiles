@@ -54,6 +54,7 @@ return {
 			ensure_installed = {
 				--Linters
 				"cspell",
+				"eslint_d",
 				"markdownlint-cli2",
 				"stylua",
 				"vint", -- Vim script

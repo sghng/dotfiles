@@ -14,7 +14,7 @@ return {
 			"CodeCompanionCmd",
 		},
 		keys = {
-			{ "<C-c>", "<Cmd>CodeCompanionActions<CR>", mode = { "n", "v" } },
+			{ "<C-a>", "<Cmd>CodeCompanionActions<CR>", mode = { "n", "v" } },
 			{
 				"<Leader>a",
 				"<Cmd>CodeCompanionChat Toggle<CR>",
@@ -33,6 +33,16 @@ return {
 			strategies = {
 				chat = { adapter = "anthropic" },
 				inline = { adapter = "anthropic" },
+			},
+			adapters = {
+				anthropic = function()
+					return require("codecompanion.adapters").extend("anthropic", {
+						env = {
+							api_key = "cmd:op read op://dev/anthropic/adapta --no-newline",
+						},
+						schema = { thinking = nil },
+					})
+				end,
 			},
 		},
 	},

@@ -11,7 +11,7 @@ return {
 				keyword = { range = "full" },
 				documentation = { auto_show = true, auto_show_delay_ms = 500 },
 			},
-			signature = { enable = true },
+			signature = { enabled = true },
 			sources = { default = { "lsp", "path", "snippets", "buffer" } },
 		},
 	},

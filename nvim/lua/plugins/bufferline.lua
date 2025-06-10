@@ -34,7 +34,6 @@ return {
 				local icon = level:match("error") and " " or " "
 				return " " .. icon .. count
 			end,
-			numbers = "ordinal",
 			offsets = { {
 				filetype = "neo-tree",
 				highlight = "Directory",

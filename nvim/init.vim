@@ -1,3 +1,5 @@
+" leader keys set before Lazy to avoid confusions
+let mapleader=" "
 " some plugins expect this lazy config path specifically
 lua require("config.lazy")
 
