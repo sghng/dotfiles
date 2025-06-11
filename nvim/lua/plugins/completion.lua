@@ -4,7 +4,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "*", -- needed for fuzzy binary download
-		dependencies = "rafamadriz/friendly-snippets",
+		dependencies = "L3MON4D3/LuaSnip",
 		event = "InsertEnter",
 		cmd = "BlinkCmp",
 		---@type blink.cmp.Config
@@ -14,6 +14,7 @@ return {
 				documentation = { auto_show = true, auto_show_delay_ms = 500 },
 			},
 			signature = { enabled = true },
+			snippets = { preset = "luasnip" },
 			sources = { default = { "lsp", "path", "snippets", "buffer", "cmdline", "omni" } },
 			term = { enabled = true },
 		},
@@ -42,5 +43,14 @@ return {
 			},
 		},
 		event = "InsertEnter",
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = "rafamadriz/friendly-snippets",
+		build = "make install_jsregexp",
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip").setup()
+		end,
 	},
 }
