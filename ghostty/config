@@ -6,9 +6,9 @@ font-thicken = true
 font-thicken-strength = 100
 background-opacity = 0.8
 background-blur = 30
-# gruvbox material has a minor issue in ghost text color
+# FIXME: gruvbox material has a minor issue in ghost text color
 # theme = gruvbox-material
 theme = GruvboxDark
-macos-titlebar-style = tabs
+macos-titlebar-style = transparent
 macos-icon = microchip
 title = " "

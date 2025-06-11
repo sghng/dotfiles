@@ -18,7 +18,7 @@ let g:python3_host_prog = "~/venvs/nvim/bin/python"
 
 " mappings
 
-nnoremap <Leader>bd :bdelete<CR>
+nnoremap <silent><Leader>bd :bdelete<CR>
 
 " Neovide configs
 
@@ -28,6 +28,7 @@ endif
 
 let g:neovide_opacity = 0.8
 let g:neovide_window_blurred = v:true
+let g:neovide_cursor_vfx_mode = "sonicboom"
 
 " needs to be loaded after gruvbox-material theme
 hi Normal guibg=#252423 " adapted from gruvbox material bg0

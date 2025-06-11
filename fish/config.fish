@@ -6,7 +6,6 @@ set fish_greeting ""
 
 # PATH
 fish_add_path /opt/homebrew/bin
-fish_add_path /opt/homebrew/anaconda3/bin
 fish_add_path /opt/homebrew/opt/ruby/bin
 fish_add_path /opt/homebrew/lib/ruby/gems/3.4.0/bin
 fish_add_path $HOME/.cargo/bin

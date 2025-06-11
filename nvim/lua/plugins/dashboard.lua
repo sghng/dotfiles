@@ -52,7 +52,7 @@ return {
 					icon = " ",
 					desc = "Obsidian",
 					group = "@attribute",
-					action = "cd ~/obsidian | e",
+					action = "cd ~/obsidian | e .",
 					key = "o",
 				},
 			},

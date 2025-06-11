@@ -10,8 +10,6 @@ macos-use-unified-titlebar = true
 macos-use-shadow = true
 
 [renderer]
-filters = [
-  "/Users/sghuang/.config/rio/slang-shaders/crt/newpixie-crt.slangp"
-]
+filters = ["/Users/sghuang/.config/rio/slang-shaders/crt/newpixie-crt.slangp"]
 
 theme = "gruvbox"
