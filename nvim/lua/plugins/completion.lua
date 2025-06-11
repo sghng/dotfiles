@@ -1,10 +1,12 @@
 ---@type LazySpec
 return {
+	{ "saghen/blink.compat", opts = {} },
 	{
 		"saghen/blink.cmp",
 		version = "*", -- needed for fuzzy binary download
 		dependencies = "rafamadriz/friendly-snippets",
 		event = "InsertEnter",
+		cmd = "BlinkCmp",
 		---@type blink.cmp.Config
 		opts = {
 			completion = {
@@ -12,7 +14,8 @@ return {
 				documentation = { auto_show = true, auto_show_delay_ms = 500 },
 			},
 			signature = { enabled = true },
-			sources = { default = { "lsp", "path", "snippets", "buffer" } },
+			sources = { default = { "lsp", "path", "snippets", "buffer", "cmdline", "omni" } },
+			term = { enabled = true },
 		},
 	},
 	{
