@@ -1,10 +1,12 @@
 [general]
+import = ["~/.config/alacritty/gruvbox.toml"]
 live_config_reload = true
 
 [window]
 dynamic_padding = true
-decorations = "Buttonless"
-opacity = 0.8
+decorations = "Full"
+decorations_theme_variant = "Dark"
+opacity = 0.6
 blur = true
 dynamic_title = false
 
