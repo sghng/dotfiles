@@ -16,13 +16,14 @@ format = """
                             []( bg:color_aqua   fg:color_yellow )\
 [( $git_branch( $git_status) )]( bg:color_aqua   fg:color_fg0    )\
                             []( bg:color_blue   fg:color_aqua   )\
- [( $bun$c$nodejs$java$python)]( bg:color_blue   fg:color_fg0    )\
+[( $bun$c$nodejs$java$python$lua$rlang\
+                             )]( bg:color_blue   fg:color_fg0    )\
                             []( bg:color_bg3    fg:color_blue   )\
                 [$conda$docker]( bg:color_bg3    fg:color_fg0    )\
                             []( bg:color_green  fg:color_bg3    )\
                     [( $jobs )]( bg:color_green  fg:color_fg0    )\
                             [](                 fg:color_green  )\
-                          $fill                                   \
+$fill\
                             [](                 fg:color_red    )\
                   [( $status )]( bg:color_red    fg:color_fg0    )\
                             []( bg:color_red    fg:color_purple )\
@@ -103,6 +104,10 @@ format = "$symbol($version) "
 symbol = " "
 format = "$symbol($version) "
 
+[java]
+symbol = " "
+format = "$symbol($version) "
+
 [c]
 symbol = " "
 format = "$symbol($version) "
@@ -110,6 +115,18 @@ format = "$symbol($version) "
 [python]
 symbol = " "
 format = "${symbol}${pyenv_prefix}(${version} )(\\($virtualenv\\) )"
+
+[rlang]
+symbol = " "
+format = "$symbol($version) "
+
+[lua]
+symbol = " "
+format = "$symbol($version) "
+
+
+# [r]
+# format = "[$symbol($version )]($style)"
 
 # ENVIRONMENTS
 
@@ -125,23 +142,23 @@ symbol = " "
 disabled = false
 
 [character]
-success_symbol            = "[](bold fg:color_green )"
-error_symbol              = "[](bold fg:color_red   )"
-vimcmd_symbol             = "[](bold fg:color_green )"
+success_symbol = "[](bold fg:color_green )"
+error_symbol = "[](bold fg:color_red   )"
+vimcmd_symbol = "[](bold fg:color_green )"
 vimcmd_replace_one_symbol = "[](bold fg:color_purple)"
-vimcmd_replace_symbol     = "[](bold fg:color_purple)"
-vimcmd_visual_symbol      = "[](bold fg:color_yellow)"
+vimcmd_replace_symbol = "[](bold fg:color_purple)"
+vimcmd_visual_symbol = "[](bold fg:color_yellow)"
 
 # PALLETE
 
 [palettes.gruvbox_dark]
-color_fg0    = "#fbf1c7"
-color_bg1    = "#3c3836"
-color_bg3    = "#665c54"
-color_blue   = "#458588"
-color_aqua   = "#689d6a"
-color_green  = "#98971a"
+color_fg0 = "#fbf1c7"
+color_bg1 = "#3c3836"
+color_bg3 = "#665c54"
+color_blue = "#458588"
+color_aqua = "#689d6a"
+color_green = "#98971a"
 color_orange = "#d65d0e"
 color_purple = "#b16286"
-color_red    = "#cc241d"
+color_red = "#cc241d"
 color_yellow = "#d79921"
