@@ -10,13 +10,13 @@ return {
 			"jbyuki/nabla.nvim",
 		},
 		cmd = "RenderMarkdown",
-		ft = { "markdown", "codecompanion"},
+		ft = { "markdown", "codecompanion" },
 		---@module "render-markdown"
 		---@type render.md.Config
 		---@diagnostic disable: missing-fields
 		opts = {
 			render_modes = true,
-			file_types = { "markdown", "Avante", "AvanteInput" },
+			file_types = { "markdown", "codecompanion" },
 			completions = { lsp = { enabled = true } },
 			win_options = { conceallevel = { rendered = 2 } },
 			-- handover math rendering to nabla
@@ -92,32 +92,38 @@ return {
 		ft = "markdown",
 		cond = false, -- FIXME: currently not working due to a bug
 		config = function()
-			require("diagram").setup({
-				integrations = { require("diagram.integrations.markdown") },
-				renderer_options = {},
+			local diagram = require("diagram")
+			diagram.setup({
+				integrations = { diagram.integrations.markdown },
+				renderer_options = { mermaid = { theme = "forest" } },
 			})
 		end,
 	},
 	{
 		-- this plugin is oriented for Zettelkasten/all-in-one method
-		"epwalsh/obsidian.nvim",
+		"obsidian-nvim/obsidian.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-telescope/telescope.nvim",
 		},
-		cmd = {
-			"ObsidianCheck",
-			"ObsidianDebug",
-			"ObsidianNew",
-			"ObsidianNewFromTemplate",
-			"ObsidianQuickSwitch",
+		cmd = "Obsidian",
+		keys = {
+			{
+				"<Leader>oo",
+				"<Cmd>Obsidian open<CR>",
+				desc = "[o]pen note in [o]bsidian",
+			},
+			{
+				"gf",
+				function()
+					return require("obsidian").util.gf_passthrough()
+				end,
+				ft = "markdown",
+				expr = true,
+				desc = "[g]o to [f]ile under cursor (Obsidian)",
+			},
 		},
-		keys = { {
-			"<Leader>oo",
-			"<Cmd>ObsidianOpen<CR>",
-			desc = "[o]pen note in [o]bsidian",
-		} },
 		event = { "BufReadPost " .. OBSIDIAN_VAULT .. "/*.md" },
 		---@module "obsidian"
 		---@type obsidian.config.ClientOpts
@@ -125,17 +131,17 @@ return {
 		opts = {
 			ui = { enable = false }, -- use render-markdown instead
 			workspaces = { { name = "TECH", path = OBSIDIAN_VAULT } },
+			-- FIXME: completion not working
+			completion = { blink = true },
 			disable_frontmatter = true,
-			open_app_foreground = true,
-			picker = { "telescope.nvim" },
+			picker = { name = "telescope.nvim" },
 			mappings = {}, -- disable default mappings
+			open = {
+				func = function(uri)
+					vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
+				end,
+			},
 		},
 		---@diagnostic enable: missing-fields
-	},
-	{
-		-- TODO: understand the keymaps
-		-- TODO: integrate with Blink
-		"jakewvincent/mkdnflow.nvim",
-		ft = "markdown",
 	},
 }
