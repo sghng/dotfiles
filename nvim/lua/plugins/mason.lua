@@ -22,6 +22,8 @@ return {
 				"ts_ls",
 				"ty", -- Python, type checker
 				"unocss",
+				-- FIXME: vale is too noisy, find alternatives
+				-- "vale_ls", -- LS for proses
 				"vimls",
 				"vue_ls",
 			},

@@ -1,8 +1,9 @@
 local linters_by_ft = {
 	fish = { "fish" },
 	bash = { "bash" },
-	vint = { "vint" },
-	markdown = { "markdownlint-cli2" },
+	vim = { "vint" },
+	markdown = { "markdownlint-cli2", "cspell" },
+	text = { "vale" },
 	["*"] = { "cspell" },
 }
 
@@ -18,11 +19,16 @@ return {
 		local lint = require("lint")
 		-- certain linters are activated along with language server
 		lint.linters_by_ft = linters_by_ft
-		vim.api.nvim_create_autocmd({ "InsertLeave", "BufReadPost" }, {
+		--- calling the linters with debouncing, inspired by LazyVim
+		local timer = vim.uv.new_timer()
+		vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufWritePost", "BufReadPost" }, {
 			group = vim.api.nvim_create_augroup("Linting", { clear = true }),
-			-- FIXME: somehow this is not called on time
 			callback = function()
-				lint.try_lint()
+				timer:stop()
+				timer:start(500, 0, function()
+					timer:stop()
+					vim.schedule(lint.try_lint)
+				end)
 			end,
 		})
 		vim.diagnostic.config({ virtual_text = true })
