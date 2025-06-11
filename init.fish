@@ -11,7 +11,7 @@ for c in ghostty kitty alacritty rio nvim neovide starship.toml
 end
 
 set -l VALE_CONFIG_PATH "~/Library/Application Support/vale/"
-cd VALE_CONFIG_PATH
+cd $VALE_CONFIG_PATH
 ln -sf $d/.vale.ini .
 vale sync # must be executed inside VALE_CONFIG_PATH
 
