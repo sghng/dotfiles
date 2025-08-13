@@ -9,16 +9,11 @@ return {
 			-- "3rd/image.nvim",  -- delay until needed
 			-- "s1n7ax/nvim-window-picker", -- delay until needed
 		},
-		-- load eagerly if directory is opened
-		lazy = vim.fn.isdirectory(vim.fn.argv(0) --[[@as string]]) == 0,
-		priority = 1000,
-		-- we want :e to always work, which can't be specified with cmd
-		event = "VeryLazy",
-		-- we want :e to always work
+		lazy = false, -- neo-tree lazy loads itself
 		keys = {
 			-- Neotree recommended key mappings
 			{
-				"<Leader>d", -- Neotree recommends / by default, which is used for searching
+				"<Leader>\\", -- Neotree recommends / by default, which is used for searching
 				"<Cmd>Neotree toggle current reveal_force_cwd<CR>",
 				desc = "Open current [d]irectory with Neotree",
 			},
@@ -46,7 +41,11 @@ return {
 		---@module "neo-tree"
 		---@type neotree.Config
 		opts = {
-			filesystem = { hijack_netrw_behavior = "open_current" },
+			filesystem = {
+				bind_to_cwd = true,
+				hijack_netrw_behavior = "open_current",
+				filtered_items = { hide_dotfiles = false },
+			},
 			window = {
 				width = 25,
 				mappings = {
