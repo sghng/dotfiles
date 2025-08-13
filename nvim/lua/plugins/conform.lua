@@ -2,7 +2,7 @@
 local formatters_by_ft = {
 	fish = { "fish_indent" },
 	lua = { "stylua" },
-	markdown = { "markdownlint-cli2", "prettierd" },
+	markdown = { "prettierd" },
 	python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
 	r = { "air" },
 	toml = { "taplo" },
