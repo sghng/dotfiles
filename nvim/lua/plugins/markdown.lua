@@ -10,28 +10,48 @@ return {
 			"jbyuki/nabla.nvim",
 		},
 		cmd = "RenderMarkdown",
+		keys = {
+			{
+				"<LocalLeader>r",
+				"<Cmd>RenderMarkdown toggle<CR>",
+				desc = "[r]ender Markdown",
+				ft = "markdown",
+			},
+		},
 		ft = { "markdown", "codecompanion" },
 		---@module "render-markdown"
 		---@type render.md.Config
 		---@diagnostic disable: missing-fields
 		opts = {
-			render_modes = true,
 			file_types = { "markdown", "codecompanion" },
-			completions = { lsp = { enabled = true } },
+			completions = { blink = { enabled = true } },
 			win_options = { conceallevel = { rendered = 2 } },
 			-- handover math rendering to nabla
-			latex = { enabled = false },
+			-- TODO: nabla inline rendering doesn't look well, report
+			-- latex = { enabled = false },
 			on = {
 				attach = function()
 					-- must be called after render-markdown is attached
-					require("nabla").enable_virt({ autogen = true })
+					-- require("nabla").enable_virt({ autogen = true })
 				end,
 			},
+			-- code border doesn't work with transparent background
+			code = { highlight_border = false },
+			inline_highlight = { highlight = "Cursor" }, -- HL Group required
 		},
 		---@diagnostic enable: missing-fields
-		--TODO: blink.cmp integration
 	},
-	{ "ellisonleao/glow.nvim", cmd = "Glow", opts = {} },
+	{
+		"ellisonleao/glow.nvim",
+		cmd = "Glow",
+		keys = { {
+			"<LocalLeader>g",
+			"<Cmd>Glow<CR>",
+			desc = "[G]low preview",
+			ft = "markdown",
+		} },
+		opts = {},
+	},
 	{
 		"iamcco/markdown-preview.nvim",
 		build = function()
@@ -40,62 +60,62 @@ return {
 		ft = "markdown", -- cannot load lazier since the commands are not global
 		keys = {
 			{
-				"<C-s>",
+				"<LocalLeader>p",
 				"<Plug>MarkdownPreview",
-				desc = "[s]tart Markdown preview",
-			},
-			{
-				"<M-s>",
-				"<Plug>MarkdownPreviewStop",
-				desc = "[s]top Markdown preview",
-			},
-			{
-				"<C-p>",
-				"<Plug>MarkdownPreviewToggle",
 				desc = "Toggle Markdown [p]review",
 			},
 		},
 	},
-	-- { "Thiago4532/mdmath.nvim", build = "brew install librsvg" },
 	{
 		"jbyuki/nabla.nvim",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		build = function()
 			---@diagnostic disable-next-line: missing-fields
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = "latex",
-			})
+			require("nvim-treesitter.configs").setup({ ensure_installed = "latex" })
 		end,
 		keys = {
 			{
-				"<Leader>m",
+				"<LocalLeader>m",
 				function()
-					require("nabla").popup()
+					require("nabla").popup({ border = "rounded" })
 				end,
 				desc = "Show Nabla [m]ath preview popup",
+				ft = "markdown",
 			},
 		},
-		cmd = "NablaToggleVirt",
-		init = function()
-			vim.api.nvim_create_user_command("NablaToggleVirt", function()
-				local nabla = require("nabla")
-				nabla.toggle_virt()
-				print("Nabla " .. (nabla.is_virt_enabled() and "enabled" or "disabled"))
-			end, { nargs = 0 })
-		end,
 	},
 	{
 		-- mermaid rendering
 		"3rd/diagram.nvim",
-		build = "bun install -g @mermaid-js/mermaid-cli",
+		build = "brew install mermaid-cli",
+		cond = not vim.g.neovide, -- image not supported in Neovide
 		dependencies = "3rd/image.nvim",
 		ft = "markdown",
-		cond = false, -- FIXME: currently not working due to a bug
+		keys = {
+			{
+				"<Localleader>d",
+				function()
+					require("diagram").show_diagram_hover()
+				end,
+				mode = "n",
+				ft = { "markdown", "codecompanion" },
+				desc = "Show [d]iagram",
+			},
+		},
 		config = function()
-			local diagram = require("diagram")
-			diagram.setup({
-				integrations = { diagram.integrations.markdown },
-				renderer_options = { mermaid = { theme = "forest" } },
+			require("diagram").setup({
+				integrations = { require("diagram.integrations.markdown") },
+				-- NOTE: setting this ensures that diagram doesn't persist across
+				-- tmux windows, but it has unintended side effects.
+				-- events = { clear_buffer = { "FocusLost" } },
+				events = { render_buffer = {} }, -- effectively disables rendering
+				renderer_options = {
+					mermaid = {
+						theme = "dark",
+						background = "transparent",
+						scale = 3,
+					},
+				},
 			})
 		end,
 	},
@@ -110,19 +130,12 @@ return {
 		cmd = "Obsidian",
 		keys = {
 			{
-				"<Leader>oo",
+				"<LocalLeader>oo",
 				"<Cmd>Obsidian open<CR>",
+				ft = "markdown",
 				desc = "[o]pen note in [o]bsidian",
 			},
-			{
-				"gf",
-				function()
-					return require("obsidian").util.gf_passthrough()
-				end,
-				ft = "markdown",
-				expr = true,
-				desc = "[g]o to [f]ile under cursor (Obsidian)",
-			},
+			-- smart_action bound to <CR> by default
 		},
 		event = { "BufReadPost " .. OBSIDIAN_VAULT .. "/*.md" },
 		---@module "obsidian"
@@ -133,9 +146,8 @@ return {
 			workspaces = { { name = "TECH", path = OBSIDIAN_VAULT } },
 			-- FIXME: completion not working
 			completion = { blink = true },
-			disable_frontmatter = true,
+			disable_frontmatter = true, -- do not mess with front matter
 			picker = { name = "telescope.nvim" },
-			mappings = {}, -- disable default mappings
 			open = {
 				func = function(uri)
 					vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
