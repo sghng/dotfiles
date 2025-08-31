@@ -4,7 +4,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "*", -- needed for fuzzy binary download
-		dependencies = "L3MON4D3/LuaSnip",
+		dependencies = { "L3MON4D3/LuaSnip", "obsidian-nvim/obsidian.nvim" },
 		event = "InsertEnter",
 		cmd = "BlinkCmp",
 		---@type blink.cmp.Config
@@ -15,8 +15,11 @@ return {
 			},
 			signature = { enabled = true },
 			snippets = { preset = "luasnip" },
-			sources = { default = { "lsp", "path", "snippets", "buffer", "cmdline", "omni" } },
-			term = { enabled = true },
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer", "omni", "obsidian" },
+				per_filetype = { markdown = { "obsidian", "obsidian_tags", "obsidian_new" } },
+			},
+			term = { enabled = true }, -- term completion disabled by default
 		},
 	},
 	{

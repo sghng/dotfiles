@@ -27,8 +27,8 @@ return {
 			completions = { blink = { enabled = true } },
 			win_options = { conceallevel = { rendered = 2 } },
 			-- handover math rendering to nabla
-			-- TODO: nabla inline rendering doesn't look well, report
 			-- latex = { enabled = false },
+			-- TODO: nabla inline rendering doesn't look well, report
 			on = {
 				attach = function()
 					-- must be called after render-markdown is attached
@@ -63,6 +63,7 @@ return {
 				"<LocalLeader>p",
 				"<Plug>MarkdownPreview",
 				desc = "Toggle Markdown [p]review",
+				ft = "markdown",
 			},
 		},
 	},
@@ -120,7 +121,6 @@ return {
 		end,
 	},
 	{
-		-- this plugin is oriented for Zettelkasten/all-in-one method
 		"obsidian-nvim/obsidian.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -144,7 +144,6 @@ return {
 		opts = {
 			ui = { enable = false }, -- use render-markdown instead
 			workspaces = { { name = "TECH", path = OBSIDIAN_VAULT } },
-			-- FIXME: completion not working
 			completion = { blink = true },
 			disable_frontmatter = true, -- do not mess with front matter
 			picker = { name = "telescope.nvim" },
