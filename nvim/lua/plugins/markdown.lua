@@ -18,13 +18,13 @@ return {
 				ft = "markdown",
 			},
 		},
-		ft = { "markdown", "codecompanion" },
+		ft = { "markdown", "codecompanion", "quarto" },
 		---@module "render-markdown"
 		---@type render.md.Config
 		---@diagnostic disable: missing-fields
 		opts = {
-			file_types = { "markdown", "codecompanion" },
-			completions = { blink = { enabled = true } },
+			file_types = { "markdown", "codecompanion", "quarto" },
+			completions = { lsp = { enabled = true } },
 			win_options = { conceallevel = { rendered = 2 } },
 			-- handover math rendering to nabla
 			-- latex = { enabled = false },
@@ -81,7 +81,7 @@ return {
 					require("nabla").popup({ border = "rounded" })
 				end,
 				desc = "Show Nabla [m]ath preview popup",
-				ft = "markdown",
+				ft = { "markdown", "quarto" },
 			},
 		},
 	},
@@ -99,7 +99,7 @@ return {
 					require("diagram").show_diagram_hover()
 				end,
 				mode = "n",
-				ft = { "markdown", "codecompanion" },
+				ft = { "markdown", "codecompanion", "quarto" },
 				desc = "Show [d]iagram",
 			},
 		},
@@ -152,6 +152,7 @@ return {
 					vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
 				end,
 			},
+			legacy_commands = false,
 		},
 		---@diagnostic enable: missing-fields
 	},
