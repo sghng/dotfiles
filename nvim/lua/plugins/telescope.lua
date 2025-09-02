@@ -1,3 +1,24 @@
+local key_defs = {
+	-- key suffix, Telescope sub command, description
+	{ "b", "buffers", "[b]uffers" },
+	{ "c", "commands", "[c]ommands" },
+	{ "f", "find_files", "[f]iles" },
+	{ "g", "live_grep", "live [g]rep" },
+	{ "h", "help_tags", "[h]elp tags" },
+	{ "k", "keymaps", "[k]eymaps" },
+	{ "s", "symbols", "[s]ymbols" },
+	{ "m", "", "[m]ore in Telescope" },
+}
+---@type LazyKeysSpec[]
+local keys = { { "<Leader>t", "<Cmd>Telescope<CR>", desc = "Telescope" } }
+for _, def in ipairs(key_defs) do
+	table.insert(keys, {
+		"<Leader>f" .. def[1],
+		"<Cmd>Telescope " .. def[2] .. "<CR>",
+		desc = "[f]ind " .. def[3],
+	})
+end
+
 ---@type LazySpec
 return {
 	"nvim-telescope/telescope.nvim",
@@ -10,50 +31,28 @@ return {
 	},
 	build = "brew install rg fd", -- for extended functionality
 	cmd = "Telescope",
-	keys = {
-		-- recommended by Telescope
-		{
-			"<Leader>ff",
-			require("telescope.builtin").find_files,
-			desc = "[f]ind [f]iles (Telescope)",
-		},
-		{
-			"<Leader>fg",
-			require("telescope.builtin").live_grep,
-			desc = "[l]ive [g]rep (Telescope)",
-		},
-		{
-			"<Leader>fb",
-			require("telescope.builtin").buffers,
-			desc = "[f]ind [b]uffers (Telescope)",
-		},
-		{
-			"<Leader>fh",
-			require("telescope.builtin").help_tags,
-			desc = "[f]ind [h]elp tags (Telescope)",
-		},
-		-- custom mappings
-		{ "<Leader>t", "<Cmd>Telescope<CR>", desc = "Open [t]elescope" },
-		{
-			"<Leader>fc",
-			require("telescope.builtin").commands,
-			desc = "[f]ind [c]ommands (Telescope)",
-		},
-	},
+	keys = keys,
 	---@module "telescope"
 	opts = {
 		defaults = {
-			---@type TelescopeLayout.config
-			---@diagnostic disable-next-line: missing-fields
-			layout_config = { horizontal = {
-				preview_cutoff = 30,
-				preview_width = 0.8,
-			} },
+			layout_strategy = "flex",
+			layout_config = {
+				flex = {
+					flip_columns = 100, -- Switch to vertical when width < 100 columns
+					flip_lines = 20, -- Switch to horizontal when height < 20 lines
+				},
+				horizontal = {
+					preview_cutoff = 30,
+					preview_width = 0.6,
+				},
+			},
 		},
 	},
-	config = function()
+	config = function(_, opts)
+		local ts = require("telescope")
+		ts.setup(opts)
 		for _, e in ipairs({ "fzf", "lazy_plugins", "noice" }) do
-			require("telescope").load_extension(e)
+			ts.load_extension(e)
 		end
 	end,
 }
