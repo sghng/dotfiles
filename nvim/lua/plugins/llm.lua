@@ -5,7 +5,6 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			-- "MeanderingProgrammer/render-markdown.nvim", -- delayed
 		},
 		cmd = {
 			"CodeCompanion",
@@ -40,16 +39,10 @@ return {
 						env = {
 							api_key = "cmd:op read op://dev/anthropic/adapta --no-newline",
 						},
-						schema = { thinking = nil },
+						schema = { extended_thinking = { default = false } },
 					})
 				end,
 			},
 		},
-	},
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		opts = {}, -- required
 	},
 }

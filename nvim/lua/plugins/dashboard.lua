@@ -2,17 +2,17 @@
 return {
 	"nvimdev/dashboard-nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
-	lazy = vim.fn.argc() ~= 0, -- load lazily if opening a dir entry
+	lazy = vim.fn.argc() ~= 0, -- load as requested if opening a dir entry
 	priority = 1000,
 	cmd = "Dashboard",
 	init = function()
 		vim.opt.shortmess:append("I") -- disables msg to prevent flashing
 	end,
 	opts = {
-		hide = { statusline = true },
 		config = {
+			-- TODO: a custom header
 			week_header = { enable = true },
-			footer = { "", " 尽心，知性，知天 " },
+			footer = { "", "󰝗 尽心，知性，知天󰉾 " },
 			project = {
 				action = function(path)
 					vim.fn.chdir(path)
@@ -58,7 +58,4 @@ return {
 			},
 		},
 	},
-	config = function(_, opts)
-		require("dashboard").setup(opts)
-	end,
 }

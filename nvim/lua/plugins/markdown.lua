@@ -109,7 +109,9 @@ return {
 				-- NOTE: setting this ensures that diagram doesn't persist across
 				-- tmux windows, but it has unintended side effects.
 				-- events = { clear_buffer = { "FocusLost" } },
-				events = { render_buffer = {} }, -- effectively disables rendering
+
+				-- NOTE: this effectively disables rendering
+				events = { render_buffer = {} },
 				renderer_options = {
 					mermaid = {
 						theme = "dark",
@@ -144,7 +146,7 @@ return {
 		opts = {
 			ui = { enable = false }, -- use render-markdown instead
 			workspaces = { { name = "TECH", path = OBSIDIAN_VAULT } },
-			completion = { blink = true },
+			completion = { blink = true, min_chars = 0, create_new = false },
 			disable_frontmatter = true, -- do not mess with front matter
 			picker = { name = "telescope.nvim" },
 			open = {
@@ -152,8 +154,8 @@ return {
 					vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
 				end,
 			},
+			-- TODO: suppresses deprecation warning, should be removed in v4.0
 			legacy_commands = false,
 		},
-		---@diagnostic enable: missing-fields
 	},
 }

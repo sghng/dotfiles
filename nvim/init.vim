@@ -14,11 +14,11 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 
-let g:python3_host_prog = "~/venvs/nvim/bin/python"
+let g:python3_host_prog = "~/venvs/nvim/bin/python3"
 
 " mappings
 
-nnoremap <silent><Leader>bd :bdelete<CR>
+nnoremap <silent><Leader>bd <Cmd>bdelete<CR>
 
 " Neovide configs
 
@@ -29,11 +29,32 @@ endif
 let g:neovide_opacity = 0.8
 let g:neovide_window_blurred = v:true
 let g:neovide_cursor_vfx_mode = "sonicboom"
+let g:neovide_input_macos_option_key_is_meta = "only_left"
 
 " needs to be loaded after gruvbox-material theme
 hi Normal guibg=#252423 " adapted from gruvbox material bg0
 
+noremap <silent><D-n> <Cmd>call jobstart(["neovide"])<CR>
+noremap <silent><D-w> <Cmd>q<CR>
+noremap <silent><D-s> <Cmd>w<CR>
+inoremap <silent><D-s> <Cmd>w<CR>
+
+let s:guifontsize = 16
+let s:guifont = "MonoLisaVariable\\ Nerd\\ Font"
+function! AdjustFontSize(amount)
+	let s:guifontsize = s:guifontsize + a:amount
+	execute "set guifont=" .. s:guifont .. ":h" .. s:guifontsize
+endfunction
+
+call AdjustFontSize(0)
+
+noremap  <silent><D-=> <Cmd>call AdjustFontSize(+1)<CR>
+inoremap <silent><D-=> <Cmd>call AdjustFontSize(+1)<CR>
+noremap  <silent><D--> <Cmd>call AdjustFontSize(-1)<CR>
+inoremap <silent><D--> <Cmd>call AdjustFontSize(-1)<CR>
+
+noremap  <D-c>      "+y
 " paste from system clipboard, somehow not working in Neovide
-nnoremap <D-v>      "+p
-vnoremap <D-v>      "+p
+noremap  <D-v>      "+p
+cnoremap <D-v>  <C-r>+
 inoremap <D-v>  <C-r>+

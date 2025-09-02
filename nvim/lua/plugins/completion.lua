@@ -1,10 +1,9 @@
 ---@type LazySpec
 return {
-	{ "saghen/blink.compat", opts = {} },
 	{
 		"saghen/blink.cmp",
 		version = "*", -- needed for fuzzy binary download
-		dependencies = { "L3MON4D3/LuaSnip", "obsidian-nvim/obsidian.nvim" },
+		dependencies = "L3MON4D3/LuaSnip",
 		event = "InsertEnter",
 		cmd = "BlinkCmp",
 		---@type blink.cmp.Config
@@ -16,8 +15,7 @@ return {
 			signature = { enabled = true },
 			snippets = { preset = "luasnip" },
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer", "omni", "obsidian" },
-				per_filetype = { markdown = { "obsidian", "obsidian_tags", "obsidian_new" } },
+				default = { "lsp", "path", "snippets", "buffer", "omni" },
 			},
 			term = { enabled = true }, -- term completion disabled by default
 		},
@@ -25,7 +23,7 @@ return {
 	{
 		"fang2hou/blink-copilot",
 		dependencies = {
-			"zbirenbaum/copilot.lua",
+			{ "zbirenbaum/copilot.lua", cmd = "Copilot" },
 			{
 				"saghen/blink.cmp",
 				---@module "blink-cmp"
@@ -51,6 +49,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		dependencies = "rafamadriz/friendly-snippets",
 		build = "make install_jsregexp",
+		event = "InsertEnter",
 		config = function()
 			require("luasnip.loaders.from_vscode").lazy_load()
 			require("luasnip").setup()

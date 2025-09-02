@@ -2,8 +2,10 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = { "brew install tree-sitter", ":TSUpdate" },
-		event = { "BufRead", "BufNewFile" },
+		build = { "brew install tree-sitter tree-sitter-cli", ":TSUpdate" },
+		event = { "BufReadPost", "BufNewFile" },
+		---@type TSConfig
+		---@diagnostic disable-next-line: missing-fields
 		opts = {
 			auto_install = true,
 			highlight = { enable = true },
@@ -17,41 +19,23 @@ return {
 					node_decremental = "grm",
 				},
 			},
-			ensure_installed = { "regex" },
+			ensure_installed = { "regex", "latex" },
 		},
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
 		end,
 	},
 	{
-		"nvim-treesitter/playground",
-		dependencies = "nvim-treesitter/nvim-treesitter",
-		cmd = "TSPlaygroundToggle",
-	},
-	{
 		"nvim-treesitter/nvim-treesitter-refactor",
 		dependencies = "nvim-treesitter/nvim-treesitter",
-		event = { "BufRead", "BufNewFile" }, -- for definition highlights
+		event = { "BufReadPost", "BufNewFile" }, -- for definition highlights
 		config = function()
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup({
+				-- NOTE: most refactoring features should be supported by LSP
 				refactor = {
 					highlight_definitions = { enable = true },
 					highligh_current_scope = { enable = true },
-					smart_rename = {
-						enable = true,
-						keymaps = { smart_rename = "grr" },
-					},
-					navigation = {
-						enable = true,
-						keymaps = {
-							goto_definition = "gnd",
-							list_definitions = "gnD",
-							list_definitions_toc = "gO",
-							goto_next_usage = "<A-*>",
-							goto_previous_usage = "<A-#>",
-						},
-					},
 				},
 			})
 			vim.opt.updatetime = 500
@@ -112,5 +96,8 @@ return {
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPost", "BufNewFile" },
 		opts = { multiwindow = true, min_window_height = 30 },
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
+		end,
 	},
 }
