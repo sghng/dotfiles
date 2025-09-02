@@ -1,23 +1,23 @@
+---@type LazyKeysSpec[]
 local keys = {}
 for i = 1, 5 do
 	table.insert(keys, {
 		"<Leader>" .. i,
 		"<Cmd>BufferLineGoToBuffer " .. i .. "<CR>",
-		desc = "Go to buffer " .. i,
+		desc = "Go to buffer [" .. i .. "]",
 	})
 end
 table.insert(keys, {
-	"gD",
+	"bD",
 	"<Cmd>BufferLinePickClose<CR>",
-	desc = "Pick buffer to close",
-	noremap = true,
+	desc = "Pick [b]uffer to [d]elete",
 })
 
 ---@type LazySpec
 return {
 	"akinsho/bufferline.nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
-	event = "BufEnter",
+	event = { "BufReadPost", "BufNewFile" },
 	keys = keys,
 	init = function()
 		vim.opt.termguicolors = true

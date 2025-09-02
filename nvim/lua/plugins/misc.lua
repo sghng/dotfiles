@@ -1,3 +1,5 @@
+-- TODO: break this file down
+
 ---@type LazySpec
 return {
 	-- Project management
@@ -5,7 +7,18 @@ return {
 	{
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
-		event = { "BufRead", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
+		cmd = {
+			"TodoTelescope",
+			"TodoLocList",
+			"TodoTrouble",
+			"TodoQuickFix",
+		},
+		keys = { {
+			"<Leader>ft",
+			"<Cmd>TodoTelescope<CR>",
+			desc = "[f]ind [t]odos in Telescope",
+		} },
 		opts = {}, -- required
 	},
 	{
@@ -16,7 +29,7 @@ return {
 			"nvim-telescope/telescope.nvim",
 			"stevearc/dressing.nvim", -- optional: better UI
 		},
-		event = { "BufRead", "BufNewFile" }, -- needed for bookmarks rendering
+		event = { "BufReadPost", "BufNewFile" }, -- needed for bookmarks rendering
 		cmd = {
 			"BookmarksCommands",
 			"BookmarksGrep",
@@ -30,88 +43,12 @@ return {
 		end,
 	},
 
-	-- Language support
-
-	{
-		-- provides context breadcrumbs, symbols outline, etc
-		-- TODO: better key binding since this is helpful
-		"nvimdev/lspsaga.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		event = "LspAttach",
-		opts = { lightbulb = { enable = false } }, -- takes up to much space
-	},
-	{
-		"stevearc/aerial.nvim",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-		},
-		-- FIXME: need to remap this, Aerial jumps based on function only
-		keys = {
-			{ "{", "<Cmd>AerialPrev<CR>" },
-			{ "}", "<Cmd>AerialNext<CR>" },
-		},
-		cmd = {
-			"AerialInfo",
-			"AerialNavOpen",
-			"AerialNavToggle",
-			"AerialOpen",
-			"AerialOpenAll",
-			"AerialToggle",
-		},
-		opts = {}, -- required
-	},
-	{
-		"folke/trouble.nvim",
-		cmd = "Trouble",
-		keys = {
-			{
-				"<Leader>xp",
-				vim.diagnostic.open_float,
-				desc = "Diagnostics [p]opup",
-			},
-			{
-				"<Leader>xx",
-				"<Cmd>Trouble diagnostics toggle<CR>",
-				desc = "Diagnostics (Trouble)",
-			},
-			{
-				"<Leader>xX",
-				"<Cmd>Trouble diagnostics toggle filter.buf=0<CR>",
-				desc = "Buffer Diagnostics (Trouble)",
-			},
-			{
-				"<Leader>cs",
-				"<Cmd>Trouble symbols toggle focus=false<CR>",
-				desc = "Symbols (Trouble)",
-			},
-			{
-				"<Leader>cl",
-				"<Cmd>Trouble lsp toggle focus=false win.position=right<CR>",
-				desc = "LSP Definitions / references / ... (Trouble)",
-			},
-			{
-				"<Leader>xL",
-				"<Cmd>Trouble loclist toggle<CR>",
-				desc = "Location List (Trouble)",
-			},
-			{
-				"<Leader>xQ",
-				"<Cmd>Trouble qflist toggle<CR>",
-				desc = "Quickfix List (Trouble)",
-			},
-		},
-		opts = {}, -- required
-	},
-
 	-- Misc
 
 	{ "tpope/vim-sensible", event = "VimEnter" },
 	{
 		"ggandor/leap.nvim",
+		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			require("leap").set_default_mappings()
 		end,
@@ -140,7 +77,7 @@ return {
 		keys = { { "<Leader>z", "<Cmd>ZenMode<CR>", desc = "Toggle [Z]en Mode" } },
 		---@module "zen-mode"
 		---@type ZenOptions
-		---@diagnostic disable: missing-fields
+		---@diagnostic disable-next-line: missing-fields
 		opts = {
 			plugins = {
 				options = { laststatus = 0 }, -- hide statusline
@@ -154,7 +91,6 @@ return {
 				},
 			},
 		},
-		---@diagnostic enable: missing-fields
 	},
 	{
 		"akinsho/toggleterm.nvim",
@@ -162,11 +98,27 @@ return {
 		keys = {
 			{
 				"<C-\\>",
-				"<Cmd>ToggleTerm<CR>",
+				"<Cmd>ToggleTerm direction='horizontal'<CR>",
 				mode = { "n", "i", "v", "t" },
-				desc = "Toggle terminal",
+				desc = "Toggle terminal (horizontal)",
+			},
+			{
+				"<M-\\>",
+				"<Cmd>ToggleTerm direction='float'<CR>",
+				mode = { "n", "i", "v", "t" },
+				desc = "Toggle terminal (float)",
+			},
+			{
+				"<C-|>",
+				"<Cmd>ToggleTerm direction='tab'<CR>",
+				mode = { "n", "i", "v", "t" },
+				desc = "Toggle terminal (tab)",
 			},
 		},
+		---@module "toggleterm"
+		---@type ToggleTermConfig
+		---@diagnostic disable-next-line:missing-fields
+		opts = { float_opts = { border = "rounded" } },
 		config = true,
 	},
 	{
@@ -180,10 +132,16 @@ return {
 	{
 		"echasnovski/mini.animate",
 		cond = not vim.g.neovide,
-		-- TODO: window animations conflict with neo-tree, file issues
-		opts = { open = { enable = false }, close = { enable = false } },
+		event = "UIEnter",
+		opts = {
+			-- Cursor animation handled by terminal emulator
+			cursor = { enable = false },
+			-- Window open/close animations doesn't work with transparency
+			open = { enable = false },
+			close = { enable = false },
+		},
 	},
-	"Bekaboo/deadcolumn.nvim",
+	{ "Bekaboo/deadcolumn.nvim", event = { "BufReadPost", "BufNewFile" } },
 	{
 		"ellisonleao/dotenv.nvim",
 		lazy = false,
@@ -196,9 +154,10 @@ return {
 	{
 		"folke/noice.nvim",
 		dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
-		event = "VeryLazy",
+		event = "UIEnter",
 		---@module "noice"
 		---@type NoiceConfig
+		---@diagnostic disable-next-line: missing-fields
 		opts = {
 			views = {
 				cmdline_popup = { position = { row = -5 } },
@@ -219,6 +178,9 @@ return {
 			presets = {
 				long_message_to_split = true, -- long messages will be sent to a split
 				lsp_doc_border = true,
+			},
+			routes = {
+				filter = {},
 			},
 		},
 	},

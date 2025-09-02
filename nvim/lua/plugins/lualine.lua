@@ -3,7 +3,7 @@ local noice = require("noice")
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
-	event = { "BufRead", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		options = {
 			theme = "gruvbox-material",

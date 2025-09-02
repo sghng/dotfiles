@@ -1,20 +1,16 @@
--- EDITTING TOOLS
-
 ---@type LazySpec
 return {
-	{ "tpope/vim-unimpaired", event = { "BufRead", "BufNewFile" } },
-	{
-		-- sets shiftwidth expandtab heuristically
-		"tpope/vim-sleuth",
-		event = { "BufRead", "BufNewFile" },
-	},
+	{ "tummetott/unimpaired.nvim", event = { "BufReadPost", "BufNewFile" } },
+	-- sets shiftwidth expandtab heuristically
+	{ "tpope/vim-sleuth", event = { "BufReadPost", "BufNewFile" } },
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		event = { "BufRead", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
 		opts = {},
 	},
-	{ "kylechui/nvim-surround", event = { "BufRead", "BufNewFile" }, opts = {} },
+	-- TODO: potential overlapping keymaps in Which Key
+	{ "kylechui/nvim-surround", event = { "BufReadPost", "BufNewFile" }, opts = {} },
 	{
 		"mbbill/undotree",
 		keys = {
@@ -44,17 +40,18 @@ return {
 		opts = {}, -- required
 	},
 	-- TODO: need to compare more align plugins
-	{ "echasnovski/mini.align", opts = {} },
-	{ "echasnovski/mini.cursorword", opts = {} },
+	{ "echasnovski/mini.align", event = { "BufReadPost", "BufNewFile" }, opts = {} },
+	{ "echasnovski/mini.cursorword", event = { "BufReadPost", "BufNewFile" }, opts = {} },
+	-- TODO: potential overlapping keymaps in Which Key
 	{
 		"numToStr/Comment.nvim",
 		dependencies = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
-			---@type ts_context_commentstring.Config
 			-- auto cmd must be disabled for integration with comment plugins
+			---@type ts_context_commentstring.Config
 			opts = { enable_autocmd = false },
 		},
-		event = { "BufRead", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			require("Comment").setup(
 				---@module "Comment"

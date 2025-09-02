@@ -3,7 +3,7 @@ return {
 	{ "tpope/vim-fugitive", event = "VeryLazy" }, -- too many commands
 	{
 		"airblade/vim-gitgutter",
-		event = { "BufRead", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			vim.cmd("GitGutterLineNrHighlightsEnable")
 		end,

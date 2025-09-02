@@ -2,6 +2,7 @@ local linters_by_ft = {
 	fish = { "fish" },
 	bash = { "bash" },
 	vim = { "vint" },
+	-- FIXME: some linter is creating a node process when running in Neovide
 	markdown = { "markdownlint-cli2", "cspell" },
 	text = { "vale" },
 	["*"] = { "cspell" },
@@ -14,7 +15,7 @@ end
 ---@type LazySpec
 return {
 	"mfussenegger/nvim-lint",
-	event = { "BufRead", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile" },
 	config = function()
 		local lint = require("lint")
 		-- certain linters are activated along with language server
