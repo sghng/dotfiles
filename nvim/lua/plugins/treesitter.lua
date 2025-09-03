@@ -8,7 +8,10 @@ return {
 		---@diagnostic disable-next-line: missing-fields
 		opts = {
 			auto_install = true,
-			highlight = { enable = true },
+			highlight = {
+				enable = true,
+				disable = { "csv", "tsv" }, -- builtin highlighting is better
+			},
 			indent = { enable = true },
 			incremental_selection = {
 				enable = true,
