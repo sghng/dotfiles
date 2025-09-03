@@ -77,18 +77,21 @@ return {
 		end,
 	},
 	{
-		-- TODO: doesn't work in terminal window, create an issue
 		"christoomey/vim-tmux-navigator",
 		keys = {
-			{ "<C-h>", "<Cmd><C-U>TmuxNavigateLeft<CR>" },
-			{ "<C-j>", "<Cmd><C-U>TmuxNavigateDown<CR>" },
-			{ "<C-k>", "<Cmd><C-U>TmuxNavigateUp<CR>" },
-			{ "<C-l>", "<Cmd><C-U>TmuxNavigateRight<CR>" },
+			{ "<C-h>", "<Cmd>TmuxNavigateLeft<CR>", mode = { "n", "i", "t", "v" } },
+			{ "<C-j>", "<Cmd>TmuxNavigateDown<CR>", mode = { "n", "i", "t", "v" } },
+			{ "<C-k>", "<Cmd>TmuxNavigateUp<CR>", mode = { "n", "i", "t", "v" } },
+			{ "<C-l>", "<Cmd>TmuxNavigateRight<CR>", mode = { "n", "i", "t", "v" } },
 		},
+		init = function()
+			vim.g.tmux_navigator_no_mappings = 1
+		end,
 	},
 	{
 		-- TODO: the naviations after entering Zen mode doesn't persist, the
 		-- status line are also showing up when exiting neo-tree, create issue
+		-- toggling neo-tree breaks Zen mode
 		"folke/zen-mode.nvim", -- automatically enabled in zen mode
 		dependencies = {
 			"folke/twilight.nvim",
