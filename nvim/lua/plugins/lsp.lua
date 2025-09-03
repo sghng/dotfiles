@@ -40,10 +40,11 @@ return {
 		},
 		config = function(_, opts)
 			require("mason-lspconfig").setup(opts)
-			-- HACK: Additional configuration for Vue.js support
-			-- TODO: this problem may have already been addressed
-			local vue_ls_path = vim.fn.expand("$MASON/packages/vue-language-server")
-			local vue_plugin_path = vue_ls_path .. "/node_modules/@vue/language-server"
+			-- Additional configuration for Vue.js support, see:
+			-- https://github.com/vuejs/language-tools/wiki/Neovim
+			-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#vue_ls
+			local vue_ls_path = vim.fn.expand("$MASON/packages/vue-language-server/")
+			local vue_plugin_path = vue_ls_path .. "node_modules/@vue/language-server/"
 			vim.lsp.config("ts_ls", {
 				init_options = {
 					plugins = {
@@ -51,6 +52,7 @@ return {
 							name = "@vue/typescript-plugin",
 							location = vue_plugin_path,
 							languages = { "vue" },
+							configNamespace = "typescript",
 						},
 					},
 				},
@@ -84,6 +86,9 @@ return {
 	-- BUG: trouble.nvim not working in Neovim nighly now.
 	-- https://github.com/folke/trouble.nvim/issues/655
 	-- TODO: we might need better key mappings
+	-- NOTE: best thing about trouble picker: preview in real time as we
+	-- navigate the picker
+	-- FIXME: trouble background is not transparent
 	{
 		"folke/trouble.nvim",
 		cmd = "Trouble",

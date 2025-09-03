@@ -19,8 +19,10 @@ return {
 					node_decremental = "grm",
 				},
 			},
-			ensure_installed = { "regex", "latex" },
+			-- embedded languages may not be recognized from filetypes
+			ensure_installed = { "javascript", "latex", "regex", "typescript" },
 		},
+		-- manual setup required
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
 		end,
