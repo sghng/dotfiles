@@ -14,11 +14,34 @@ return {
 			"TodoTrouble",
 			"TodoQuickFix",
 		},
-		keys = { {
-			"<Leader>ft",
-			"<Cmd>TodoTelescope<CR>",
-			desc = "[f]ind [t]odos in Telescope",
-		} },
+		keys = {
+			{
+				"<Leader>ft",
+				"<Cmd>TodoTelescope<CR>",
+				desc = "[f]ind [t]odos in Telescope",
+			},
+			-- TODO: maybe we should use Trouble for this?
+			{
+				"<Leader>lt",
+				"<Cmd>TodoLocList<CR>",
+				desc = "[l]ist [t]odos",
+			},
+			-- overrides tag navigation, which is obsolete now
+			{
+				"]t",
+				function()
+					require("todo-comments").jump_next()
+				end,
+				desc = "next [t]odo comment",
+			},
+			{
+				"[t",
+				function()
+					require("todo-comments").jump_prev()
+				end,
+				desc = "next [t]odo comment",
+			},
+		},
 		opts = {}, -- required
 	},
 	{
