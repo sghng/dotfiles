@@ -3,19 +3,33 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "*", -- needed for fuzzy binary download
-		dependencies = "L3MON4D3/LuaSnip",
+		dependencies = "rafamadriz/friendly-snippets",
 		event = "InsertEnter",
 		cmd = "BlinkCmp",
+		---@module "blink-cmp"
 		---@type blink.cmp.Config
 		opts = {
 			completion = {
 				keyword = { range = "full" },
 				documentation = { auto_show = true, auto_show_delay_ms = 500 },
 			},
-			signature = { enabled = true },
-			snippets = { preset = "luasnip" },
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "omni" },
+				providers = {
+					-- display snippets according to embedded language, see:
+					-- https://github.com/nvim-treesitter/nvim-treesitter/discussions/6643
+					-- https://github.com/Saghen/blink.cmp/issues/1679
+					snippets = {
+						opts = {
+							get_filetype = function(context)
+								local curline = vim.fn.line(".")
+								local lang =
+									vim.treesitter.get_parser():language_for_range({ curline, 0, curline, 0 }):lang()
+								return lang
+							end,
+						},
+					},
+				},
 			},
 			term = { enabled = true }, -- term completion disabled by default
 		},
@@ -44,15 +58,5 @@ return {
 			},
 		},
 		event = "InsertEnter",
-	},
-	{
-		"L3MON4D3/LuaSnip",
-		dependencies = "rafamadriz/friendly-snippets",
-		build = "make install_jsregexp",
-		event = "InsertEnter",
-		config = function()
-			require("luasnip.loaders.from_vscode").lazy_load()
-			require("luasnip").setup()
-		end,
 	},
 }
