@@ -31,13 +31,13 @@ return {
 		end,
 	},
 	{
+		-- prefer vim.lsp for such features
 		"nvim-treesitter/nvim-treesitter-refactor",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPost", "BufNewFile" }, -- for definition highlights
 		config = function()
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup({
-				-- NOTE: most refactoring features should be supported by LSP
 				refactor = {
 					highlight_definitions = { enable = true },
 					highligh_current_scope = { enable = true },
@@ -69,7 +69,7 @@ return {
 						},
 						["if"] = {
 							query = "@function.inner",
-							desc = "Select inner of a [f]unction",
+							desc = "Select [i]nner of a [f]unction",
 						},
 						["ac"] = {
 							query = "@class.outer",
@@ -93,16 +93,23 @@ return {
 		end,
 	},
 	{
-		-- TODO: use [c to jump to beginning of context, currently it's used by
-		-- git gutter to navigate between hunks
-		-- TODO: adjust highlihgt of context, so that it looks different from
-		-- selection
 		"nvim-treesitter/nvim-treesitter-context",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPost", "BufNewFile" },
+		keys = {
+			{
+				"[c",
+				function()
+					require("treesitter-context").go_to_context(vim.v.count1)
+				end,
+				desc = "Start of [c]ontext",
+			},
+		},
 		opts = { multiwindow = true, min_window_height = 30 },
 		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
+			require("treesitter-context").setup(opts)
+			vim.cmd([[highlight TreesitterContextBottom gui=underdashed guisp=Grey]])
+			vim.cmd([[highlight TreesitterContextLineNumberBottom gui=NONE]])
 		end,
 	},
 }
