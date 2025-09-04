@@ -1,4 +1,3 @@
-local noice = require("noice")
 ---@type LazySpec
 return {
 	"nvim-lualine/lualine.nvim",
@@ -6,30 +5,31 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		options = {
+			globalstatus = true,
 			theme = "gruvbox-material",
-			extensions = {
-				"aerial",
-				"fugitive",
-				"lazy",
-				"mason",
-				"neo-tree",
-				"toggleterm",
-			},
+			disabled_filetypes = { winbar = { "neo-tree" } },
 		},
-		sections = {
-			lualine_x = {
+		extensions = {
+			"aerial",
+			"lazy",
+			"mason",
+			"neo-tree",
+			"quickfix",
+			"toggleterm",
+			"trouble",
+		},
+		winbar = {
+			lualine_a = {
 				{
-					noice.api.status.command.get,
-					cond = noice.api.status.command.has,
-					color = { fg = "#ff9e64" },
-				},
-				{
-					noice.api.status.search.get,
-					cond = noice.api.status.search.has,
-					color = { fg = "#ff9e64" },
+					function()
+						-- the symbols from LSPSaga is better than Aerial
+						return require("lspsaga.symbol.winbar").get_bar() or ""
+					end,
 				},
 			},
+			lualine_z = { { "filename" } },
 		},
+		inactive_winbar = { lualine_z = { "filename" } },
 	},
 	init = function()
 		vim.opt.laststatus = 3 -- lualine spans whole window

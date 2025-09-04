@@ -1,19 +1,20 @@
-vim.keymap.set("n", "<Leader>gd", vim.lsp.buf.definition, { desc = "[g]o to definition" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "[g]o to definition" })
 ---@type LazySpec
 return {
 
 	-- LSP Installation and Config
 
-	{ "mason-org/mason.nvim", lazy = true, config = true },
 	{
 		"mason-org/mason-lspconfig.nvim",
 		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
 			"neovim/nvim-lspconfig", -- must be manually loaded
 			"WhoIsSethDaniel/mason-tool-installer.nvim", -- ensure tools are installed
 		},
 		-- Language servers should be ready before entering buffer to ensure
 		-- proper syntax highlighting
 		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "Mason" },
 		---@type MasonLspconfigSettings
 		opts = {
 			ensure_installed = {
@@ -21,10 +22,11 @@ return {
 				"cssls",
 				"html",
 				"jsonls",
+				"just",
 				"lemminx", -- XML
 				"lua_ls",
 				"marksman",
-				"pyrefly", -- Python, LSP
+				"pyrefly", -- Python LSP
 				"ruff", -- Python formatter/linter
 				"tailwindcss",
 				"taplo", -- TOML
@@ -135,13 +137,25 @@ return {
 		-- provides a few LSP features additional to Trouble:
 		-- context breadcrumb, call hierarchy, code action,
 		-- definitions peeking (Trouble can't display this in hover)
+		-- the breadcrumbs provided is better than that by Aerial
+		-- not actively maintained
 		-- TODO: better key binding since this is helpful
 		"nvimdev/lspsaga.nvim",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"nvim-treesitter/nvim-treesitter",
 		},
-		event = "LspAttach",
-		opts = { lightbulb = { enable = false } }, -- takes up to much space
+		cmd = "Lspsaga",
+		opts = {
+			lightbulb = { enable = false }, -- takes up to much space
+			symbol_in_winbar = { enable = false }, -- handover to lualine
+		},
+	},
+	{
+		"stevearc/aerial.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
 	},
 }
