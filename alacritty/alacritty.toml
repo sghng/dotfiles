@@ -12,7 +12,7 @@ dynamic_title = false
 
 [font]
 size = 18
-normal.family = "MonoLisaVariable Nerd Font"
+normal.family = "MonoLisa Nerd Font"
 
 [terminal]
 shell.program = "/opt/homebrew/bin/fish"

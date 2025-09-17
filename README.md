@@ -12,4 +12,4 @@ systems as well, with a few known exceptions:
 Meanwhile, some configs require manual setup.
 
 - Create a symlink at `~/obsidian` pointing to the Obsidian vault.
-- These dotfiles use `MonoLisaVariable Nerd Font` through out.
+- These dotfiles use `MonoLisa Nerd Font` through out.
