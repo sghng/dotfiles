@@ -3,7 +3,3 @@ frame = "transparent"
 tabs = true
 theme = "dark"
 title-hidden = true
-
-[font]
-normal = ["MonoLisaVariable Nerd Font"]
-size = 18
