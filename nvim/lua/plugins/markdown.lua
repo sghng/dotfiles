@@ -1,4 +1,27 @@
 local OBSIDIAN_VAULT = vim.fn.resolve(vim.fn.expand("~/obsidian"))
+local obsidian_key_defs = {
+	-- key suffix, Obsidian sub command, description
+	{ "b", "backlinks", "[b]acklinks" },
+	{ "d", "dailies", "[d]ailies" },
+	{ "j", "today", "[j]in tian (today)" },
+	{ "l", "links", "[l]inks" },
+	{ "m", "tomorrow", "[m]ing tian (tomorrow)" },
+	{ "r", "rename", "[r]ename" },
+	{ "t", "tags", "[t]ags" },
+	{ "o", "open", "[o]pen" },
+	{ "w", "workspace", "[w]orkspace" },
+	{ "z", "yesterday", "[z]uo tian (yesterday)" },
+}
+---@type LazyKeysSpec[]
+local obsidian_keys = {}
+for _, def in ipairs(obsidian_key_defs) do
+	table.insert(obsidian_keys, {
+		"<Localleader>o" .. def[1],
+		"<Cmd>Obsidian " .. def[2] .. "<CR>",
+		desc = "[o]bsidian " .. def[3],
+		ft = "markdown",
+	})
+end
 
 ---@type LazySpec
 return {
@@ -24,7 +47,6 @@ return {
 		---@diagnostic disable: missing-fields
 		opts = {
 			file_types = { "markdown", "codecompanion", "quarto" },
-			completions = { lsp = { enabled = true } },
 			win_options = { conceallevel = { rendered = 2 } },
 			-- handover math rendering to nabla
 			-- latex = { enabled = false },
@@ -130,16 +152,8 @@ return {
 			"nvim-telescope/telescope.nvim",
 		},
 		cmd = "Obsidian",
-		keys = {
-			{
-				"<LocalLeader>oo",
-				"<Cmd>Obsidian open<CR>",
-				ft = "markdown",
-				desc = "[o]pen note in [o]bsidian",
-			},
-			-- smart_action bound to <CR> by default
-		},
-		event = { "BufReadPost " .. OBSIDIAN_VAULT .. "/*.md" },
+		keys = obsidian_keys, -- smart_action bound to <CR> by default
+		event = { "BufReadPost " .. OBSIDIAN_VAULT .. "/**/*.md" },
 		---@module "obsidian"
 		---@type obsidian.config.ClientOpts
 		---@diagnostic disable: missing-fields
@@ -148,12 +162,6 @@ return {
 			workspaces = { { name = "TECH", path = OBSIDIAN_VAULT } },
 			completion = { blink = true, min_chars = 0, create_new = false },
 			disable_frontmatter = true, -- do not mess with front matter
-			picker = { name = "telescope.nvim" },
-			open = {
-				func = function(uri)
-					vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
-				end,
-			},
 			-- TODO: suppresses deprecation warning, should be removed in v4.0
 			legacy_commands = false,
 		},
