@@ -7,30 +7,33 @@ return {
 	{
 		"mason-org/mason-lspconfig.nvim",
 		dependencies = {
-			{ "mason-org/mason.nvim", opts = {} },
+			{ "mason-org/mason.nvim", cmd = "Mason", opts = {} },
 			"neovim/nvim-lspconfig", -- must be manually loaded
 			"WhoIsSethDaniel/mason-tool-installer.nvim", -- ensure tools are installed
 		},
 		-- Language servers should be ready before entering buffer to ensure
 		-- proper syntax highlighting
 		event = { "BufReadPre", "BufNewFile" },
-		cmd = { "Mason" },
 		---@type MasonLspconfigSettings
 		opts = {
 			ensure_installed = {
 				"air", -- R
+				"bashls",
+				"clangd",
 				"cssls",
+				"fish_lsp",
 				"html",
 				"jsonls",
 				"just",
 				"lemminx", -- XML
 				"lua_ls",
 				"marksman",
-				"pyrefly", -- Python LSP
+				"neocmake", -- CMake
+				"oxlint",
 				"ruff", -- Python formatter/linter
 				"tailwindcss",
 				"taplo", -- TOML
-				"ts_ls",
+				"ts_ls", -- TypeScript
 				"ty", -- Python LSP/type checker
 				"tinymist", -- Typst LSP
 				"unocss",
@@ -68,6 +71,7 @@ return {
 		opts = {
 			ensure_installed = {
 				--Linters
+				"checkmake", -- Makefile
 				"cspell",
 				"eslint_d",
 				"markdownlint-cli2",
@@ -137,9 +141,8 @@ return {
 		-- provides a few LSP features additional to Trouble:
 		-- context breadcrumb, call hierarchy, code action,
 		-- definitions peeking (Trouble can't display this in hover)
-		-- the breadcrumbs provided is better than that by Aerial
 		-- not actively maintained
-		-- TODO: better key binding since this is helpful
+		-- TODO: could be helpful
 		"nvimdev/lspsaga.nvim",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
@@ -148,10 +151,15 @@ return {
 		cmd = "Lspsaga",
 		opts = {
 			lightbulb = { enable = false }, -- takes up to much space
-			symbol_in_winbar = { enable = false }, -- handover to lualine
+			symbol_in_winbar = {
+				enable = false, -- handover to lualine
+				separator = " ",
+				show_file = false,
+			},
 		},
 	},
 	{
+		-- TODO: could be helpful
 		"stevearc/aerial.nvim",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
