@@ -53,7 +53,6 @@ format = "$user"
 
 [directory]
 format = "$path"
-truncation_length = 5
 truncation_symbol = "…/"
 
 [directory.substitutions]
@@ -124,13 +123,10 @@ format = "$symbol($version) "
 symbol = " "
 format = "$symbol($version) "
 
-
-# [r]
-# format = "[$symbol($version )]($style)"
-
 # ENVIRONMENTS
 
 [conda]
+symbol = " "
 format = "$symbol($environment)"
 
 # MISC
