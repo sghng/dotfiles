@@ -1,5 +1,5 @@
 [general]
-import = ["~/.config/alacritty/gruvbox.toml"]
+import = ["$HOME/.config/alacritty/gruvbox.toml"]
 live_config_reload = true
 
 [window]
