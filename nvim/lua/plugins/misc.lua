@@ -107,15 +107,20 @@ return {
 		opts = {
 			plugins = {
 				options = { laststatus = 0 }, -- hide statusline
-				tmux = { enabled = true },
+				gitsigns = { enabled = true },
 				kitty = { enabled = true, font = "+4" },
-				wezterm = { enabled = true, font = "+4" },
 				neovide = {
 					enabled = true,
 					scale = 1.2,
 					disable_animations = false,
 				},
+				tmux = { enabled = true },
+				twilight = { enabled = false },
+				wezterm = { enabled = true, font = "+4" },
 			},
+			on_open = function(win)
+				vim.opt.winbar = ""
+			end,
 		},
 	},
 	{
@@ -134,18 +139,11 @@ return {
 				mode = { "n", "i", "v", "t" },
 				desc = "Toggle terminal (float)",
 			},
-			{
-				"<C-|>",
-				"<Cmd>ToggleTerm direction='tab'<CR>",
-				mode = { "n", "i", "v", "t" },
-				desc = "Toggle terminal (tab)",
-			},
 		},
 		---@module "toggleterm"
 		---@type ToggleTermConfig
 		---@diagnostic disable-next-line:missing-fields
 		opts = { float_opts = { border = "rounded" } },
-		config = true,
 	},
 	{
 		"sitiom/nvim-numbertoggle",
@@ -167,7 +165,13 @@ return {
 			close = { enable = false },
 		},
 	},
-	{ "Bekaboo/deadcolumn.nvim", event = { "BufReadPost", "BufNewFile" } },
+	{
+		"Bekaboo/deadcolumn.nvim",
+		event = "UIEnter", -- needed for proper highlight
+		init = function()
+			vim.cmd([[autocmd FileType codecompanion setlocal colorcolumn=]])
+		end,
+	},
 	{
 		"ellisonleao/dotenv.nvim",
 		lazy = false,
@@ -181,6 +185,13 @@ return {
 		"folke/noice.nvim",
 		dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
 		event = "UIEnter",
+		keys = {
+			{
+				"<Leader>d",
+				"<Cmd>Noice dismiss<CR>",
+				desc = "[d]ismiss Noice popups",
+			},
+		},
 		---@module "noice"
 		---@type NoiceConfig
 		---@diagnostic disable-next-line: missing-fields
@@ -225,4 +236,5 @@ return {
 		---@type CsvView.Options
 		opts = { parser = { quote_char = '"' } }, -- somehow needs to be specified
 	},
+	{ "0xferrous/ansi.nvim", cmd = { "AnsiEnable", "AnsiToggle" } },
 }

@@ -34,9 +34,9 @@ let g:neovide_input_macos_option_key_is_meta = "only_left"
 " needs to be loaded after gruvbox-material theme
 hi Normal guibg=#252423 " adapted from gruvbox material bg0
 
-noremap <silent><D-n> <Cmd>call jobstart(["neovide"])<CR>
-noremap <silent><D-w> <Cmd>q<CR>
-noremap <silent><D-s> <Cmd>w<CR>
+noremap  <silent><D-n> <Cmd>call jobstart(["neovide"])<CR>
+noremap  <silent><D-w> <Cmd>q<CR>
+noremap  <silent><D-s> <Cmd>w<CR>
 inoremap <silent><D-s> <Cmd>w<CR>
 
 let s:guifontsize = 16

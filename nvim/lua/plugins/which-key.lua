@@ -25,8 +25,10 @@ return {
 			-- common groupings
 			{ "<Leader>b", group = "buffer" },
 			{ "<Leader>f", group = "[f]ind (with Telescope)" },
-			{ "[", group = "Previous..." },
-			{ "]", group = "Previous..." },
+			{ "<Leader>g", group = "[g]it" },
+			{ "<Localleader>o", group = "[o]bsidian" },
+			{ "[", group = "Jump to the previous..." },
+			{ "]", group = "Jump to the next..." },
 			{ "gr", group = "LSP operations" },
 			-- common keymaps
 		},

@@ -25,6 +25,7 @@ return {
 						-- the symbols from LSPSaga is better than Aerial
 						return require("lspsaga.symbol.winbar").get_bar() or ""
 					end,
+					separator = { right = "" },
 				},
 			},
 			lualine_z = { { "filename" } },

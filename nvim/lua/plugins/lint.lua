@@ -2,7 +2,6 @@ local linters_by_ft = {
 	fish = { "fish" },
 	bash = { "bash" },
 	vim = { "vint" },
-	-- FIXME: some linter is creating a node process when running in Neovide
 	markdown = { "markdownlint-cli2", "cspell" },
 	text = { "vale" },
 	["*"] = { "cspell" },

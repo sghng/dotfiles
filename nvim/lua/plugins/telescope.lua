@@ -8,6 +8,7 @@ local key_defs = {
 	{ "k", "keymaps", "[k]eymaps" },
 	{ "s", "symbols", "[s]ymbols" },
 	{ "m", "", "[m]ore in Telescope" },
+	{ "n", "<Cmd>Noice telescope<CR>", "[n]otifications in Telescope" },
 }
 ---@type LazyKeysSpec[]
 local keys = { { "<Leader>t", "<Cmd>Telescope<CR>", desc = "Telescope" } }

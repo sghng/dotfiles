@@ -4,7 +4,7 @@ return {
 		"saghen/blink.cmp",
 		version = "*", -- needed for fuzzy binary download
 		dependencies = "rafamadriz/friendly-snippets",
-		event = "InsertEnter",
+		event = { "InsertEnter", "CmdLineEnter" },
 		cmd = "BlinkCmp",
 		---@module "blink-cmp"
 		---@type blink.cmp.Config
@@ -37,7 +37,7 @@ return {
 	{
 		"fang2hou/blink-copilot",
 		dependencies = {
-			{ "zbirenbaum/copilot.lua", cmd = "Copilot" },
+			{ "zbirenbaum/copilot.lua", cmd = "Copilot", opts = {} },
 			{
 				"saghen/blink.cmp",
 				---@module "blink-cmp"

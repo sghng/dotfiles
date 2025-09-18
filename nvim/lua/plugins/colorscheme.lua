@@ -3,7 +3,6 @@ return {
 	{
 		"sainnhe/gruvbox-material",
 		lazy = false,
-		priority = 1000,
 		config = function()
 			vim.g.gruvbox_material_enable_bold = 1
 			vim.g.gruvbox_material_enable_italic = 1
@@ -14,8 +13,6 @@ return {
 	{
 		"neanias/everforest-nvim",
 		cond = false,
-		lazy = false,
-		priority = 1000,
 		opts = {
 			background = "soft",
 			transparent_background_level = 1,
