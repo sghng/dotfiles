@@ -1,3 +1,6 @@
+-- Markdown-ish file types
+local MD_FT = { "markdown", "quarto", "codecompanion" }
+
 local OBSIDIAN_VAULT = vim.fn.resolve(vim.fn.expand("~/obsidian"))
 local obsidian_key_defs = {
 	-- key suffix, Obsidian sub command, description
@@ -38,15 +41,15 @@ return {
 				"<LocalLeader>r",
 				"<Cmd>RenderMarkdown toggle<CR>",
 				desc = "[r]ender Markdown",
-				ft = "markdown",
+				ft = MD_FT,
 			},
 		},
-		ft = { "markdown", "codecompanion", "quarto" },
+		ft = MD_FT,
 		---@module "render-markdown"
 		---@type render.md.Config
 		---@diagnostic disable: missing-fields
 		opts = {
-			file_types = { "markdown", "codecompanion", "quarto" },
+			file_types = MD_FT,
 			win_options = { conceallevel = { rendered = 2 } },
 			-- handover math rendering to nabla
 			-- latex = { enabled = false },
@@ -70,7 +73,7 @@ return {
 			"<LocalLeader>g",
 			"<Cmd>Glow<CR>",
 			desc = "[G]low preview",
-			ft = "markdown",
+			ft = MD_FT,
 		} },
 		opts = {},
 	},
@@ -79,13 +82,13 @@ return {
 		build = function()
 			vim.fn["mkdp#util#install"]() -- more robust than yarn install
 		end,
-		ft = "markdown", -- cannot load lazier since the commands are not global
+		ft = MD_FT,
 		keys = {
 			{
 				"<LocalLeader>p",
 				"<Plug>MarkdownPreview",
 				desc = "Toggle Markdown [p]review",
-				ft = "markdown",
+				ft = MD_FT,
 			},
 		},
 	},
@@ -103,7 +106,7 @@ return {
 					require("nabla").popup({ border = "rounded" })
 				end,
 				desc = "Show Nabla [m]ath preview popup",
-				ft = { "markdown", "quarto" },
+				ft = MD_FT,
 			},
 		},
 	},
@@ -113,7 +116,7 @@ return {
 		build = "brew install mermaid-cli",
 		cond = not vim.g.neovide, -- image not supported in Neovide
 		dependencies = "3rd/image.nvim",
-		ft = "markdown",
+		ft = MD_FT,
 		keys = {
 			{
 				"<Localleader>d",
@@ -121,7 +124,7 @@ return {
 					require("diagram").show_diagram_hover()
 				end,
 				mode = "n",
-				ft = { "markdown", "codecompanion", "quarto" },
+				ft = MD_FT,
 				desc = "Show [d]iagram",
 			},
 		},
@@ -153,7 +156,7 @@ return {
 		},
 		cmd = "Obsidian",
 		keys = obsidian_keys, -- smart_action bound to <CR> by default
-		event = { "BufReadPost " .. OBSIDIAN_VAULT .. "/**/*.md" },
+		event = { "BufReadPost " .. OBSIDIAN_VAULT .. "/**.md" },
 		---@module "obsidian"
 		---@type obsidian.config.ClientOpts
 		---@diagnostic disable: missing-fields
@@ -164,6 +167,19 @@ return {
 			disable_frontmatter = true, -- do not mess with front matter
 			-- TODO: suppresses deprecation warning, should be removed in v4.0
 			legacy_commands = false,
+			note_id_func = function(title)
+				return title
+			end,
 		},
+		config = function(_, opts)
+			require("obsidian").setup(opts)
+			-- remove default binding
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "ObsidianNoteEnter",
+				callback = function(ev)
+					vim.keymap.del("n", "<CR>", { buffer = ev.buf })
+				end,
+			})
+		end,
 	},
 }
