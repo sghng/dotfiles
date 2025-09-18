@@ -4,6 +4,7 @@ local formatters_by_ft = {
 	lua = { "stylua" },
 	markdown = { "markdownlint-cli2", "prettierd" },
 	python = { "ruff_organize_imports", "ruff_format" }, -- don't remove imports
+	-- FIXME: Prettier reports "no parser" for Quarto
 	quarto = { "injected", "prettierd" },
 	r = { "air" },
 	toml = { "taplo" },
