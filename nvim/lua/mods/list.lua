@@ -10,7 +10,7 @@ local key_defs = {
 	{ "X", "diagnostics toggle", "diagnostics (global)" },
 }
 ---@type LazySpec[]
-local keys = {}
+local keys = { { "<Leader>lz", "<Cmd>Lazy<CR>", desc = "[l]a[z]y" } }
 for _, def in ipairs(key_defs) do
 	table.insert(keys, {
 		"<Leader>l" .. def[1],
