@@ -29,9 +29,6 @@ let g:neovide_window_blurred = v:true
 let g:neovide_cursor_vfx_mode = "sonicboom"
 let g:neovide_input_macos_option_key_is_meta = "only_left"
 
-" needs to be loaded after gruvbox-material theme, the default bg isn't right
-hi Normal guibg=#252423 " adapted from gruvbox material bg0
-
 noremap  <silent><D-n> <Cmd>call jobstart(["neovide"])<CR>
 noremap  <silent><D-w> <Cmd>q<CR>
 noremap  <silent><D-s> <Cmd>w<CR>
