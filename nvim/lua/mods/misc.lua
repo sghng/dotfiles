@@ -1,71 +1,8 @@
 -- TODO: break this file down
 
+-- Miscellaneous plugins
 ---@type LazySpec
 return {
-	-- Project management
-
-	{
-		"folke/todo-comments.nvim",
-		dependencies = "nvim-lua/plenary.nvim",
-		event = { "BufReadPost", "BufNewFile" },
-		cmd = {
-			"TodoTelescope",
-			"TodoLocList",
-			"TodoTrouble",
-			"TodoQuickFix",
-		},
-		keys = {
-			{
-				"<Leader>ft",
-				"<Cmd>TodoTelescope<CR>",
-				desc = "[f]ind [t]odos in Telescope",
-			},
-			-- TODO: maybe we should use Trouble for this?
-			{
-				"<Leader>lt",
-				"<Cmd>TodoLocList<CR>",
-				desc = "[l]ist [t]odos",
-			},
-			-- overrides tag navigation, which is obsolete now
-			{
-				"]t",
-				function()
-					require("todo-comments").jump_next()
-				end,
-				desc = "next [t]odo comment",
-			},
-			{
-				"[t",
-				function()
-					require("todo-comments").jump_prev()
-				end,
-				desc = "next [t]odo comment",
-			},
-		},
-		opts = {}, -- required
-	},
-	{
-		-- TODO: need to figure this out
-		"LintaoAmons/bookmarks.nvim",
-		dependencies = {
-			"kkharji/sqlite.lua",
-			"nvim-telescope/telescope.nvim",
-			"stevearc/dressing.nvim", -- optional: better UI
-		},
-		event = { "BufReadPost", "BufNewFile" }, -- needed for bookmarks rendering
-		cmd = {
-			"BookmarksCommands",
-			"BookmarksGrep",
-			"BookmarksInfo",
-			"BookmarksLists",
-			"BookmarksNewLists",
-			"BookmarksQuery",
-		},
-		config = function()
-			require("bookmarks").setup() -- required for DB initailization
-		end,
-	},
-
 	-- Misc
 
 	{ "tpope/vim-sensible", event = "VimEnter" },
@@ -220,21 +157,6 @@ return {
 				filter = {},
 			},
 		},
-	},
-	{
-		"hat0uma/csvview.nvim",
-		cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
-		keys = {
-			{
-				"<Localleader>v",
-				"<Cmd>CsvViewToggle<CR>",
-				desc = "Toggle CSV table [v]iew",
-				ft = { "csv", "tsv" },
-			},
-		},
-		---@module "csvview"
-		---@type CsvView.Options
-		opts = { parser = { quote_char = '"' } }, -- somehow needs to be specified
 	},
 	{ "0xferrous/ansi.nvim", cmd = { "AnsiEnable", "AnsiToggle" } },
 }

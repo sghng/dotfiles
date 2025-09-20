@@ -1,6 +1,6 @@
 ---@type LazySpec
 return {
-	{ "tummetott/unimpaired.nvim", event = { "BufReadPost", "BufNewFile" } },
+	{ "tpope/vim-unimpaired", event = { "BufReadPost", "BufNewFile" } },
 	-- sets shiftwidth expandtab heuristically
 	{ "tpope/vim-sleuth", event = { "BufReadPost", "BufNewFile" } },
 	{

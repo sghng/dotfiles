@@ -1,2 +1,5 @@
 lazyvim.json
 lazy-lock.json
+
+.repro/
+repro.lua

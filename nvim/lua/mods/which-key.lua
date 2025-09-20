@@ -3,6 +3,7 @@ return {
 	"folke/which-key.nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	-- we want this plugin to be loaded for keymaps hints
+	lazy = false,
 	event = "VeryLazy",
 	keys = { {
 		"<Leader>?",
@@ -23,9 +24,7 @@ return {
 		},
 		spec = {
 			-- common groupings
-			{ "<Leader>b", group = "buffer" },
-			{ "<Leader>f", group = "[f]ind (with Telescope)" },
-			{ "<Leader>g", group = "[g]it" },
+			{ "<Leader>b", group = "[b]uffer" },
 			{ "<Localleader>o", group = "[o]bsidian" },
 			{ "[", group = "Jump to the previous..." },
 			{ "]", group = "Jump to the next..." },

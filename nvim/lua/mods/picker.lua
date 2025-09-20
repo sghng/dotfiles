@@ -8,10 +8,16 @@ local key_defs = {
 	{ "k", "keymaps", "[k]eymaps" },
 	{ "s", "symbols", "[s]ymbols" },
 	{ "m", "", "[m]ore in Telescope" },
-	{ "n", "<Cmd>Noice telescope<CR>", "[n]otifications in Telescope" },
 }
 ---@type LazyKeysSpec[]
-local keys = { { "<Leader>t", "<Cmd>Telescope<CR>", desc = "Telescope" } }
+local keys = {
+	{ "<Leader>t", "<Cmd>Telescope<CR>", desc = "Telescope" },
+	{
+		"<Leader>fn",
+		"<Cmd>Noice telescope<CR>",
+		desc = "[f]ind [n]otifications in Telescope",
+	},
+}
 for _, def in ipairs(key_defs) do
 	table.insert(keys, {
 		"<Leader>f" .. def[1],
@@ -19,6 +25,7 @@ for _, def in ipairs(key_defs) do
 		desc = "[f]ind " .. def[3],
 	})
 end
+wk_add({ "<Leader>f", group = "[f]ind (with Telescope)" })
 
 ---@type LazySpec
 return {
@@ -33,7 +40,6 @@ return {
 	build = "brew install rg fd", -- for extended functionality
 	cmd = "Telescope",
 	keys = keys,
-	---@module "telescope"
 	opts = {
 		defaults = {
 			layout_strategy = "flex",
@@ -46,6 +52,14 @@ return {
 					preview_cutoff = 30,
 					preview_width = 0.6,
 				},
+			},
+		},
+		extensions = {
+			---@module 'telescope._extensions.lazy_plugins'
+			---@type TelescopeLazyPluginsUserConfig
+			-- BUG: this isn't working! error msg saying mods can't be found
+			lazy_plugins = {
+				lazy_config = vim.fn.stdpath("config") .. "/lua/init.lua",
 			},
 		},
 	},

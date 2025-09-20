@@ -7,7 +7,7 @@ return {
 		options = {
 			globalstatus = true,
 			theme = "gruvbox-material",
-			disabled_filetypes = { winbar = { "neo-tree" } },
+			disabled_filetypes = { winbar = { "neo-tree", "codecompanion" } },
 		},
 		extensions = {
 			"aerial",

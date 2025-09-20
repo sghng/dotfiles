@@ -1,7 +1,10 @@
-# Guidelines for NeoVim Config
+# Guidelines for Neovim Config
 
 - Use Vim script, unless Lua does it absolutely better.
-- If in Lua, use NeoVim API whenever possible (avoid `vim.cmd()`).
+- If in Lua, use Neovim API whenever possible (avoid `vim.cmd()`).
+- Use `---@xxx` for annotations, as used in
+  [LuaLS documentation](https://luals.github.io/wiki/annotations/), the style
+  used in Neovim repo (`--- @xxx`) is incorrect.
 - If a plugin doesn't need config (e.g. `plenary.nvim`), or only one plugin
   depends on it (e.g. `twilight.nvim`), put it in the spec of the plugin that
   depends on it.
@@ -17,7 +20,7 @@
   according to [documentation](https://lazy.folke.io/spec#spec-setup).
 - Describe every kep mapping, and emphasize the mnemonics, e.g. `af` is
   described by `Select [a] [f]unction`
-- When specifying key mappings, mimic NeoVim documentation style to capitalize
+- When specifying key mappings, mimic Neovim documentation style to capitalize
   key names, i.e. prefer `<Leader>`, `<C-v>`, `<Cmd>`, and `<CR>`.
 - For file editing related plugins, `BufReadPost` and `BufNewFile` should be
   used to load them, because `BufEnter` and `BufNew` events are emitted when

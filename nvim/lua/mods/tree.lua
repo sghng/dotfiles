@@ -65,9 +65,7 @@ return {
 		},
 	},
 	{
-		-- update import paths when renaming files
-		-- FIXME: somehow doesn't work without manually reloading, see
-		-- https://github.com/antosha417/nvim-lsp-file-operations/issues/44
+		-- Update import paths when renaming files
 		"antosha417/nvim-lsp-file-operations",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -75,5 +73,13 @@ return {
 		},
 		event = "LspAttach",
 		opts = {}, -- required
+	},
+	{
+		"stevearc/oil.nvim",
+		dependencies = "nvim-tree/nvim-web-devicons",
+		cmd = "Oil",
+		---@module 'oil'
+		---@type oil.SetupOpts
+		opts = { default_file_explorer = false },
 	},
 }

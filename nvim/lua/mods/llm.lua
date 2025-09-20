@@ -1,4 +1,5 @@
----@type LazySpec
+--- LLM related utilities
+--- @type LazySpec
 return {
 	{
 		"olimorris/codecompanion.nvim",
@@ -30,19 +31,24 @@ return {
 			---@type CodeCompanion.Strategies
 			---@diagnostic disable-next-line: missing-fields
 			strategies = {
-				chat = { adapter = "anthropic" },
-				inline = { adapter = "anthropic" },
+				chat = { adapter = "anthropic", model = "claude-sonnet-4-0" },
+				inline = { adapter = "anthropic", model = "claude=sonnet-4-0" },
 			},
 			adapters = {
-				anthropic = function()
-					return require("codecompanion.adapters").extend("anthropic", {
-						env = {
-							api_key = "cmd:op read op://dev/anthropic/adapta --no-newline",
-						},
-						schema = { extended_thinking = { default = false } },
-					})
-				end,
+				http = {
+					anthropic = function()
+						return require("codecompanion.adapters").extend("anthropic", {
+							env = {
+								api_key = "cmd:op read op://dev/anthropic-adapta/credential",
+							},
+							schema = { extended_thinking = { default = false } },
+						})
+					end,
+				},
 			},
 		},
+	},
+	{
+		"supermaven-inc/supermaven-nvim",
 	},
 }

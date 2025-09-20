@@ -1,3 +1,5 @@
+wk_add({ "<Leader>g", group = "[g]it" })
+
 ---@type LazySpec
 return {
 	{
@@ -31,6 +33,8 @@ return {
 	},
 	{
 		"NeogitOrg/neogit",
+		-- dir = "~/dev/neogit",
+		-- dev = true,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"sindrets/diffview.nvim",

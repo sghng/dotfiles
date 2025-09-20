@@ -89,56 +89,7 @@ return {
 
 	-- LSP Utilities
 
-	-- BUG: trouble.nvim not working in Neovim nighly now.
-	-- https://github.com/folke/trouble.nvim/issues/655
-	-- TODO: we might need better key mappings
-	-- NOTE: best thing about trouble picker: preview in real time as we
-	-- navigate the picker
-	-- FIXME: trouble background is not transparent
 	{
-		"folke/trouble.nvim",
-		cmd = "Trouble",
-		keys = {
-			{
-				"<Leader>xp",
-				vim.diagnostic.open_float,
-				desc = "Diagnostics [p]opup",
-			},
-			{
-				"<Leader>xx",
-				"<Cmd>Trouble diagnostics toggle<CR>",
-				desc = "Diagnostics (Trouble)",
-			},
-			{
-				"<Leader>xX",
-				"<Cmd>Trouble diagnostics toggle filter.buf=0<CR>",
-				desc = "Buffer Diagnostics (Trouble)",
-			},
-			{
-				"<Leader>cs",
-				"<Cmd>Trouble symbols toggle focus=false<CR>",
-				desc = "Symbols (Trouble)",
-			},
-			{
-				"<Leader>cl",
-				"<Cmd>Trouble lsp toggle focus=false win.position=right<CR>",
-				desc = "LSP Definitions / references / ... (Trouble)",
-			},
-			{
-				"<Leader>xL",
-				"<Cmd>Trouble loclist toggle<CR>",
-				desc = "Location List (Trouble)",
-			},
-			{
-				"<Leader>xQ",
-				"<Cmd>Trouble qflist toggle<CR>",
-				desc = "Quickfix List (Trouble)",
-			},
-		},
-		opts = {}, -- required
-	},
-	{
-		-- provides a few LSP features additional to Trouble:
 		-- context breadcrumb, call hierarchy, code action,
 		-- definitions peeking (Trouble can't display this in hover)
 		-- not actively maintained
@@ -149,6 +100,11 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 		},
 		cmd = "Lspsaga",
+		keys = {
+			"<Leader>lo",
+			"<Cmd>Lspsaga outline<CR>",
+			desc = "[l]ist [o]utline (LSPSaga)",
+		},
 		opts = {
 			lightbulb = { enable = false }, -- takes up to much space
 			symbol_in_winbar = {
@@ -161,9 +117,11 @@ return {
 	{
 		-- TODO: could be helpful
 		"stevearc/aerial.nvim",
+		event = "LspAttach",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-tree/nvim-web-devicons",
 		},
+		opts = {}, -- required
 	},
 }

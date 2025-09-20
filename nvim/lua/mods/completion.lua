@@ -16,16 +16,18 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "omni" },
 				providers = {
-					-- display snippets according to embedded language, see:
-					-- https://github.com/nvim-treesitter/nvim-treesitter/discussions/6643
-					-- https://github.com/Saghen/blink.cmp/issues/1679
 					snippets = {
 						opts = {
-							get_filetype = function(context)
-								local curline = vim.fn.line(".")
-								local lang =
-									vim.treesitter.get_parser():language_for_range({ curline, 0, curline, 0 }):lang()
-								return lang
+							get_filetype = function()
+								local success, parser = pcall(vim.treesitter.get_parser)
+								if success and parser then
+									local curline = vim.fn.line(".")
+									local lang = parser:language_for_range({ curline, 0, curline, 0 }):lang()
+									if lang ~= "" then
+										return lang
+									end
+								end
+								return vim.bo.filetype -- fall back to filetype
 							end,
 						},
 					},

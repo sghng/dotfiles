@@ -1,14 +1,20 @@
 local linters_by_ft = {
-	fish = { "fish" },
 	bash = { "bash" },
-	vim = { "vint" },
+	fish = { "fish" },
 	markdown = { "markdownlint-cli2", "cspell" },
+	quarto = { "markdownlint-cli2", "cspell" },
 	text = { "vale" },
+	vim = { "vint" },
 	["*"] = { "cspell" },
 }
-
-for _, ft in ipairs({ "css", "json", "javascript", "typescript", "vue" }) do
+-- eslint only
+for _, ft in ipairs({ "css", "json" }) do
 	linters_by_ft[ft] = { "eslint_d" }
+end
+-- both eslint and oxlint
+-- TODO: if eslint config is not present, enable oxlint only
+for _, ft in ipairs({ "javascript", "typescript", "vue" }) do
+	linters_by_ft[ft] = { "eslint_d", "oxlint" }
 end
 
 ---@type LazySpec

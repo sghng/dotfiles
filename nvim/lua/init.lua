@@ -1,3 +1,5 @@
+-- VENDORED CODE START
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if vim.fn.isdirectory(lazypath) == 0 then
@@ -22,9 +24,13 @@ if vim.fn.isdirectory(lazypath) == 0 then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- VENDORED CDOE END
+
+require("utils") -- load global util functions
 require("lazy").setup({
-	spec = { { import = "plugins" } },
-	install = { colorscheme = { "gruvbox-material" } },
+	spec = { { import = "mods" }, { import = "ft" } },
+	-- the builtin theme closest to gruvbox
+	install = { colorscheme = { "retrobox" } },
 	checker = { enabled = true, frequency = 86400 }, -- check updates everyday
 	-- disbale Netrw in favor of Neo tree
 	performance = { rtp = { disabled_plugins = { "netrwPlugin" } } },
