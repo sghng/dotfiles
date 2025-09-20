@@ -14,9 +14,13 @@ return {
 			"CodeCompanionCmd",
 		},
 		keys = {
-			{ "<C-a>", "<Cmd>CodeCompanionActions<CR>", mode = { "n", "v" } },
 			{
-				"<Leader>a",
+				"<Leader>aa",
+				"<Cmd>CodeCompanionActions<CR>",
+				mode = { "n", "v" },
+			},
+			{
+				"<Leader>ac",
 				"<Cmd>CodeCompanionChat Toggle<CR>",
 				mode = { "n", "v" },
 			},
@@ -25,6 +29,13 @@ return {
 		},
 		init = function()
 			vim.cmd.cab("cc", "CodeCompanion")
+			-- HACK: work around for colorcolumn
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "CodeCompanionChatOpened",
+				callback = function()
+					vim.opt_local.colorcolumn = ""
+				end,
+			})
 		end,
 		opts = {
 			---@module "codecompanion"

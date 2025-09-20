@@ -3,7 +3,6 @@ let mapleader=" "
 lua require("init")  -- load all Lua configs
 
 " custom configs come later to override plugin defaults
-
 set colorcolumn=81,101,121
 set mouse=a
 set signcolumn=yes:2
