@@ -8,6 +8,7 @@ palette = "gruvbox_dark"
 
 # prefer coloring modules in main format string to decouple them
 # prefer margin without module over padding within
+# we use basic string here to align elements with spaces
 
 format = """
 [ $os( $username)](              bg:color_orange                 )\
@@ -16,7 +17,7 @@ format = """
                             []( bg:color_aqua   fg:color_yellow )\
 [( $git_branch( $git_status) )]( bg:color_aqua   fg:color_fg0    )\
                             []( bg:color_blue   fg:color_aqua   )\
-[( $bun$c$nodejs$java$python$lua$rlang\
+[( $bun$c$cmake$cpp$java$lua$nodejs$python$quarto$rlang\
                              )]( bg:color_blue   fg:color_fg0    )\
                             []( bg:color_bg3    fg:color_blue   )\
                 [$conda$docker]( bg:color_bg3    fg:color_fg0    )\
@@ -97,37 +98,49 @@ format = "($all_status$ahead_behind)"
 
 [bun]
 symbol = " "
-format = "$symbol($version) "
-
-[nodejs]
-symbol = " "
-format = "$symbol($version) "
-
-[java]
-symbol = " "
-format = "$symbol($version) "
+format = "$symbol$version "
+style = "bold red"
 
 [c]
 symbol = " "
-format = "$symbol($version) "
+format = "$symbol$version "
 
-[python]
-symbol = " "
-format = "${symbol}${pyenv_prefix}(${version} )(\\($virtualenv\\) )"
+[cpp]
+symbol = " "
+format = "$symbol$version(-$name) "
 
-[rlang]
-symbol = " "
-format = "$symbol($version) "
+[cmake]
+symbol = " "
+format = "$symbol$version "
+
+[java]
+symbol = " "
+format = "$symbol$version "
 
 [lua]
 symbol = " "
-format = "$symbol($version) "
+format = "$symbol$version "
+
+[nodejs]
+symbol = " "
+format = "$symbol$version "
+
+[python]
+symbol = " "
+format = "$symbol$pyenv_prefix$version( \\($virtualenv\\)) "
+
+[quarto]
+format = "$symbol$version "
+
+[rlang]
+symbol = " "
+format = "$symbol$version "
 
 # ENVIRONMENTS
 
 [conda]
 symbol = " "
-format = "$symbol($environment)"
+format = "$symbol$environment"
 
 # MISC
 
