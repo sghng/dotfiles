@@ -1,11 +1,16 @@
+#!/usr/bin/env fish
 # script used to initialize the environment
 
+# $d is the dir for dotfiles
 set -l d (realpath (dirname (status -f)))
 
-for c in .zshrc .zprofile .tmux.conf .wezterm.lua cspell.config.yaml
+# these go into home dir
+for c in .ipython .mambarc .tmux.conf .wezterm.lua .zprofile .zshrc \
+    cspell.config.yaml
     ln -sf $d/$c ~
 end
 
+# these go into config dir
 for c in ghostty kitty alacritty rio nvim neovide starship.toml
     ln -sf $d/$c ~/.config/
 end
