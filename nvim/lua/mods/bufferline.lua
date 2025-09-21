@@ -17,7 +17,8 @@ table.insert(keys, {
 return {
 	"akinsho/bufferline.nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
-	event = "UIEnter",
+	-- load before UIEnter in Neovide for correct bg
+	event = vim.g.neovide and "ColorScheme" or { "BufReadPost", "BufNewFile" },
 	keys = keys,
 	init = function()
 		vim.opt.termguicolors = true
