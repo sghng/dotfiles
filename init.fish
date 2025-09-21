@@ -5,8 +5,7 @@
 set -l d (realpath (dirname (status -f)))
 
 # these go into home dir
-for c in .ipython .mambarc .tmux.conf .wezterm.lua .zprofile .zshrc \
-    cspell.config.yaml
+for c in .ipython .mambarc .tmux.conf .wezterm.lua cspell.config.yaml
     ln -sf $d/$c ~
 end
 
