@@ -52,6 +52,14 @@ return {
 					["P"] = { "toggle_preview", config = { use_image_nvim = true } },
 				},
 			},
+			event_handlers = {
+				{
+					event = "neo_tree_buffer_enter",
+					handler = function()
+						vim.opt_local.relativenumber = true
+					end,
+				},
+			},
 			---@diagnostic disable-next-line: missing-fields
 			source_selector = { winbar = true }, -- statusline is taken
 		},
