@@ -28,30 +28,46 @@ end
 
 ---@type LazySpec
 return {
-	"stevearc/conform.nvim",
-	cmd = "ConformInfo",
-	event = "BufWritePre", -- in case format on save
-	keys = {
-		{
-			"<Leader>cf", -- avoid prefix conflict with Telescope
-			function()
-				require("conform").format()
-			end,
-			desc = "[c]ode [f]ormat (Conform)",
+	{
+		"stevearc/conform.nvim",
+		dependencies = "WhoIsSethDaniel/mason-tool-installer.nvim",
+		cmd = "ConformInfo",
+		event = "BufWritePre", -- in case format on save
+		keys = {
+			{
+				"<Leader>cf", -- avoid prefix conflict with Telescope
+				function()
+					require("conform").format()
+				end,
+				desc = "[c]ode [f]ormat (Conform)",
+			},
 		},
-	},
-	---@module "conform"
-	---@type conform.setupOpts
-	opts = {
-		formatters_by_ft = formatters_by_ft,
-		default_format_opts = { async = true, lsp_format = "fallback" },
-		format_on_save = { async = false, lsp_format = "fallback" },
-		formatters = {
-			prettierd = {
-				env = {
-					PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("$DOTS/.prettierrc.yaml"),
+		---@module "conform"
+		---@type conform.setupOpts
+		opts = {
+			formatters_by_ft = formatters_by_ft,
+			default_format_opts = { async = true, lsp_format = "fallback" },
+			format_on_save = { async = false, lsp_format = "fallback" },
+			formatters = {
+				prettierd = {
+					env = {
+						PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("$DOTS/.prettierrc.yaml"),
+					},
 				},
 			},
+		},
+	},
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		lazy = true,
+		opts_extend = { "ensure_installed" },
+		opts = {
+			ensure_installed = {
+				"prettierd",
+				"shfmt",
+				"typstyle", -- Typst
+			},
+			auto_update = true,
 		},
 	},
 }

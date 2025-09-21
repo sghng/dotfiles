@@ -9,7 +9,6 @@ return {
 		dependencies = {
 			{ "mason-org/mason.nvim", cmd = "Mason", opts = {} },
 			"neovim/nvim-lspconfig", -- must be manually loaded
-			"WhoIsSethDaniel/mason-tool-installer.nvim", -- ensure tools are installed
 		},
 		-- Language servers should be ready before entering buffer to ensure
 		-- proper syntax highlighting
@@ -64,27 +63,6 @@ return {
 				filetypes = { "typescript", "javascript", "vue" },
 			})
 		end,
-	},
-	{
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		lazy = true,
-		opts = {
-			ensure_installed = {
-				--Linters
-				"checkmake", -- Makefile
-				"cspell",
-				"eslint_d",
-				"markdownlint-cli2",
-				"stylua",
-				"vint", -- Vim script
-				--Formatters
-				"prettier",
-				"prettierd",
-				"shfmt",
-				"typstyle", -- Typst
-			},
-			auto_update = true,
-		},
 	},
 
 	-- LSP Utilities
