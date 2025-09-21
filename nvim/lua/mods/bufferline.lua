@@ -34,11 +34,18 @@ return {
 				local icon = level:match("error") and " " or " "
 				return " " .. icon .. count
 			end,
-			offsets = { {
-				filetype = "neo-tree",
-				highlight = "Directory",
-				text = "neo-tree",
-			} },
+			offsets = {
+				{
+					filetype = "neo-tree",
+					highlight = "Directory",
+					text = "neo-tree",
+				},
+				{
+					filetype = "codecompanion",
+					highlight = "Question",
+					text = "CodeCompanion",
+				},
+			},
 		},
 		highlights = {
 			-- dim separators
