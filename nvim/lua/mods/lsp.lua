@@ -65,6 +65,10 @@ return {
 		end,
 	},
 
+	-- Non-LSP injected LSP options
+
+	{ "nvimtools/none-ls.nvim", lazy = true },
+
 	-- LSP Utilities
 
 	{

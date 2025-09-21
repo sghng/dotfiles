@@ -5,12 +5,12 @@
 set -l d (realpath (dirname (status -f)))
 
 # these go into home dir
-for c in .ipython .mambarc .tmux.conf .wezterm.lua cspell.config.yaml
+for c in .ipython .mambarc .tmux.conf .wezterm.lua
     ln -sf $d/$c ~
 end
 
 # these go into config dir
-for c in ghostty kitty alacritty rio nvim neovide starship.toml
+for c in alacritty cspell.config.yaml ghostty kitty neovide nvim rio starship.toml
     ln -sf $d/$c ~/.config/
 end
 

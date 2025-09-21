@@ -43,6 +43,15 @@ return {
 		end,
 	},
 	{
+		"davidmh/cspell.nvim",
+		dependencies = "nvimtools/none-ls.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+		config = function()
+			local cspell = require("cspell")
+			require("null-ls").register(cspell.code_actions)
+		end,
+	},
+	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		lazy = true,
 		opts_extend = { "ensure_installed" },
