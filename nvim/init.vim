@@ -23,12 +23,13 @@ if !exists("g:neovide")
 	finish
 endif
 
-hi Normal guibg=#232425 " adapted from Gruvbox Material, not working in Neovide
-
-let g:neovide_opacity = 0.8
-let g:neovide_window_blurred = v:true
 let g:neovide_cursor_vfx_mode = "sonicboom"
 let g:neovide_input_macos_option_key_is_meta = "only_left"
+let g:neovide_opacity = 0.8
+let g:neovide_theme = "dark"
+let g:neovide_window_blurred = v:true
+
+hi Normal guibg=#232425 " BUG: setting guibg works only in dark mode
 
 noremap  <silent><D-n> <Cmd>call jobstart(["neovide"])<CR>
 noremap  <silent><D-w> <Cmd>q<CR>
