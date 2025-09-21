@@ -21,8 +21,7 @@ return {
 	event = vim.g.neovide and "ColorScheme" or { "BufReadPost", "BufNewFile" },
 	keys = keys,
 	init = function()
-		vim.opt.termguicolors = true
-		vim.opt.mousemoveevent = true
+		vim.opt.mousemoveevent = true -- required for hovering
 	end,
 	---@module "bufferline"
 	---@type bufferline.UserConfig

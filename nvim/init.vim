@@ -4,8 +4,7 @@ lua require("init")  -- load all Lua configs
 
 " custom configs come later to override plugin defaults
 set colorcolumn=81,101,121
-set mouse=a
-set signcolumn=yes:2
+set signcolumn=auto:2
 
 " will be overridden by vim-sleuth
 set expandtab
@@ -23,6 +22,8 @@ nnoremap <silent><Leader>bd <Cmd>bdelete<CR>
 if !exists("g:neovide")
 	finish
 endif
+
+hi Normal guibg=#232425 " adapted from Gruvbox Material, not working in Neovide
 
 let g:neovide_opacity = 0.8
 let g:neovide_window_blurred = v:true
