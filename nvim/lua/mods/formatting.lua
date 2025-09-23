@@ -1,11 +1,12 @@
+PRETTIER = "prettier" -- prettier or prettierd
+
 ---@type {[string]: string[]}
 local formatters_by_ft = {
 	fish = { "fish_indent" },
 	lua = { "stylua" },
-	markdown = { "markdownlint-cli2", "prettierd" },
+	markdown = { "markdownlint-cli2", PRETTIER },
 	python = { "ruff_organize_imports", "ruff_format" }, -- don't remove imports
-	-- FIXME: Prettier reports "no parser" for Quarto
-	quarto = { "injected", "prettierd" },
+	quarto = { "injected", PRETTIER },
 	r = { "air" },
 	toml = { "taplo" },
 	["_"] = { "trim_whitespace", "trim_newlines" },
@@ -20,10 +21,11 @@ for _, ft in ipairs({
 	"json",
 	"javascript",
 	"typescript",
+	"svg",
 	"vue",
 	"yaml",
 }) do
-	formatters_by_ft[ft] = { "prettierd" }
+	formatters_by_ft[ft] = { PRETTIER }
 end
 
 ---@type LazySpec
@@ -51,8 +53,30 @@ return {
 			formatters = {
 				prettierd = {
 					env = {
+						-- BUG: overrides in default config are not respected
+						-- https://github.com/fsouza/prettierd/issues/941
 						PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("$DOTS/.prettierrc.yaml"),
 					},
+				},
+				prettier = {
+					-- HACK: manually search for config files, if not present,
+					-- fallback to global default.
+					prepend_args = function(_, ctx)
+						local error = vim.system({
+							"prettier",
+							"--find-config-path",
+							ctx.filename,
+						}, { text = true })
+							:wait().stderr
+						if error == "" then
+							return {}
+						else
+							return {
+								"--config",
+								vim.fn.expand("$DOTS/.prettierrc.yaml"),
+							}
+						end
+					end,
 				},
 			},
 		},
@@ -63,6 +87,7 @@ return {
 		opts_extend = { "ensure_installed" },
 		opts = {
 			ensure_installed = {
+				"prettier",
 				"prettierd",
 				"shfmt",
 				"typstyle", -- Typst

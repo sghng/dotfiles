@@ -1,1 +1,8 @@
 proseWrap: always
+overrides:
+  - files: "*.qmd"
+    options:
+      parser: "markdown"
+  - files: "*.svg"
+    options:
+      parser: "html"
