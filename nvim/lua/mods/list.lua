@@ -21,7 +21,19 @@ end
 
 --- @type LazySpec
 return {
-	{ "folke/trouble.nvim", cmd = "Trouble", keys = keys, opts = {} },
+	{
+		"folke/trouble.nvim",
+		cmd = "Trouble",
+		keys = keys,
+		event = "InsertEnter",
+		config = function()
+			require("trouble").setup({})
+			vim.cmd("hi clear TroubleNormal")
+			vim.cmd("hi link TroubleNormal Normal")
+			vim.cmd("hi clear TroubleNormalNC")
+			vim.cmd("hi link TroubleNormalNC Normal")
+		end,
+	},
 	{ "stevearc/quicker.nvim", ft = { "lf", "qf" } },
 	{ "kevinhwang91/nvim-bqf", ft = { "lf", "qf" } },
 	{
