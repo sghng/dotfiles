@@ -36,29 +36,4 @@ return {
 			term = { enabled = true }, -- term completion disabled by default
 		},
 	},
-	{
-		"fang2hou/blink-copilot",
-		dependencies = {
-			{ "zbirenbaum/copilot.lua", cmd = "Copilot", opts = {} },
-			{
-				"saghen/blink.cmp",
-				---@module "blink-cmp"
-				---@type blink.cmp.Config
-				opts = {
-					sources = {
-						default = { "copilot" },
-						providers = {
-							copilot = {
-								name = "copilot",
-								module = "blink-copilot",
-								async = true,
-							},
-						},
-					},
-				},
-				opts_extend = { "sources.default" },
-			},
-		},
-		event = "InsertEnter",
-	},
 }

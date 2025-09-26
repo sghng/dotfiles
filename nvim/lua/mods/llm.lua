@@ -43,7 +43,7 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			strategies = {
 				chat = { adapter = "anthropic", model = "claude-sonnet-4-0" },
-				inline = { adapter = "anthropic", model = "claude=sonnet-4-0" },
+				inline = { adapter = "anthropic", model = "claude-sonnet-4-0" },
 			},
 			adapters = {
 				http = {
@@ -60,6 +60,51 @@ return {
 		},
 	},
 	{
-		"supermaven-inc/supermaven-nvim",
+		"zbirenbaum/copilot.lua",
+		dependencies = "copilotlsp-nvim/copilot-lsp",
+		cmd = "Copilot",
+		event = "TextChanged",
+		---@module "copilot"
+		---@type CopilotConfig
+		---@diagnostic disable: missing-fields
+		opts = {
+			nes = {
+				enabled = true,
+				keymap = {
+					accept_and_goto = "<Leader>p",
+					accept = false,
+					dismiss = "<Esc>",
+				},
+			},
+		},
+		---@diagnostic enable: missing-fields
+		config = function(_, opts)
+			require("copilot").setup(opts)
+		end,
+	},
+	{
+		"fang2hou/blink-copilot",
+		dependencies = {
+			"zbirenbaum/copilot.lua",
+			{
+				"saghen/blink.cmp",
+				---@module "blink-cmp"
+				---@type blink.cmp.Config
+				opts = {
+					sources = {
+						default = { "copilot" },
+						providers = {
+							copilot = {
+								name = "copilot",
+								module = "blink-copilot",
+								async = true,
+							},
+						},
+					},
+				},
+				opts_extend = { "sources.default" },
+			},
+		},
+		event = "InsertEnter",
 	},
 }
