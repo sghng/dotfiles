@@ -90,6 +90,7 @@ return {
 				"prettier",
 				"prettierd",
 				"shfmt",
+				"stylua",
 				"typstyle", -- Typst
 			},
 			auto_update = true,

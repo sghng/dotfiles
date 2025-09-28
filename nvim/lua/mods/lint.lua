@@ -61,7 +61,7 @@ return {
 				"cspell",
 				"eslint_d",
 				"markdownlint-cli2",
-				"stylua",
+				"selene", -- Lua
 				"vint", -- Vim script
 			},
 			auto_update = true,
