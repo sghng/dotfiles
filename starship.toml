@@ -6,31 +6,27 @@ add_newline = false
 
 palette = "gruvbox_dark"
 
-# prefer coloring modules in main format string to decouple them
-# prefer margin without module over padding within
-# we use basic string here to align elements with spaces
+# use basic string here to align elements with spaces
 
 format = """
-[ $os( $username)](              bg:color_orange                 )\
-                            []( bg:color_yellow fg:color_orange )\
-                 [ $directory ]( bg:color_yellow fg:color_fg0    )\
-                            []( bg:color_aqua   fg:color_yellow )\
-[( $git_branch( $git_status) )]( bg:color_aqua   fg:color_fg0    )\
-                            []( bg:color_blue   fg:color_aqua   )\
-[( $bun$c$cmake$cpp$java$lua$nodejs$python$quarto$rlang\
-                             )]( bg:color_blue   fg:color_fg0    )\
-                            []( bg:color_bg3    fg:color_blue   )\
-                [$conda$docker]( bg:color_bg3    fg:color_fg0    )\
-                            []( bg:color_green  fg:color_bg3    )\
-                    [( $jobs )]( bg:color_green  fg:color_fg0    )\
-                            [](                 fg:color_green  )\
+[ $os( $username)](              bg:orange                       )\
+                            []( bg:yellow       fg:prev_bg      )\
+                 [ $directory ]( bg:prev_bg      fg:bright-white )\
+                            []( bg:cyan         fg:prev_bg      )\
+[( $git_branch( $git_status) )]( bg:prev_bg      fg:bright-white )\
+$bun$c$cmake$cpp$java$lua$nodejs$python$quarto$rlang\
+                            []( bg:bright-black fg:prev_bg      )\
+                [$conda$docker]( bg:prev_bg      fg:bright-white )\
+                            []( bg:green        fg:prev_bg      )\
+                    [( $jobs )]( bg:prev_bg      fg:bright-white )\
+                            [](                 fg:prev_bg      )\
 $fill\
-                            [](                 fg:color_red    )\
-                  [( $status )]( bg:color_red    fg:color_fg0    )\
-                            []( bg:color_red    fg:color_purple )\
-            [( $cmd_duration )]( bg:color_purple fg:color_fg0    )\
-                            []( bg:color_purple fg:color_bg1    )\
-                      [ $time ]( bg:color_bg1    fg:color_fg0    )\
+                            [](                 fg:red          )\
+                  [( $status )]( bg:red          fg:bright-white )\
+                            []( bg:red          fg:purple       )\
+            [( $cmd_duration )]( bg:purple       fg:bright-white )\
+                            []( bg:prev_bg      fg:black        )\
+                      [ $time ]( bg:black        fg:bright-white )\
 $line_break $shell
 """
 
@@ -96,45 +92,46 @@ format = "($all_status$ahead_behind)"
 
 # LANGUAGES
 
+# TODO: use a script to generate language modules
+
 [bun]
 symbol = " "
-format = "$symbol$version "
-style = "bold red"
+format = "([](bg:#791A49 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [c]
 symbol = " "
-format = "$symbol$version "
+format = "([](bg:#1C4679 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [cpp]
 symbol = " "
-format = "$symbol$version(-$name) "
+format = "([](bg:#00599C fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [cmake]
 symbol = " "
-format = "$symbol$version "
+format = "([](bg:#DF3C3C fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [java]
 symbol = " "
-format = "$symbol$version "
+format = "([](bg:#ED8B00 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [lua]
 symbol = " "
-format = "$symbol$version "
+format = "([](bg:#000080 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [nodejs]
 symbol = " "
-format = "$symbol$version "
+format = "([](bg:#339933 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [python]
 symbol = " "
-format = "$symbol$pyenv_prefix$version( \\($virtualenv\\)) "
+format = "([](bg:#FFD43B fg:prev_bg)[ $symbol$pyenv_prefix$version( \\($virtualenv\\)) ](bg:prev_bg fg:bright-white))"
 
 [quarto]
-format = "$symbol$version "
+format = "([](bg:#447099 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [rlang]
 symbol = " "
-format = "$symbol$version "
+format = "([](bg:#3867B6 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 # ENVIRONMENTS
 
@@ -161,13 +158,5 @@ vimcmd_visual_symbol = "[](bold fg:color_yellow)"
 # PALLETE
 
 [palettes.gruvbox_dark]
-color_fg0 = "#fbf1c7"
-color_bg1 = "#3c3836"
-color_bg3 = "#665c54"
-color_blue = "#458588"
-color_aqua = "#689d6a"
-color_green = "#98971a"
-color_orange = "#d65d0e"
-color_purple = "#b16286"
-color_red = "#cc241d"
-color_yellow = "#d79921"
+black = "#3c3836"
+orange = "#d65d0e"
