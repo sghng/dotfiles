@@ -1,6 +1,13 @@
 ---@type LazySpec
 return {
-	{ "tpope/vim-unimpaired", event = { "BufReadPost", "BufNewFile" } },
+	{
+		"tpope/vim-unimpaired",
+		dependencies = "afreakk/unimpaired-which-key.nvim",
+		event = "BufEnter",
+		config = function()
+			require("which-key").add(require("unimpaired-which-key"))
+		end,
+	},
 	-- sets shiftwidth expandtab heuristically
 	{ "tpope/vim-sleuth", event = { "BufReadPost", "BufNewFile" } },
 	{
