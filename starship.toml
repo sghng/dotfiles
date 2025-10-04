@@ -10,18 +10,18 @@ format = """
 [ $os( $username)](              bg:orange                  )\
                             []( bg:yellow  fg:prev_bg      )\
                  [ $directory ]( bg:prev_bg fg:bright-white )\
-                            []( bg:cyan    fg:prev_bg      )\
-[( $git_branch( $git_status) )]( bg:prev_bg fg:bright-white )\
+                           ([]( bg:cyan    fg:prev_bg      )\
+[( $git_branch( $git_status) )]( bg:prev_bg fg:bright-white ))\
 \
 $bun$c$cpp$cmake$java$lua$nodejs$python$quarto$rlang$conda\
 \
-                            []( bg:green   fg:prev_bg      )\
-                    [( $jobs )]( bg:prev_bg fg:bright-white )\
+                           ([]( bg:green   fg:prev_bg      )\
+                    [( $jobs )]( bg:prev_bg fg:bright-white ))\
                             [](            fg:prev_bg      )\
 $fill\
-                            [](            fg:red          )\
-                  [( $status )]( bg:red     fg:bright-white )\
-                            []( bg:red     fg:purple       )\
+                           ([](            fg:red          )\
+                  [( $status )]( bg:red     fg:bright-white ))\
+                            []( bg:prev_bg fg:purple       )\
             [( $cmd_duration )]( bg:purple  fg:bright-white )\
                             []( bg:prev_bg fg:black        )\
                       [ $time ]( bg:black   fg:bright-white )\
