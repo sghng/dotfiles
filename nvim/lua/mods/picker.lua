@@ -11,6 +11,7 @@ local key_defs = {
 }
 ---@type LazyKeysSpec[]
 local keys = {
+	{ "<Leader>f", "<Nop>", desc = "[f]ind (with Telescope)" },
 	{ "<Leader>t", "<Cmd>Telescope<CR>", desc = "Telescope" },
 	{
 		"<Leader>fn",
@@ -25,7 +26,6 @@ for _, def in ipairs(key_defs) do
 		desc = "[f]ind " .. def[3],
 	})
 end
-wk_add({ "<Leader>f", group = "[f]ind (with Telescope)" })
 
 ---@type LazySpec
 return {
