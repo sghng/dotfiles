@@ -1,4 +1,4 @@
-PRETTIER = "prettier" -- prettier or prettierd
+local PRETTIER = "prettierd" -- prettier or prettierd
 
 ---@type {[string]: string[]}
 local formatters_by_ft = {
@@ -14,6 +14,10 @@ local formatters_by_ft = {
 
 for _, ft in ipairs({ "sh", "zsh" }) do
 	formatters_by_ft[ft] = { "shfmt" }
+end
+
+for _, ft in ipairs({ "tex", "sty", "bib" }) do
+	formatters_by_ft[ft] = { "tex-fmt" }
 end
 
 for _, ft in ipairs({
@@ -53,13 +57,11 @@ return {
 			formatters = {
 				prettierd = {
 					env = {
-						-- BUG: overrides in default config are not respected
-						-- https://github.com/fsouza/prettierd/issues/941
 						PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("$DOTS/.prettierrc.yaml"),
 					},
 				},
 				prettier = {
-					-- HACK: manually search for config files, if not present,
+					-- Manually search for config files, if not present,
 					-- fallback to global default.
 					prepend_args = function(_, ctx)
 						local error = vim.system({
@@ -91,6 +93,7 @@ return {
 				"prettierd",
 				"shfmt",
 				"stylua",
+				"tex-fmt", -- LaTeX
 				"typstyle", -- Typst
 			},
 			auto_update = true,
