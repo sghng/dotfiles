@@ -1,4 +1,2 @@
 changeps1: False  # handled by Starship
 use_uv: True
-
-# vim: set ft=yaml
