@@ -158,13 +158,12 @@ return {
 		keys = obsidian_keys, -- smart_action bound to <CR> by default
 		event = { "BufReadPost " .. OBSIDIAN_VAULT .. "/**.md" },
 		---@module "obsidian"
-		---@type obsidian.config.ClientOpts
-		---@diagnostic disable: missing-fields
+		---@type obsidian.config
 		opts = {
 			ui = { enable = false }, -- use render-markdown instead
 			workspaces = { { name = "TECH", path = OBSIDIAN_VAULT } },
 			completion = { blink = true, min_chars = 0, create_new = false },
-			disable_frontmatter = true, -- do not mess with front matter
+			frontmatter = { enabled = false },
 			-- TODO: suppresses deprecation warning, should be removed in v4.0
 			legacy_commands = false,
 			note_id_func = function(title)
