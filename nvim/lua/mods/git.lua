@@ -11,13 +11,12 @@ return {
 		end,
 	},
 	{
-		-- NOTE: this plugin also supports some hunk actions
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		cmd = "Gitsigns",
 		keys = {
-			{ "<Leader>]h", "<Cmd>Gitsigns next_hunk<CR>", desc = "Next [h]unk" },
-			{ "<Leader>[h", "<Cmd>Gitsigns prev_hunk<CR>", desc = "Previous [h]unk" },
+			{ "]h", "<Cmd>Gitsigns next_hunk<CR>", desc = "Next [h]unk" },
+			{ "[h", "<Cmd>Gitsigns prev_hunk<CR>", desc = "Previous [h]unk" },
 			{ "<Leader>gb", "<Cmd>Gitsigns blame<CR>", desc = "[g]it [b]lame" },
 			{ "<Leader>gh", "<Cmd>Gitsigns toggle_linehl<CR>", desc = "toggle [g]it hunk [h]ighlight" },
 			{ "<Leader>gd", "<Cmd>Gitsigns diffthis<CR>", desc = "[g]it [d]iff this buffer" },
