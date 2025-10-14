@@ -10,6 +10,8 @@ if status is-interactive
     cursor-agent shell-integration fish
     starship init fish | source
 
+    alias clear='clear -x' # clear should retain history
+
     abbr -a vi nvim
     abbr -a ls lsd
     abbr -a ll lsd -l
