@@ -91,47 +91,47 @@ format = "($all_status$ahead_behind)"
 # >>>
 
 [bun]
-symbol = ""
-format = "([](bg:#791A49 fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#791A49 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [c]
-symbol = ""
-format = "([](bg:#1C4679 fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#1C4679 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [cpp]
-symbol = ""
-format = "([](bg:#00599C fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#00599C fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [cmake]
-symbol = ""
-format = "([](bg:#DF3C3C fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#DF3C3C fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [java]
-symbol = ""
-format = "([](bg:#ED8B00 fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#ED8B00 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [lua]
-symbol = ""
-format = "([](bg:#000080 fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#000080 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [nodejs]
-symbol = ""
-format = "([](bg:#339933 fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#339933 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [python]
-symbol = ""
-format = "([](bg:#987A26 fg:prev_bg)[ $symbol $pyenv_prefix$version( \\($virtualenv\\)) ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#987A26 fg:prev_bg)[ $symbol$pyenv_prefix$version( \\($virtualenv\\)) ](bg:prev_bg fg:bright-white))"
 
 [quarto]
-format = "([](bg:#447099 fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+format = "([](bg:#447099 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [rlang]
-symbol = ""
-format = "([](bg:#3867B6 fg:prev_bg)[ $symbol $version ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#3867B6 fg:prev_bg)[ $symbol$version ](bg:prev_bg fg:bright-white))"
 
 [conda]
-symbol = ""
-format = "([](bg:#53B553 fg:prev_bg)[ $symbol $environment ](bg:prev_bg fg:bright-white))"
+symbol = " "
+format = "([](bg:#53B553 fg:prev_bg)[ $symbol$environment ](bg:prev_bg fg:bright-white))"
 
 # <<<
 

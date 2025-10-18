@@ -10,7 +10,7 @@ class M:
     name: str
     bg: str
     symbol: str = ""
-    fmt: str = "$symbol $version"
+    fmt: str = "$symbol$version"
 
     def __str__(self):
         lines = [f"[{self.name}]"]
@@ -34,13 +34,16 @@ MODULES = [
         "python",
         "#987A26",
         "",
-        r"$symbol $pyenv_prefix$version( \\\\($virtualenv\\\\))",
+        r"$symbol$pyenv_prefix$version( \\\\($virtualenv\\\\))",
     ),
     M("quarto", "#447099"),
     M("rlang", "#3867B6", ""),
-    M("conda", "#53B553", "", "$symbol $environment"),
+    M("conda", "#53B553", "", "$symbol$environment"),
 ]
 
+for m in MODULES:
+    if m.symbol:
+        m.symbol += " "  # Nerd fond symbols need a trailing space
 
 config = Path(argv[1])
 content = config.read_text()
