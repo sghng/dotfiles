@@ -28,11 +28,12 @@ end
 
 # PATH
 fish_add_path /opt/homebrew/bin
+fish_add_path $HOME/.local/bin
 fish_add_path /opt/homebrew/opt/ruby/bin
 fish_add_path /opt/homebrew/lib/ruby/gems/3.4.0/bin
-fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.bun/bin
-fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.cargo/bin
+fish_add_path $HOME/.ghcup/bin
 
 # ENV
 set -x CSPELL_DEFAULT_CONFIG_PATH $HOME/.config/cspell.config.yaml
