@@ -1,14 +1,11 @@
 # the initial-command is executed by bash by default
 initial-command = $SHELL -c "tmux attach -t base; or tmux new -s base; fish"
-font-family = "MonoLisaVariable Nerd Font"
+font-family = MonoLisa Nerd Font
+font-family = Sarasa Mono SC
 font-size = 18
-font-thicken = true
-font-thicken-strength = 100
 background-opacity = 0.8
 background-blur = 30
-# FIXME: gruvbox material has a minor issue in ghost text color
-# theme = gruvbox-material
-theme = GruvboxDark
+theme = Gruvbox Dark
 macos-titlebar-style = transparent
 macos-icon = microchip
 title = " "
