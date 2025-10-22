@@ -1,8 +1,12 @@
 local linters_by_ft = {
 	bash = { "bash" },
 	fish = { "fish" },
+	haskell = { "hlint" },
+	lua = { "selene" },
 	markdown = { "markdownlint-cli2", "cspell" },
 	quarto = { "markdownlint-cli2", "cspell" },
+	ruby = { "rubocup" },
+	rust = { "bacon" },
 	text = { "vale" },
 	vim = { "vint" },
 	["*"] = { "cspell" },
@@ -23,12 +27,15 @@ return {
 		"mfussenegger/nvim-lint",
 		dependencies = "WhoIsSethDaniel/mason-tool-installer.nvim",
 		event = { "BufReadPost", "BufNewFile" },
+		init = function()
+			vim.diagnostic.config({ virtual_text = true })
+		end,
 		config = function()
 			local lint = require("lint")
 			-- certain linters are activated along with language server
 			lint.linters_by_ft = linters_by_ft
 			--- calling the linters with debouncing, inspired by LazyVim
-			local timer = vim.uv.new_timer()
+			local timer = assert(vim.uv.new_timer())
 			vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufWritePost", "BufReadPost" }, {
 				group = vim.api.nvim_create_augroup("Linting", { clear = true }),
 				callback = function()
@@ -39,16 +46,19 @@ return {
 					end)
 				end,
 			})
-			vim.diagnostic.config({ virtual_text = true })
 		end,
 	},
 	{
+		-- does not support YAML config files!
 		"davidmh/cspell.nvim",
+		cond = false,
 		dependencies = "nvimtools/none-ls.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			local cspell = require("cspell")
-			require("null-ls").register(cspell.code_actions)
+			local null_ls = require("null-ls")
+			null_ls.register(cspell.diagnostics)
+			null_ls.register(cspell.code_actions)
 		end,
 	},
 	{
@@ -57,9 +67,11 @@ return {
 		opts_extend = { "ensure_installed" },
 		opts = {
 			ensure_installed = {
+				"bacon", -- Rust
 				"checkmake", -- Makefile
 				"cspell",
 				"eslint_d",
+				"hlint", -- Haskell
 				"markdownlint-cli2",
 				"selene", -- Lua
 				"vint", -- Vim script

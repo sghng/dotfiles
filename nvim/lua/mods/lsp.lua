@@ -21,6 +21,7 @@ return {
 				"clangd",
 				"cssls",
 				"fish_lsp",
+				"hls", -- Haskell
 				"html",
 				"jsonls",
 				"just",
@@ -29,9 +30,13 @@ return {
 				"marksman",
 				"neocmake", -- CMake
 				"oxlint",
+				"rubocop", -- Ruby formatter/linter
+				"ruby_lsp",
 				"ruff", -- Python formatter/linter
+				"rust_analyzer",
 				"tailwindcss",
 				"taplo", -- TOML
+				"texlab", -- LaTeX
 				"ts_ls", -- TypeScript
 				"ty", -- Python LSP/type checker
 				"tinymist", -- Typst LSP
