@@ -9,9 +9,10 @@ return {
 	{
 		"ggandor/leap.nvim",
 		event = { "BufReadPost", "BufNewFile" },
-		config = function()
-			require("leap").set_default_mappings()
-		end,
+		keys = {
+			{ "s", "<Plug>(leap)", mode = { "n", "x", "o" } },
+			{ "S", "<Plug>(leap-from-window)" },
+		},
 	},
 	{
 		"christoomey/vim-tmux-navigator",
