@@ -42,7 +42,9 @@ return {
 					timer:stop()
 					timer:start(500, 0, function()
 						timer:stop()
-						vim.schedule(lint.try_lint)
+						vim.schedule(function()
+							lint.try_lint(nil, { cwd = root() })
+						end)
 					end)
 				end,
 			})
