@@ -16,7 +16,7 @@ return {
 			project = {
 				action = function(path)
 					vim.fn.chdir(path)
-					vim.cmd("Telescope find_files")
+					require("snacks").picker.files()
 				end,
 			},
 			shortcut = {
@@ -31,7 +31,9 @@ return {
 					icon = " ",
 					desc = "Files",
 					group = "@number",
-					action = [[Telescope find_files search_dirs={"~"}]],
+					action = function()
+						require("snacks").picker.smart()
+					end,
 					key = "f",
 				},
 				{

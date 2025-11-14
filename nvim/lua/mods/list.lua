@@ -41,7 +41,6 @@ return {
 		"LintaoAmons/bookmarks.nvim",
 		dependencies = {
 			"kkharji/sqlite.lua",
-			"nvim-telescope/telescope.nvim",
 			"stevearc/dressing.nvim", -- optional: better UI
 		},
 		event = { "BufReadPost", "BufNewFile" }, -- needed for bookmarks rendering
@@ -62,7 +61,6 @@ return {
 		dependencies = "nvim-lua/plenary.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		cmd = {
-			"TodoTelescope",
 			"TodoLocList",
 			"TodoTrouble",
 			"TodoQuickFix",
@@ -70,8 +68,11 @@ return {
 		keys = {
 			{
 				"<Leader>ft",
-				"<Cmd>TodoTelescope<CR>",
-				desc = "[f]ind [t]odos in Telescope",
+				function()
+					-- FIXME: this somehow doesn't work
+					require("snacks").picker.todo_comments()
+				end,
+				desc = "[l]ist [t]odos",
 			},
 			{
 				"<Leader>lt",

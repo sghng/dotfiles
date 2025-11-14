@@ -41,7 +41,7 @@ return {
 		event = "BufWritePre", -- in case format on save
 		keys = {
 			{
-				"<Leader>cf", -- avoid prefix conflict with Telescope
+				"<Leader>cf", -- avoid prefix conflict with pickers
 				function()
 					require("conform").format()
 				end,

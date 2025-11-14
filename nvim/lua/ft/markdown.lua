@@ -152,7 +152,6 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim",
 		},
 		cmd = "Obsidian",
 		keys = obsidian_keys, -- smart_action bound to <CR> by default

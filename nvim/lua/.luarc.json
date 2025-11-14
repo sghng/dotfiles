@@ -1,3 +1,3 @@
 {
-  "diagnostics.globals": ["vim", "unpack"]
+  "diagnostics.globals": ["vim", "Snacks"]
 }
