@@ -37,26 +37,6 @@ return {
 	{ "stevearc/quicker.nvim", ft = { "lf", "qf" } },
 	{ "kevinhwang91/nvim-bqf", ft = { "lf", "qf" } },
 	{
-		-- TODO: need to figure this out
-		"LintaoAmons/bookmarks.nvim",
-		dependencies = {
-			"kkharji/sqlite.lua",
-			"stevearc/dressing.nvim", -- optional: better UI
-		},
-		event = { "BufReadPost", "BufNewFile" }, -- needed for bookmarks rendering
-		cmd = {
-			"BookmarksCommands",
-			"BookmarksGrep",
-			"BookmarksInfo",
-			"BookmarksLists",
-			"BookmarksNewLists",
-			"BookmarksQuery",
-		},
-		config = function()
-			require("bookmarks").setup() -- required for DB initailization
-		end,
-	},
-	{
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
 		event = { "BufReadPost", "BufNewFile" },
