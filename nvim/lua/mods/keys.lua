@@ -1,3 +1,16 @@
+---@type wk.Spec[]
+local spec = {
+	-- common groupings
+	{ "<Leader>b", group = "[b]uffer" },
+	{ "<Localleader>o", group = "[o]bsidian" },
+	{ "[", group = "Jump to the previous..." },
+	{ "]", group = "Jump to the next..." },
+	{ "gr", group = "LSP operations" },
+	-- common keymaps, reuse established standard from other IDEs
+	{ "<F2>", vim.lsp.buf.rename, desc = "Rename Symbol" }, -- VSCode/Zed
+	{ "<F8>", vim.diagnostic.open_float, desc = "Expand diagnostic details" }, -- VSCode/Zed
+}
+
 ---@type LazySpec
 return {
 	"folke/which-key.nvim",
@@ -22,14 +35,6 @@ return {
 			scroll_down = "<Down>",
 			scroll_up = "<Up>",
 		},
-		spec = {
-			-- common groupings
-			{ "<Leader>b", group = "[b]uffer" },
-			{ "<Localleader>o", group = "[o]bsidian" },
-			{ "[", group = "Jump to the previous..." },
-			{ "]", group = "Jump to the next..." },
-			{ "gr", group = "LSP operations" },
-			-- common keymaps
-		},
+		spec = spec,
 	},
 }
