@@ -30,6 +30,7 @@ return {
 				"marksman",
 				"neocmake", -- CMake
 				"oxlint",
+				"powershell_es",
 				"rubocop", -- Ruby formatter/linter
 				"ruby_lsp",
 				"ruff", -- Python formatter/linter
