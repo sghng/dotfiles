@@ -105,7 +105,7 @@ return {
 				desc = "Start of [c]ontext",
 			},
 		},
-		opts = { multiwindow = true, min_window_height = 30 },
+		opts = { max_lines = "20%", multiwindow = true, min_window_height = 30 },
 		config = function(_, opts)
 			require("treesitter-context").setup(opts)
 			vim.cmd([[highlight TreesitterContextBottom gui=underdashed guisp=Grey]])
