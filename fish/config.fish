@@ -34,6 +34,21 @@ fish_add_path /opt/homebrew/lib/ruby/gems/3.4.0/bin
 fish_add_path $HOME/.bun/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.ghcup/bin
+fish_add_path /opt/homebrew/opt/postgresql@18/bin
+
+# FUNCTIONS
+function pr_merge -d "Squash merge a branch like a PR"
+    set -l branch $argv[1]
+    git merge --squash "$branch"
+    if test $status -ne 0
+        return 1
+    end
+    begin
+        echo "$branch"
+        echo ""
+        git log --pretty=format:"* %s%n" HEAD.."$branch"
+    end | git commit -e -F -
+end
 
 # ENV
 set -x CSPELL_DEFAULT_CONFIG_PATH $HOME/.config/cspell.config.yaml
