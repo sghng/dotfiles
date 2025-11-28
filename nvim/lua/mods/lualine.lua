@@ -2,12 +2,14 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
-	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		options = {
 			globalstatus = true,
 			theme = "gruvbox-material",
-			disabled_filetypes = { winbar = { "neo-tree", "codecompanion" } },
+			disabled_filetypes = {
+				winbar = { "dashboard", "neo-tree", "codecompanion", "toggleterm" },
+				statusline = { "dashboard" },
+			},
 		},
 		extensions = {
 			"aerial",

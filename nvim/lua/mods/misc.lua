@@ -62,28 +62,6 @@ return {
 		},
 	},
 	{
-		"akinsho/toggleterm.nvim",
-		cmd = "ToggleTerm",
-		keys = {
-			{
-				"<C-\\>",
-				"<Cmd>ToggleTerm direction='horizontal'<CR>",
-				mode = { "n", "i", "v", "t" },
-				desc = "Toggle terminal (horizontal)",
-			},
-			{
-				"<M-\\>",
-				"<Cmd>ToggleTerm direction='float'<CR>",
-				mode = { "n", "i", "v", "t" },
-				desc = "Toggle terminal (float)",
-			},
-		},
-		---@module "toggleterm"
-		---@type ToggleTermConfig
-		---@diagnostic disable-next-line:missing-fields
-		opts = { float_opts = { border = "rounded" } },
-	},
-	{
 		"sitiom/nvim-numbertoggle",
 		event = "InsertEnter",
 		init = function()

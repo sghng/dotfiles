@@ -33,7 +33,7 @@ return {
 					},
 				},
 			},
-			term = { enabled = true }, -- term completion disabled by default
+			-- term = { enabled = true }, -- upstream wip
 		},
 	},
 }
