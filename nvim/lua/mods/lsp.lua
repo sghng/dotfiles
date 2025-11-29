@@ -20,6 +20,7 @@ return {
 				"bashls",
 				"clangd",
 				"cssls",
+				"dockerls",
 				"fish_lsp",
 				"hls", -- Haskell
 				"html",
@@ -35,6 +36,7 @@ return {
 				"ruby_lsp",
 				"ruff", -- Python formatter/linter
 				"rust_analyzer",
+				"svelte",
 				"tailwindcss",
 				"taplo", -- TOML
 				"texlab", -- LaTeX
@@ -46,6 +48,7 @@ return {
 				-- "vale_ls", -- LS for proses
 				"vimls",
 				"vue_ls",
+				"yamlls",
 			},
 		},
 		config = function(_, opts)
@@ -77,6 +80,13 @@ return {
 
 	-- LSP Utilities
 
+	{
+		"MysticalDevil/inlay-hints.nvim",
+		event = "LspAttach",
+		cmd = { "InlayHintsToggle", "InlayHintsEnable" },
+		dependencies = { "neovim/nvim-lspconfig" },
+		opts = {},
+	},
 	{
 		-- context breadcrumb, call hierarchy, code action,
 		-- definitions peeking (Trouble can't display this in hover)
