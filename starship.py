@@ -21,6 +21,10 @@ class M:
         )
         return "\n".join(lines)
 
+    def __post_init__(self):
+        if self.symbol:
+            self.symbol += " "  # Nerd fond symbols need a trailing space
+
 
 MODULES = [
     M("bun", "#791A49", ""),
@@ -41,15 +45,11 @@ MODULES = [
     M("conda", "#53B553", "", "$symbol$environment"),
 ]
 
-for m in MODULES:
-    if m.symbol:
-        m.symbol += " "  # Nerd fond symbols need a trailing space
+modules = "\n\n".join(str(m) for m in MODULES)
+fmt = "".join(f"${m.name}" for m in MODULES)
 
 config = Path(argv[1])
 content = config.read_text()
-
-modules = "\n\n".join(str(m) for m in MODULES)
-fmt = "".join(f"${m.name}" for m in MODULES)
 
 for pattern, repl in [
     (r"(^# >>>\n).*?(^# <<<)", rf"\1\n{modules}\n\n\2"),
