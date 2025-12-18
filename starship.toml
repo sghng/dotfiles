@@ -37,6 +37,8 @@ format = "$symbol"
 [os.symbols]
 Macos = " "
 Linux = "󰌽 "
+Redhat = " "
+RedHatEnterprise = " "
 
 [shell]
 disabled = false
