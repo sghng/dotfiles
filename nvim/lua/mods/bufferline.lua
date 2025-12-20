@@ -8,7 +8,7 @@ for i = 1, 5 do
 	})
 end
 table.insert(keys, {
-	"bD",
+	"<Leader>bD",
 	"<Cmd>BufferLinePickClose<CR>",
 	desc = "Pick [b]uffer to [d]elete",
 })
