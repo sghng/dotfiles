@@ -6,34 +6,33 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
 			"MunifTanjim/nui.nvim",
-			-- "3rd/image.nvim",  -- delay until needed
-			-- "s1n7ax/nvim-window-picker", -- delay until needed
+			"3rd/image.nvim",
+			"s1n7ax/nvim-window-picker",
 		},
-		lazy = false, -- neo-tree lazy loads itself
+		lazy = false,
 		keys = {
-			-- Neotree recommended key mappings
 			{
-				"<Leader>\\", -- Neotree recommends / by default, which is used for searching
+				"<Leader>\\", -- inspired by / suggested by Neo-tree
 				"<Cmd>Neotree toggle current reveal_force_cwd<CR>",
-				desc = "Open current [d]irectory with Neotree",
+				desc = "Open current [d]irectory",
 			},
 			{
-				"|",
+				"|", -- suggested by Neo-tree
 				"<Cmd>Neotree toggle left<CR>",
 				desc = "Reveal file in Neotree sidebar",
 			},
 			{
-				"<Leader>r", -- gd conflicts with go to definition
+				"<Leader>r", -- Neo-tree suggested gd, which conflicts with go to definition
 				"<Cmd>Neotree float reveal reveal_force_cwd<CR>",
 				desc = "[r]eveal file in Neotree popup",
 			},
 			{
-				"<Leader>bb",
+				"<Leader>bb", -- inspired by <Leader>b suggested by Neo-tree
 				"<Cmd>Neotree toggle show buffers right<CR>",
 				desc = "Toggle [b]uffer explorer",
 			},
 			{
-				"<Leader>s",
+				"<Leader>s", -- suggested by Neo-tree
 				"<Cmd>Neotree toggle float git_status<CR>",
 				desc = "Show Git [s]tatus in Neotree",
 			},
