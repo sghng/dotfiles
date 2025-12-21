@@ -16,7 +16,6 @@ return {
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {},
 	},
-	-- TODO: potential overlapping keymaps in Which Key
 	{ "kylechui/nvim-surround", event = { "BufReadPost", "BufNewFile" }, opts = {} },
 	{
 		"mbbill/undotree",
@@ -24,7 +23,7 @@ return {
 			{
 				"<Leader>u",
 				vim.cmd.UndotreeToggle,
-				{ desc = "Toggle [u]ndo tree" },
+				desc = "Toggle [u]ndo tree",
 			},
 		},
 		cmd = { "UndotreeToggle", "UndotreeShow" },
@@ -49,7 +48,6 @@ return {
 	-- TODO: need to compare more align plugins
 	{ "echasnovski/mini.align", event = { "BufReadPost", "BufNewFile" }, opts = {} },
 	{ "echasnovski/mini.cursorword", event = { "BufReadPost", "BufNewFile" }, opts = {} },
-	-- TODO: potential overlapping keymaps in Which Key
 	{
 		"numToStr/Comment.nvim",
 		dependencies = {
@@ -59,6 +57,34 @@ return {
 			opts = { enable_autocmd = false },
 		},
 		event = { "BufReadPost", "BufNewFile" },
+		keys = {
+			-- inspired by many other IDEs
+			{
+				"<C-/>",
+				"<Plug>(comment_toggle_linewise_current)",
+				desc = "comment out current line",
+				mode = { "n", "i" },
+			},
+			{
+				"<C-/>",
+				"<Plug>(comment_toggle_linewise_visual)",
+				desc = "comment out selected line(s)",
+				mode = { "v" },
+			},
+			-- <C-/> is mapped to <C-_> in terminal emulator
+			{
+				"<C-_>",
+				"<Plug>(comment_toggle_linewise_current)",
+				desc = "comment out current line",
+				mode = { "n", "i" },
+			},
+			{
+				"<C-_>",
+				"<Plug>(comment_toggle_linewise_visual)",
+				desc = "comment out selected line(s)",
+				mode = { "v" },
+			},
+		},
 		config = function()
 			require("Comment").setup(
 				---@module "Comment"
