@@ -6,7 +6,7 @@ wk_add({ "<Leader>l", group = "[l]ist" })
 local key_defs = {
 	{ "d", "lsp_definitions toggle", "[d]efinitions" },
 	{ "s", "lsp_document_symbols toggle focus=false", "[s]ymbols" },
-	{ "x", "diagnostics toggle filter.buf=0'", "diagnostics (buffer)" },
+	{ "x", "diagnostics toggle filter.buf=0", "diagnostics (buffer)" },
 	{ "X", "diagnostics toggle", "diagnostics (global)" },
 }
 ---@type LazySpec[]
