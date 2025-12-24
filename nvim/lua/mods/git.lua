@@ -5,7 +5,7 @@ return {
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = { "LazyGit", "LazyGitConfig", "LazyGitCurrentFile" },
-		keys = { { "<Leader>gg", vim.cmd.LazyGit, desc = "Lazy[g]it" } },
+		keys = { { "<Leader>gz", vim.cmd.LazyGit, desc = "La[z]y[g]it" } },
 		config = function()
 			vim.g.lazygit_floating_window_scaling_factor = 0.9
 		end,
@@ -20,6 +20,10 @@ return {
 			{ "<Leader>gb", "<Cmd>Gitsigns blame<CR>", desc = "[g]it [b]lame" },
 			{ "<Leader>gh", "<Cmd>Gitsigns toggle_linehl<CR>", desc = "toggle [g]it hunk [h]ighlight" },
 			{ "<Leader>gd", "<Cmd>Gitsigns diffthis<CR>", desc = "[g]it [d]iff this buffer" },
+			{ "<Leader>gsh", "<Cmd>Gitsigns stage_hunk<CR>", desc = "[g]it [s]tage this hunk" },
+			{ "<Leader>guh", "<Cmd>Gitsigns undo_stage_hunk<CR>", desc = "[g]it [u]nstage this hunk" },
+			{ "<Leader>gsb", "<Cmd>Gitsigns stage_buffer<CR>", desc = "[g]it [s]tage this buffer" },
+			{ "<Leader>gub", "<Cmd>Gitsigns undo_stage_buffer<CR>", desc = "[g]it [u]nstage this buffer" },
 		},
 		---@module "gitsigns"
 		---@type Gitsigns.Config
@@ -32,13 +36,36 @@ return {
 	},
 	{
 		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"sindrets/diffview.nvim",
-		},
+		dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
 		cmd = "Neogit",
 		keys = {
-			{ "<Leader>gn", "<Cmd>Neogit kind=floating<CR>", desc = "open [n]eogit popup" },
+			{ "<Leader>gg", "<Cmd>Neogit kind=floating<CR>", desc = "neo[g]it popup" },
+			{ "<Leader>gl", "<Cmd>Neogit log kind=tab<CR>", desc = "[g]it [l]og" },
 		},
+	},
+	{
+		"pwntester/octo.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			"folke/snacks.nvim",
+		},
+		cmd = "Octo",
+		keys = {
+			{ "<Leader>oi", "<Cmd>Octo issue list<CR>", desc = "GitHub Issues" },
+			{ "<Leader>op", "<Cmd>Octo pr list<CR>", desc = "GitHub PullRequests" },
+			{ "<Leader>od", "<Cmd>Octo discussion list<CR>", desc = "GitHub Discussions" },
+			{ "<Leader>on", "<Cmd>Octo notification list<CR>", desc = "GitHub Notifications" },
+			{
+				"<Leader>os",
+				function()
+					require("octo.utils").create_base_search_command({ include_current_repo = true })
+				end,
+				desc = "Search GitHub",
+			},
+		},
+		---@type OctoConfig
+		---@diagnostic disable-next-line: missing-fields
+		opts = { picker = "snacks", enable_builtin = true },
 	},
 }
