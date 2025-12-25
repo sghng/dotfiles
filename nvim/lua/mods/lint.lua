@@ -1,24 +1,25 @@
 local linters_by_ft = {
-	bash = { "bash" },
-	fish = { "fish" },
+	dockerfile = { "hadolint" },
 	haskell = { "hlint" },
 	lua = { "selene" },
+	make = { "checkmake" },
 	markdown = { "markdownlint-cli2", "cspell" },
 	quarto = { "markdownlint-cli2", "cspell" },
-	ruby = { "rubocup" },
-	rust = { "bacon" },
 	text = { "vale" },
 	vim = { "vint" },
 	["*"] = { "cspell" },
 }
--- eslint only
-for _, ft in ipairs({ "css", "json" }) do
-	linters_by_ft[ft] = { "eslint_d" }
+
+local linters = vim.iter(vim.tbl_values(linters_by_ft)):flatten():totable()
+
+-- linters as language server
+for _, linter in ipairs({ "biome", "rubocop" }) do
+	table.insert(linters, linter)
 end
--- both eslint and oxlint
--- TODO: if eslint config is not present, enable oxlint only
-for _, ft in ipairs({ "javascript", "typescript", "vue" }) do
-	linters_by_ft[ft] = { "eslint_d", "oxlint" }
+
+-- not in Mason registry
+for _, ft in ipairs({ "bash", "fish" }) do
+	linters_by_ft[ft] = { ft }
 end
 
 ---@type LazySpec
@@ -65,20 +66,7 @@ return {
 	},
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		lazy = true,
 		opts_extend = { "ensure_installed" },
-		opts = {
-			ensure_installed = {
-				"bacon", -- Rust
-				"checkmake", -- Makefile
-				"cspell",
-				"eslint_d",
-				"hlint", -- Haskell
-				"markdownlint-cli2",
-				"selene", -- Lua
-				"vint", -- Vim script
-			},
-			auto_update = true,
-		},
+		opts = { ensure_installed = linters },
 	},
 }
