@@ -3,7 +3,6 @@ local key_defs = {
 	{ "b", "buffers", "[b]uffers" },
 	{ "c", "commands", "[c]ommands" },
 	{ "f", "files", "[f]iles" },
-	{ "g", "grep", "live [g]rep" },
 	{ "h", "help", "[h]elp tags" },
 	{ "k", "keymaps", "[k]eymaps" },
 	{ "n", "notifications", "[n]otifications" },
@@ -12,7 +11,14 @@ local key_defs = {
 }
 ---@type LazyKeysSpec[]
 local keys = {
-	{ "<Leader>f", "<Nop>", desc = "[f]ind (with Snacks.picker)" },
+	{ "<Leader>f", "<Nop>", desc = "[f]ind (with picker)" },
+	{
+		"<Leader>/",
+		function()
+			Snacks.picker.grep()
+		end,
+		desc = "live grep",
+	},
 	{
 		"<Leader><Space>",
 		function()
