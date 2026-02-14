@@ -7,7 +7,7 @@ return {
 
 	{ "tpope/vim-sensible", event = "VimEnter" },
 	{
-		"ggandor/leap.nvim",
+		url = "https://codeberg.org/andyg/leap.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		keys = {
 			{ "s", "<Plug>(leap)", mode = { "n", "x", "o" } },
