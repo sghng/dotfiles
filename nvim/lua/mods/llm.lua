@@ -52,12 +52,69 @@ return {
 							env = {
 								api_key = "cmd:op read op://dev/anthropic-adapta/credential",
 							},
-							schema = { extended_thinking = { default = false } },
 						})
 					end,
 				},
 			},
 		},
+	},
+	{
+		"nickjvandyke/opencode.nvim",
+		dependencies = {
+			---@module "snacks"
+			"folke/snacks.nvim",
+			optional = true,
+			opts = {
+				input = {}, -- enhances ask()
+				picker = { -- enhances select()
+					actions = {
+						opencode_send = function(...)
+							return require("opencode").snacks_picker_send(...)
+						end,
+					},
+					win = {
+						input = { keys = {
+							["<A-a>"] = { "opencode_send", mode = { "n", "i" } },
+						} },
+					},
+				},
+			},
+		},
+		config = function()
+			---@type opencode.Opts
+			vim.g.opencode_opts = {}
+
+			vim.o.autoread = true -- required for opts.events.reload
+			local opencode = require("opencode")
+
+			vim.keymap.set({ "n", "x" }, "<C-a>", function()
+				opencode.ask("@this: ", { submit = true })
+			end, { desc = "Ask opencode…" })
+			vim.keymap.set({ "n", "x" }, "<C-x>", function()
+				opencode.select()
+			end, { desc = "Execute opencode action…" })
+			vim.keymap.set({ "n", "t" }, "<C-.>", function()
+				opencode.toggle()
+			end, { desc = "Toggle opencode" })
+
+			vim.keymap.set({ "n", "x" }, "go", function()
+				return opencode.operator("@this ")
+			end, { desc = "Add range to opencode", expr = true })
+			vim.keymap.set("n", "goo", function()
+				return opencode.operator("@this ") .. "_"
+			end, { desc = "Add line to opencode", expr = true })
+
+			vim.keymap.set("n", "<S-C-u>", function()
+				opencode.command("session.half.page.up")
+			end, { desc = "Scroll opencode up" })
+			vim.keymap.set("n", "<S-C-d>", function()
+				opencode.command("session.half.page.down")
+			end, { desc = "Scroll opencode down" })
+
+			-- You may want these if you use the opinionated `<C-a>` and `<C-x>` keymaps above — otherwise consider `<leader>o…` (and remove terminal mode from the `toggle` keymap)
+			vim.keymap.set("n", "+", "<C-a>", { desc = "Increment under cursor", noremap = true })
+			vim.keymap.set("n", "-", "<C-x>", { desc = "Decrement under cursor", noremap = true })
+		end,
 	},
 	{
 		"zbirenbaum/copilot.lua",
