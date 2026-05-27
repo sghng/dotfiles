@@ -29,4 +29,4 @@ curl -L https://github.com/libretro/slang-shaders/archive/master.tar.gz |
 
 touch ~/.hushlogin
 
-dash -c "ln -sf $d/fish ~/.config" # fish can't handle itself
+dash -c "trash -rf ~/.config/fish && ln -sf $d/fish ~/.config/" # fish can't handle itself
