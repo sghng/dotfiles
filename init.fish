@@ -11,6 +11,8 @@ end
 
 ln -sf $d/ipython_config.py ~/.ipython/profile_default
 
+ln -sf $d/karabiner.json ~/.config/karabiner
+
 # these go into config dir
 for c in alacritty cspell.config.yaml ghostty kitty neovide nvim rio starship.toml
     ln -sf $d/$c ~/.config/
