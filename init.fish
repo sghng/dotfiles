@@ -9,6 +9,8 @@ for c in .mambarc .tmux.conf .wezterm.lua
     ln -sf $d/$c ~
 end
 
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 ln -sf $d/ipython_config.py ~/.ipython/profile_default
 
 ln -sf $d/karabiner.json ~/.config/karabiner
