@@ -7,7 +7,6 @@ if status is-interactive
     set -x BAT_THEME gruvbox-dark
     set HOMEBREW_NO_ENV_HINTS 1
 
-    cursor-agent shell-integration fish
     starship init fish | source
 
     alias clear='clear -x' # clear should retain history
@@ -59,6 +58,3 @@ set -gx MAMBA_EXE /opt/homebrew/opt/micromamba/bin/mamba
 set -gx MAMBA_ROOT_PREFIX /Users/sghng/mamba
 $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
 # <<< mamba initialize <<<
-
-# OpenClaw Completion
-source "/Users/sghng/.openclaw/completions/openclaw.fish"
