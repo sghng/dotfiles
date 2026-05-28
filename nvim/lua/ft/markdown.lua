@@ -161,7 +161,7 @@ return {
 		opts = {
 			ui = { enable = false }, -- use render-markdown instead
 			workspaces = { { name = "TECH", path = OBSIDIAN_VAULT } },
-			completion = { blink = true, min_chars = 0, create_new = false },
+			completion = { min_chars = 0, match_case = false, create_new = false },
 			frontmatter = { enabled = false },
 			-- TODO: suppresses deprecation warning, should be removed in v4.0
 			legacy_commands = false,
