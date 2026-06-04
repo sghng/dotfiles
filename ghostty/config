@@ -1,11 +1,12 @@
 # the initial-command is executed by bash by default
 initial-command = $SHELL -c "tmux attach -t base; or tmux new -s base; fish"
-font-family = MonoLisa Nerd Font
+font-family = MonoLisa Variable
+font-family = Symbols Nerd Font Mono
 font-family = Sarasa Mono SC
 font-size = 18
 background-opacity = 0.8
 background-blur = 30
-theme = Gruvbox Dark Material
+theme = Gruvbox Dark
 macos-titlebar-style = transparent
 macos-icon = microchip
 title = " "
