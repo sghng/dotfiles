@@ -49,52 +49,11 @@ return {
 	{ "echasnovski/mini.align", event = { "BufReadPost", "BufNewFile" }, opts = {} },
 	{ "echasnovski/mini.cursorword", event = { "BufReadPost", "BufNewFile" }, opts = {} },
 	{
-		"numToStr/Comment.nvim",
-		dependencies = {
-			"JoosepAlviste/nvim-ts-context-commentstring",
-			-- auto cmd must be disabled for integration with comment plugins
-			---@type ts_context_commentstring.Config
-			opts = { enable_autocmd = false },
-		},
+		"folke/ts-comments.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		keys = {
-			-- inspired by many other IDEs
-			{
-				"<C-/>",
-				"<Plug>(comment_toggle_linewise_current)",
-				desc = "comment out current line",
-				mode = { "n", "i" },
-			},
-			{
-				"<C-/>",
-				"<Plug>(comment_toggle_linewise_visual)",
-				desc = "comment out selected line(s)",
-				mode = { "v" },
-			},
-			-- <C-/> is mapped to <C-_> in terminal emulator
-			{
-				"<C-_>",
-				"<Plug>(comment_toggle_linewise_current)",
-				desc = "comment out current line",
-				mode = { "n", "i" },
-			},
-			{
-				"<C-_>",
-				"<Plug>(comment_toggle_linewise_visual)",
-				desc = "comment out selected line(s)",
-				mode = { "v" },
-			},
+			{ "<C-/>", "gcc", remap = true, desc = "toggle comment", mode = { "n", "i" } },
+			{ "<C-/>", "gc", remap = true, desc = "toggle comment", mode = "v" },
 		},
-		config = function()
-			require("Comment").setup(
-				---@module "Comment"
-				---@type CommentConfig
-				---@diagnostic disable-next-line: missing-fields
-				{
-					-- Must be dynamically configured, hook required for JSX
-					pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-				}
-			)
-		end,
 	},
 }
