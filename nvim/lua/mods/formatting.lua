@@ -23,6 +23,7 @@ end
 for _, ft in ipairs({
 	"css",
 	"json",
+	"jsonc",
 	"javascript",
 	"typescript",
 	"svg",
