@@ -1,5 +1,6 @@
-" leader keys set before Lazy to avoid confusions
-let mapleader=" "
+set background=dark " set background for Neovide before colorscheme is picked
+let mapleader=" " " leader keys set before Lazy to avoid confusions
+
 lua require("init")  -- load all Lua configs
 
 " custom configs come later to override plugin defaults
