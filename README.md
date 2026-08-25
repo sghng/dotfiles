@@ -12,5 +12,5 @@ systems as well, with a few known exceptions:
 Meanwhile, some configs require manual setup.
 
 - Create a symlink at `~/obsidian` pointing to the Obsidian vault.
-- These dotfiles use `MonoLisa Variable` through out. Symbols use fallback font
+- These dotfiles use `MonoLisaCode` through out. Symbols use fallback font
   "Symbols Nerd Font Mono".

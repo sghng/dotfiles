@@ -12,7 +12,7 @@ dynamic_title = false
 
 [font]
 size = 18
-normal.family = "MonoLisa Variable"
+normal.family = "MonoLisaCode"
 
 [terminal]
 shell.program = "/opt/homebrew/bin/fish"
