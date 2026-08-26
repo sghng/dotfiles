@@ -53,8 +53,8 @@ return {
 		---@type conform.setupOpts
 		opts = {
 			formatters_by_ft = formatters_by_ft,
-			default_format_opts = { async = true, lsp_format = "fallback" },
-			format_on_save = { async = false, lsp_format = "fallback" },
+			default_format_opts = { async = true, lsp_format = "prefer" },
+			format_on_save = { async = false, lsp_format = "prefer" },
 			formatters = {
 				prettierd = {
 					env = {
@@ -95,7 +95,6 @@ return {
 				"shfmt",
 				"stylua",
 				"tex-fmt", -- LaTeX
-				"typstyle", -- Typst
 			},
 			auto_update = true,
 		},

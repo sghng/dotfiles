@@ -42,7 +42,7 @@ return {
 				"texlab", -- LaTeX
 				"ts_ls", -- TypeScript
 				"ty", -- Python LSP/type checker
-				"tinymist", -- Typst LSP
+				"tinymist", -- Typst LSP, bundles typstyle formatter
 				"unocss",
 				-- FIXME: vale is too noisy, find alternatives
 				-- "vale_ls", -- LS for proses
@@ -53,6 +53,7 @@ return {
 		},
 		config = function(_, opts)
 			require("mason-lspconfig").setup(opts)
+			vim.lsp.config["tinymist"] = { settings = { formatterProseWrap = true } }
 			-- Additional configuration for Vue.js support, see:
 			-- https://github.com/vuejs/language-tools/wiki/Neovim
 			-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#vue_ls
