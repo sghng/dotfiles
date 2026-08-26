@@ -63,6 +63,7 @@ return {
 			-- code border doesn't work with transparent background
 			code = { highlight_border = false },
 			inline_highlight = { highlight = "Cursor" }, -- HL Group required
+			sign = { priority = 1 },
 		},
 		---@diagnostic enable: missing-fields
 	},

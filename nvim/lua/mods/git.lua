@@ -31,7 +31,7 @@ return {
 		opts = {
 			current_line_blame = true,
 			preview_config = { border = "rounded" },
-			sign_priority = 10, -- push signs to the left
+			sign_priority = 4096, -- push to the left
 		},
 	},
 	{
