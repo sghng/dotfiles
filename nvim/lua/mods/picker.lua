@@ -1,8 +1,9 @@
 local key_defs = {
-	-- key suffix, Snacks.picker function, description
+	-- key suffix, Snacks.picker function, description, opts
 	{ "b", "buffers", "[b]uffers" },
 	{ "c", "commands", "[c]ommands" },
-	{ "f", "files", "[f]iles" },
+	{ "f", "files", "[f]iles", { follow = true } },
+	{ "g", "grep", "[g]rep", { follow = true } },
 	{ "h", "help", "[h]elp tags" },
 	{ "k", "keymaps", "[k]eymaps" },
 	{ "n", "notifications", "[n]otifications" },
@@ -15,7 +16,7 @@ local keys = {
 	{
 		"<Leader>/",
 		function()
-			Snacks.picker.grep()
+			Snacks.picker.grep({ follow = true })
 		end,
 		desc = "live grep",
 	},
@@ -31,7 +32,7 @@ for _, def in ipairs(key_defs) do
 	table.insert(keys, {
 		"<Leader>f" .. def[1],
 		function()
-			Snacks.picker[def[2]]()
+			Snacks.picker[def[2]](def[4] or {})
 		end,
 		desc = "[f]ind " .. def[3],
 	})
