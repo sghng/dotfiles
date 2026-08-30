@@ -38,7 +38,7 @@ noremap  <silent><D-s> <Cmd>w<CR>
 inoremap <silent><D-s> <Cmd>w<CR>
 
 let s:guifontsize = 16
-let s:guifont = "MonoLisaCode,Symbols_Nerd_Font_Mono"
+let s:guifont = "MonoLisaCode,Symbols_Nerd_Font_Mono,Maple_Mono_NF_CN"
 function! AdjustFontSize(amount)
 	let s:guifontsize = s:guifontsize + a:amount
 	execute "set guifont=" .. s:guifont .. ":h" .. s:guifontsize

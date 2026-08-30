@@ -2,7 +2,7 @@
 initial-command = $SHELL -c "tmux attach -t base; or tmux new -s base; fish"
 font-family = MonoLisaCode
 font-family = Symbols Nerd Font Mono
-font-family = Sarasa Mono SC
+font-family = Maple Mono NF CN
 font-size = 18
 background-opacity = 0.8
 background-blur = 30
