@@ -4,6 +4,16 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPost", "BufNewFile" },
 		-- TODO: enable tree sitter features
+		config = function()
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function(args)
+					local lang = vim.treesitter.language.get_lang(args.match)
+					if lang and require("nvim-treesitter.parsers")[lang] then
+						require("nvim-treesitter").install({ lang })
+					end
+				end,
+			})
+		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
