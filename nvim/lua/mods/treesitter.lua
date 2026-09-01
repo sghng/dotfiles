@@ -2,22 +2,36 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "BufReadPost", "BufNewFile" },
-		-- TODO: enable tree sitter features
+		lazy = false, -- does not support lazy-loading
+		build = ":TSUpdate",
 		config = function()
+			local function enable()
+				vim.treesitter.start()
+				local wo = vim.wo[0][0]
+				wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+				wo.foldmethod = "expr"
+				wo.foldlevel = 99 -- open all folds by default
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function(args)
 					local lang = vim.treesitter.language.get_lang(args.match)
-					if lang and require("nvim-treesitter.parsers")[lang] then
-						require("nvim-treesitter").install({ lang })
+					if not lang or not require("nvim-treesitter.parsers")[lang] then
+						return
 					end
+					if vim.list_contains(require("nvim-treesitter.config").get_installed(), lang) then
+						enable()
+						return
+					end
+					require("nvim-treesitter").install({ lang }):await(vim.schedule_wrap(function()
+						vim.api.nvim_buf_call(args.buf, enable)
+					end))
 				end,
 			})
 		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		branch = "main", -- TODO: remove this once main is released
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		---@module "nvim-treesitter-textobjects"
 		-- TODO: define objects
