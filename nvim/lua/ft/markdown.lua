@@ -64,6 +64,7 @@ return {
 			code = { highlight_border = false },
 			inline_highlight = { highlight = "Cursor" }, -- HL Group required
 			sign = { priority = 1 },
+			nested = false,
 		},
 		---@diagnostic enable: missing-fields
 	},
