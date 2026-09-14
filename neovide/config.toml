@@ -1,3 +1,5 @@
 fork = true
 frame = "transparent"
 title-hidden = true
+system-native-tabs = true
+startup-message-capture = false # conflicts with Noice
