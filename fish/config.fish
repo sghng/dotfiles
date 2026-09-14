@@ -33,7 +33,6 @@ fish_add_path /opt/homebrew/lib/ruby/gems/3.4.0/bin
 fish_add_path $HOME/.bun/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.ghcup/bin
-fish_add_path /opt/homebrew/opt/postgresql@18/bin
 
 # FUNCTIONS
 function pr_merge -d "Squash merge a branch like a PR"
@@ -51,10 +50,3 @@ end
 
 # ENV
 set -x CSPELL_DEFAULT_CONFIG_PATH $HOME/.config/cspell.config.yaml
-
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba shell init' !!
-set -gx MAMBA_EXE /opt/homebrew/opt/micromamba/bin/mamba
-set -gx MAMBA_ROOT_PREFIX /Users/sghng/mamba
-$MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
-# <<< mamba initialize <<<
