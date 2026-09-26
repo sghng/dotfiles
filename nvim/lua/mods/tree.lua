@@ -72,12 +72,7 @@ return {
 		},
 	},
 	{
-		-- Update import paths when renaming files
 		"antosha417/nvim-lsp-file-operations",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-neo-tree/neo-tree.nvim",
-		},
 		event = "LspAttach",
 		opts = {}, -- required
 	},
