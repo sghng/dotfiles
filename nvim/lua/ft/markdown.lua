@@ -115,7 +115,7 @@ return {
 	{
 		-- mermaid rendering
 		"3rd/diagram.nvim",
-		build = "brew install mermaid-cli",
+		build = vim.fn.has("macunix") == 1 and "brew install mermaid-cli" or "bun install -g @mermaid-js/mermaid-cli",
 		cond = not vim.g.neovide, -- image not supported in Neovide
 		dependencies = "3rd/image.nvim",
 		ft = MD_FT,

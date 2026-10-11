@@ -26,10 +26,10 @@ if status is-interactive
 end
 
 # PATH
-fish_add_path /opt/homebrew/bin
+test -d /opt/homebrew; and fish_add_path /opt/homebrew/bin
 fish_add_path $HOME/.local/bin
-fish_add_path /opt/homebrew/opt/ruby/bin
-fish_add_path /opt/homebrew/lib/ruby/gems/3.4.0/bin
+test -d /opt/homebrew; and fish_add_path /opt/homebrew/opt/ruby/bin
+test -d /opt/homebrew; and fish_add_path /opt/homebrew/lib/ruby/gems/3.4.0/bin
 fish_add_path $HOME/.bun/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.ghcup/bin
