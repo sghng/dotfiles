@@ -144,6 +144,9 @@ return {
 						theme = "dark",
 						background = "transparent",
 						scale = 3,
+						-- Ubuntu 23.10+ AppArmor blocks chrome's userns sandbox
+						cli_args = vim.fn.has("macunix") == 1 and nil
+							or { "-p", vim.fn.stdpath("config") .. "/puppeteer.json" },
 					},
 				},
 			})
