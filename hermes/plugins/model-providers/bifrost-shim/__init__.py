@@ -1,9 +1,9 @@
 """Bifrost shim — repoint bundled provider profiles at llm.sgh.ng.
 
-Doctrine: the harness owns transport + attribution; Bifrost owns routing.
-Each shimmed profile keeps the bundled class (thinking/effort wire quirks,
-headers, max-tokens all preserved — we subclass, never replace) and changes
-only three things:
+The shim is a pure transport interceptor. Doctrine: the harness owns
+transport + attribution; Bifrost owns routing; Hermes owns model catalogs.
+Each shimmed profile keeps its bundled class (thinking/effort wire quirks,
+headers — subclass, never replace) and changes exactly three things:
 
   1. base_url  -> https://llm.sgh.ng/v1  (Bifrost front door; keyless)
   2. default_headers += x-bf-dim-app: hermes-<profile>   (usage attribution)
@@ -11,23 +11,30 @@ only three things:
      build_api_kwargs_extras top-level merge, verified in both the main
      transport (agent/transports/chat_completions.py) and the aux client.
 
-The picker is kept clean by fetch_models: it takes Bifrost's aggregated
-/v1/models and keeps only this provider's prefix, stripped back to bare
-names — no hardcoded model lists.
+Model listings are deliberately NOT handled here. fetch_models returns None,
+which makes Hermes's picker machinery fall back to its own static
+_PROVIDER_MODELS catalog (maintained upstream, per provider). The gateway's
+aggregated /v1/models (every lane, provider-prefixed) is never consulted
+for picker content — no filtering, no hardcoded lists, no network
+dependency in the shim.
+
+Bundled model-provider plugins load before user plugins (source order in
+hermes_cli/plugins.py: bundled < user < project < entry-point), so the
+bundled profiles are always resolvable from the providers registry at shim
+load time — no direct file imports.
 
 KIMI_BASE_URL (profile .env) must also point at Bifrost: Hermes's
 HermesOverlay applies the env base_url after the profile, and an explicit
-env value always wins over the profile default.
+env value always wins over the profile default. opencode-go has no active
+base-url env override, so the profile value stands.
 """
 
 from __future__ import annotations
 
 import dataclasses
 import logging
-import os
-from pathlib import Path
 
-from providers import register_provider
+from providers import get_provider_profile, register_provider
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +51,12 @@ def _dim_app() -> str:
         return "hermes"
 
 
-def _wrap(profile, *, prefix: str, aux: str | None = None):
-    """Return a shim subclass instance of a bundled provider profile."""
+def _shim(name: str, *, prefix: str, aux: str | None = None):
+    """Register a shim subclass of the bundled profile `name`."""
+    profile = get_provider_profile(name)
+    if profile is None:
+        raise RuntimeError(f"bifrost-shim: bundled profile {name!r} not registered")
+
     base_cls = type(profile)
 
     class _Shim(base_cls):
@@ -58,13 +69,9 @@ def _wrap(profile, *, prefix: str, aux: str | None = None):
             return body, top
 
         def fetch_models(self, **kwargs):  # noqa: ARG002
-            # Bifrost's /v1/models aggregates every lane with provider/ prefixes;
-            # keep only this provider's entries, stripped back to bare names.
-            live = super().fetch_models(**kwargs)
-            if not live:
-                return live
-            p = self._bifrost_prefix + "/"
-            return [m[len(p):] for m in live if m.startswith(p)]
+            # Catalogs are Hermes's job: returning None makes the picker fall
+            # back to the static _PROVIDER_MODELS catalog for this provider.
+            return None
 
     fields = {f.name: getattr(profile, f.name) for f in dataclasses.fields(profile)}
     fields["base_url"] = BIFROST_BASE
@@ -73,65 +80,9 @@ def _wrap(profile, *, prefix: str, aux: str | None = None):
     fields["default_headers"] = headers
     if aux:
         fields["default_aux_model"] = aux
-    return _Shim(**fields)
+    register_provider(_Shim(**fields))
+    logger.info("bifrost-shim: %s -> %s (prefix %s/)", name, BIFROST_BASE, prefix)
 
 
-def _load_bundled_kimi():
-    """Import the bundled kimi-coding plugin, by module path or by file."""
-    try:
-        from plugins.model_providers.kimi_coding import kimi as bundled
-
-        return bundled
-    except Exception:
-        mod = _load_bundled_plugin_module("kimi-coding", "plugins.model_providers.kimi_coding_shimfb")
-        return mod.kimi
-
-
-def _load_bundled_plugin_module(plugin_dir: str, mod_name: str):
-    """Load a bundled model-provider plugin by file path (order-independent)."""
-    import importlib.util
-
-    from hermes_cli.plugins import get_bundled_plugins_dir
-
-    init = get_bundled_plugins_dir() / "model-providers" / plugin_dir / "__init__.py"
-    spec = importlib.util.spec_from_file_location(
-        mod_name,
-        init,
-        submodule_search_locations=[str(init.parent)],
-    )
-    if spec is None or spec.loader is None:
-        raise ImportError(f"cannot load bundled plugin from {init}")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
-
-
-def _load_bundled_opencode_go():
-    try:
-        from plugins.model_providers.opencode_zen import opencode_go as bundled
-
-        return bundled
-    except Exception:
-        mod = _load_bundled_plugin_module("opencode-zen", "plugins.model_providers.opencode_zen_shimfb")
-        return mod.opencode_go
-
-
-_DIM = _dim_app()
-_kimi = _load_bundled_kimi()
-register_provider(
-    _wrap(
-        _kimi,
-        prefix="kimi",
-        aux="kimi-for-coding-highspeed",
-    )
-)
-logger.info("bifrost-shim: kimi-coding -> %s (dim-app: %s)", BIFROST_BASE, _DIM)
-
-_opencode_go = _load_bundled_opencode_go()
-register_provider(
-    _wrap(
-        _opencode_go,
-        prefix="opencode-go",
-    )
-)
-logger.info("bifrost-shim: opencode-go -> %s (dim-app: %s)", BIFROST_BASE, _DIM)
+_shim("kimi-coding", prefix="kimi", aux="kimi-for-coding-highspeed")
+_shim("opencode-go", prefix="opencode-go")
