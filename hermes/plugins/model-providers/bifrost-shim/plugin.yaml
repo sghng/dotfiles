@@ -1,0 +1,5 @@
+name: bifrost-shim
+kind: model-provider
+version: 1.0.0
+description: Repoint bundled provider profiles at the Bifrost gateway (llm.sgh.ng) with provider/model wire names and x-bf-dim-app attribution.
+author: sghng
