@@ -11,8 +11,9 @@ only three things:
      build_api_kwargs_extras top-level merge, verified in both the main
      transport (agent/transports/chat_completions.py) and the aux client.
 
-The picker is kept clean by fetch_models returning a curated list instead of
-the gateway's aggregated /v1/models (150+ entries from every lane).
+The picker is kept clean by fetch_models: it takes Bifrost's aggregated
+/v1/models and keeps only this provider's prefix, stripped back to bare
+names — no hardcoded model lists.
 
 KIMI_BASE_URL (profile .env) must also point at Bifrost: Hermes's
 HermesOverlay applies the env base_url after the profile, and an explicit
@@ -43,7 +44,7 @@ def _dim_app() -> str:
         return "hermes"
 
 
-def _wrap(profile, *, prefix: str, models: list[str], aux: str | None = None):
+def _wrap(profile, *, prefix: str, aux: str | None = None):
     """Return a shim subclass instance of a bundled provider profile."""
     base_cls = type(profile)
 
@@ -56,8 +57,14 @@ def _wrap(profile, *, prefix: str, models: list[str], aux: str | None = None):
                 top = {**(top or {}), "model": f"{self._bifrost_prefix}/{model}"}
             return body, top
 
-        def fetch_models(self, **kwargs):  # noqa: ARG002 - curated picker list
-            return list(models)
+        def fetch_models(self, **kwargs):  # noqa: ARG002
+            # Bifrost's /v1/models aggregates every lane with provider/ prefixes;
+            # keep only this provider's entries, stripped back to bare names.
+            live = super().fetch_models(**kwargs)
+            if not live:
+                return live
+            p = self._bifrost_prefix + "/"
+            return [m[len(p):] for m in live if m.startswith(p)]
 
     fields = {f.name: getattr(profile, f.name) for f in dataclasses.fields(profile)}
     fields["base_url"] = BIFROST_BASE
@@ -76,21 +83,37 @@ def _load_bundled_kimi():
 
         return bundled
     except Exception:
-        import importlib.util
-
-        from hermes_cli.plugins import get_bundled_plugins_dir
-
-        init = get_bundled_plugins_dir() / "model-providers" / "kimi-coding" / "__init__.py"
-        spec = importlib.util.spec_from_file_location(
-            "plugins.model_providers.kimi_coding_shimfb",
-            init,
-            submodule_search_locations=[str(init.parent)],
-        )
-        if spec is None or spec.loader is None:
-            raise ImportError(f"cannot load bundled kimi-coding plugin from {init}")
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
+        mod = _load_bundled_plugin_module("kimi-coding", "plugins.model_providers.kimi_coding_shimfb")
         return mod.kimi
+
+
+def _load_bundled_plugin_module(plugin_dir: str, mod_name: str):
+    """Load a bundled model-provider plugin by file path (order-independent)."""
+    import importlib.util
+
+    from hermes_cli.plugins import get_bundled_plugins_dir
+
+    init = get_bundled_plugins_dir() / "model-providers" / plugin_dir / "__init__.py"
+    spec = importlib.util.spec_from_file_location(
+        mod_name,
+        init,
+        submodule_search_locations=[str(init.parent)],
+    )
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load bundled plugin from {init}")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _load_bundled_opencode_go():
+    try:
+        from plugins.model_providers.opencode_zen import opencode_go as bundled
+
+        return bundled
+    except Exception:
+        mod = _load_bundled_plugin_module("opencode-zen", "plugins.model_providers.opencode_zen_shimfb")
+        return mod.opencode_go
 
 
 _DIM = _dim_app()
@@ -99,8 +122,16 @@ register_provider(
     _wrap(
         _kimi,
         prefix="kimi",
-        models=["kimi-for-coding", "kimi-for-coding-highspeed"],
         aux="kimi-for-coding-highspeed",
     )
 )
 logger.info("bifrost-shim: kimi-coding -> %s (dim-app: %s)", BIFROST_BASE, _DIM)
+
+_opencode_go = _load_bundled_opencode_go()
+register_provider(
+    _wrap(
+        _opencode_go,
+        prefix="opencode-go",
+    )
+)
+logger.info("bifrost-shim: opencode-go -> %s (dim-app: %s)", BIFROST_BASE, _DIM)
