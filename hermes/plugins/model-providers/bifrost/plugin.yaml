@@ -1,0 +1,5 @@
+name: bifrost
+kind: model-provider
+version: 1.0.0
+description: The Bifrost gateway (llm.sgh.ng) as a first-class provider — curated registry of canonical provider/model ids sent verbatim, no wire mutation.
+author: sghng
