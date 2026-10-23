@@ -79,6 +79,20 @@ export default Plugin.define({
       const provider = HOST_TO_PROVIDER[url.host];
       if (!provider) return;
 
+      // OpenCode Zen (opencode.ai/zen/v1) is NOT the Go plan: it has its own
+      // free tier, and that tier is client-locked upstream — every non-OpenCode
+      // caller gets 403 FreeTierError "can only be used from within OpenCode"
+      // (verified 2026-10-23, spoofed UA and app headers included). There is no
+      // Zen lane in the gateway, so rewriting these to opencode-go breaks them
+      // ("Model is unavailable"). Pass Zen through untouched; only the Go path
+      // (/zen/go/) belongs to the opencode-go lane.
+      if (
+        url.host === "opencode.ai" &&
+        url.pathname.startsWith("/zen/") &&
+        !url.pathname.startsWith("/zen/go/")
+      )
+        return;
+
       // Anthropic Messages traffic (/api/anthropic/...) is a different wire
       // format and the gateway only serves OpenAI-compatible lanes for these
       // providers — leave it on the vendor's own endpoint.
