@@ -21,6 +21,11 @@ const HOST_TO_PROVIDER: Record<string, string> = {
   "api.openai.com": "openai",
   "api.deepseek.com": "deepseek",
   "api.kimi.ai": "kimi",
+  // Kimi Code-plan CN endpoint (opencode's `kimi-code-plan-cn` provider). Same
+  // subscription lane as the global endpoint — the `/coding/v1/...` OpenAI wire
+  // maps onto the gateway's /v1 history; the Anthropic-wire sibling
+  // (/coding/anthropic/...) is skipped at the path level below.
+  "api.kimi.com": "kimi",
   "api.moonshot.cn": "kimi",
   "api.moonshot.ai": "kimi",
   "opencode.ai": "opencode-go",

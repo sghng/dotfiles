@@ -1,0 +1,5 @@
+name: bifrost-relay
+kind: model-provider
+version: 1.0.0
+description: Route LLM traffic through the Bifrost gateway via ProviderProfile.create_client while keeping every provider fully native.
+author: sghng
