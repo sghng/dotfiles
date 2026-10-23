@@ -70,6 +70,14 @@ export default Plugin.define({
       // providers — leave it on the vendor's own endpoint.
       if (url.pathname.includes("/anthropic")) return
 
+      // Google-protocol traffic (:generateContent / :streamGenerateContent) has no
+      // Bifrost ingress — the gateway serves OpenAI chat-completions only. Rewriting
+      // it produced `POST /v1/models/<id>:generateContent` and a bare HTTP 405 with
+      // no gateway log row (verified 2026-10-23, OpenCode Go Gemini/Argon). Pass it
+      // through untouched. To run Argon THROUGH the gateway, use the
+      // `bifrost-gemini` provider declared in opencode.jsonc instead.
+      if (url.pathname.includes(":generateContent") || url.pathname.includes(":streamGenerateContent")) return
+
       const req = event.request
 
       // Body is a one-shot stream: read it, then rebuild the Request.
