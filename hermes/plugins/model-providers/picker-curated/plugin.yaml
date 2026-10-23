@@ -1,0 +1,5 @@
+name: picker-curated
+kind: model-provider
+version: 1.0.0
+description: Keep the model picker on Hermes's own curated catalogs when provider base URLs are relayed through a gateway.
+author: sghng
